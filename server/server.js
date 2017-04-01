@@ -6,7 +6,12 @@ const chalk = require('chalk')
 const cors = require('cors')
 const morgan = require('morgan')
 
-app.use(express.static('./build'))
+const app = express()
+const http = require('http').Server(app)
+
+
+app.use(express.static(path.resolve(__dirname, '..', 'build')))
+
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(cors())
@@ -14,16 +19,8 @@ app.use(morgan('short'))
 
 require('./routes')(app)
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, './build', 'index.html'))
-})
-
-app.get('/test', (req, res) => {
-  res.status(200).send('Hello World!')
-})
-
-app.get('*', (request, response) => {
-  response.sendFile(path.join(__dirname, '/../public/index.html'))
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'))
 })
 
 const port = process.env.PORT || 2020
