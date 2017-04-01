@@ -51,9 +51,9 @@
         "no-unneeded-ternary": "off",
         "no-plusplus": "off",
         "react/jsx-no-bind": [0, {"allowBind": true}],
-        "class-methods-use-this": ["error", { "exceptMethods": ["setToken", "getProfile", "getToken", "logout"] }] 
+        "class-methods-use-this": ["error", { "exceptMethods": ["setToken", "getProfile", "getToken", "logout", "render"] }] 
     },
-    "extends": "react-app",
+    "extends": "airbnb",
     "plugins": [
         "react",
         "jsx-a11y",
