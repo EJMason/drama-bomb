@@ -9,9 +9,7 @@ const morgan = require('morgan')
 const app = express()
 const http = require('http').Server(app)
 
-
 app.use(express.static(path.resolve(__dirname, '..', 'build')))
-
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(cors())

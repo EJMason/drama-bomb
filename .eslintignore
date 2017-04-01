@@ -1,6 +1,6 @@
 ** tests **
 test/*
 node_modules
-app/build
+build/*
 scripts/*
 config/*
