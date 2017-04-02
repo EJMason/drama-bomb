@@ -16,6 +16,7 @@ class Homepage extends Component {
   }
 
   render() {
+    console.log('These are the homepage props: ', this.props)
     return (
       <div>
         Hello

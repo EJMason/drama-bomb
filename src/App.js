@@ -13,7 +13,7 @@ class App extends Component {
   }
 
   render() {
-    console.log(process.env)
+    console.log('Here are the props: ', this.props)
     return (
       <div className="App">
         <div className="App-header">

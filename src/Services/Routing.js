@@ -1,14 +1,14 @@
 // import React from 'react'
 import React, { Component } from 'react'
 import { Router, Route, Redirect } from 'react-router'
+import { connect } from 'react-redux'
 import createBrowserHistory from 'history/createBrowserHistory'
 
 import Dashboard from '../Containers/Dashboard'
 import App from '../App'
 
 const history = createBrowserHistory()
-
-const buildAppComponent = () => (<App stuff="yaaaaa" />)
+const buildAppComponent = () => (<App stuff="tester" />)
 
 class Routing extends Component {
   constructor(props) {
@@ -35,4 +35,13 @@ class Routing extends Component {
   }
 }
 
-export default Routing
+const mapStateToProps = state => ({
+  history: state.login.history,
+})
+
+const mapDispatchToProps = dispatch => ({
+  dispatchMount: () => dispatch(tempActions.dispatchMountAction()),
+})
+
+export const hist = history
+export default connect(mapStateToProps, mapDispatchToProps)(Routing)
