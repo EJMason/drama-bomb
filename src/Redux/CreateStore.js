@@ -8,7 +8,7 @@ export default (rootReducer, rootSaga) => {
 
   if (process.env.NODE_ENV !== 'production') {
     plugins = [...plugins,
-      logger(),
+      logger,
     ]
   }
 
