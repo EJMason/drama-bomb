@@ -28,7 +28,7 @@ class Routing extends Component {
       <Router history={history}>
         <div>
           <Route exact path="/" render={buildAppComponent} />
-          <Route exact path="/demon" render={renderCorrectPage} />
+          <Route exact path="/demon" render={this.renderCorrectPage.bind(this)} />
         </div>
       </Router>
     )

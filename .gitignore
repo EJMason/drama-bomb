@@ -15,7 +15,9 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+clientKeys.js
 
 # styles
 src/**/*.css
+config.codekit3
 

@@ -1,4 +1,11 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+
+import HomepageTopBar from '../Components/HomepageTopBar'
+import AuthService from '../Services/AuthServices'
+import { actions as tempActions } from '../Redux/temp'
+
+const auth = new AuthService()
 
 class Homepage extends Component {
   constructor(props) {
@@ -12,9 +19,18 @@ class Homepage extends Component {
     return (
       <div>
         Hello
+        <HomepageTopBar auth={auth} />
       </div>
     )
   }
 }
 
-export default Homepage
+const mapStateToProps = state => ({
+  loggedIn: state.temp.mounted,
+})
+
+const mapDispatchToProps = dispatch => ({
+  dispatchMount: () => dispatch(tempActions.dispatchMountAction()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Homepage)

@@ -1,10 +1,11 @@
 import React from 'react'
 import '../Styles/Tools.css'
 
-const HomepageTopBar = () => {
+
+const HomepageTopBar = ({ auth }) => {
   return (
     <div className="outline">
-      <button>Hello</button>
+      <button onClick={() => auth.login()}>Hello</button>
     </div>
   )
 }
