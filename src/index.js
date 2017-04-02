@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 
-import routing from './Services/Routing'
+import Routing from './Services/Routing'
 import createStore from './Redux/Reducers'
 import './index.css'
 
@@ -11,7 +11,7 @@ const store = createStore()
 
 const reduxProvider = (
   <Provider store={store}>
-    {routing}
+    <Routing />
   </Provider>
 )
 
