@@ -1,4 +1,4 @@
-import { takeEvery } from 'redux-saga'
+import { takeEvery } from 'redux-saga/effects'
 
 /* ------------- Types ------------- */
 import { types as tempTypes } from '../Redux/temp'
