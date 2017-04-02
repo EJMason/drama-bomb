@@ -8,14 +8,6 @@ import App from '../App'
 
 const history = createBrowserHistory()
 
-history.listen((location, action) => {
-  console.log(`The current URL is ${location.pathname}${location.search}${location.hash}`)
-  console.log(`The last navigation action was ${action}`)
-})
-
-const loggedIn = true
-
-const renderCorrectPage = () => { return loggedIn ? (<Dashboard />) : (<Redirect to="/" />) }
 const buildAppComponent = () => (<App stuff="yaaaaa" />)
 
 class Routing extends Component {
@@ -23,7 +15,12 @@ class Routing extends Component {
     super(props)
     this.state = {
       temp: null,
+      loggedIn: false,
     }
+  }
+
+  renderCorrectPage() {
+    return this.state.loggedIn ? (<Dashboard />) : (<Redirect to="/" />)
   }
 
   render() {
