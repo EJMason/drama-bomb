@@ -6,9 +6,10 @@ import createHistory from 'history/createBrowserHistory'
 
 import Dashboard from '../Containers/Dashboard'
 import App from '../App'
+import Login from '../Components/Login'
 
 export const history = createHistory()
-const buildAppComponent = () => (<App stuff="tester" />)
+const buildAppComponent = () => (<App />)
 
 class Routing extends Component {
   constructor(props) {
@@ -17,10 +18,12 @@ class Routing extends Component {
       temp: null,
       loggedIn: false,
     }
+
+    this.renderCorrectPage = this.renderCorrectPage.bind(this)
   }
 
   renderCorrectPage() {
-    return this.state.loggedIn ? (<Dashboard />) : (<Redirect to="/" />)
+    return (localStorage.getItem('id_token')) ? (<Dashboard />) : (<Redirect to="/" />)
   }
 
   render() {
@@ -28,7 +31,8 @@ class Routing extends Component {
       <ConnectedRouter history={history}>
         <div>
           <Route exact path="/" render={buildAppComponent} />
-          <Route exact path="/demon" render={this.renderCorrectPage.bind(this)} />
+          <Route path="/demon" render={this.renderCorrectPage} />
+          <Route path="/login" component={Login} />
         </div>
       </ConnectedRouter>
     )

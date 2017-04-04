@@ -1,23 +1,25 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { replace } from 'react-router-redux'
 
 import { actions as tempActions } from '../Redux/temp'
-import HomeTopBar from './HomeTopBar'
+import AuthService from '../Services/AuthServices'
 
-class Homepage extends Component {
+const auth = new AuthService()
+
+class HomeTopBar extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      temp: null,
+      temp: 'a',
     }
   }
 
   render() {
     return (
       <div>
-        Hello
-        <HomeTopBar />
+        <button onClick={auth.login}>THIS IS MY LOGIN BUTTON</button>
       </div>
     )
   }
@@ -25,10 +27,12 @@ class Homepage extends Component {
 
 const mapStateToProps = state => ({
   loggedIn: state.temp.mounted,
+  auth: state.login.auth,
 })
 
 const mapDispatchToProps = dispatch => ({
   dispatchMount: () => dispatch(tempActions.dispatchMountAction()),
+  dispatchReplaceHistory: () => dispatch(replace('/')),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Homepage)
+export default connect(mapStateToProps, mapDispatchToProps)(HomeTopBar)
