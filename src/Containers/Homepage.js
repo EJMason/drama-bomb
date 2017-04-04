@@ -16,7 +16,7 @@ class Homepage extends Component {
   render() {
     return (
       <div>
-        Hello
+        This is the top of the homepage
         <HomeTopBar />
       </div>
     )

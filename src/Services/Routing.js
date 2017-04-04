@@ -9,17 +9,20 @@ import App from '../App'
 import Login from '../Components/Login'
 
 export const history = createHistory()
-const buildAppComponent = () => (<App />)
 
 class Routing extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      temp: null,
       loggedIn: false,
     }
 
+    this.buildAppComponent = this.buildAppComponent.bind(this)
     this.renderCorrectPage = this.renderCorrectPage.bind(this)
+  }
+
+  buildAppComponent() {
+    return (<App />)
   }
 
   renderCorrectPage() {
@@ -30,7 +33,7 @@ class Routing extends Component {
     return (
       <ConnectedRouter history={history}>
         <div>
-          <Route exact path="/" render={buildAppComponent} />
+          <Route exact path="/" render={this.buildAppComponent} />
           <Route path="/demon" render={this.renderCorrectPage} />
           <Route path="/login" component={Login} />
         </div>
