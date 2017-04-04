@@ -30,11 +30,10 @@ export default class AuthService extends EventEmitter {
     this.setToken(authResult.idToken)
 
     try {
-      console.log('THIS IS THE ID TOKEN: ', authResult.idToken)
       const profile = await this.lock.getProfile(authResult.idToken)
-      console.log('THIS IS THE PROFILE: ', profile)
+      this.setProfile(profile)
     } catch (err) {
-      console.log(err)
+      console.err(err)
     }
   }
 
@@ -68,3 +67,10 @@ export default class AuthService extends EventEmitter {
     localStorage.removeItem('id_token')
   }
 }
+
+export const getProfileInfo = () => {
+  const profile = localStorage.getItem('profile')
+  return profile ? JSON.parse(localStorage.profile) : {}
+}
+
+export const getIdToken = () => localStorage.getItem('id_token')

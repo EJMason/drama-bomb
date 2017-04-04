@@ -14,6 +14,10 @@ class HomeTopBar extends Component {
     this.state = {
       temp: 'a',
     }
+
+    auth.on('profile_updated', newProfile => {
+      console.log('\n\nI CAN READ TRIGGERS HERE!!!!!\n\n\n', newProfile)
+    })
   }
 
   render() {
