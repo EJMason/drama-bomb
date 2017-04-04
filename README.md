@@ -10,9 +10,9 @@ Still they did not come back? Time to be more aggressive!
 That seems like a great idea!
 
 ### Todo List
-[ ] Draw out DB 
-[ ] Set up Auth0 managment api to get twitter authorization to act in behalf of authorized user
-[ ] 
+- [ ] Draw out DB 
+- [ ] Set up Auth0 managment api to get twitter authorization to act in behalf of authorized user
+- [ ] Draw out what the app needs to do, what endpoints are needed and anything else
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
