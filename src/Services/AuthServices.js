@@ -28,7 +28,7 @@ export default class AuthService extends EventEmitter {
 
   async _doAuthentication(authResult) {
     this.setToken(authResult.idToken)
-
+    console.log('THIS IS THE AUTHRESULT: ', authResult)
     try {
       const profile = await this.lock.getProfile(authResult.idToken)
       this.setProfile(profile)
