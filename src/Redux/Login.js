@@ -1,6 +1,4 @@
-import createBrowserHistory from 'history/createBrowserHistory'
 
-const history = createBrowserHistory()
 // ------------------ Action Names ----------------- //
 export const types = {
   SET_LOGGED_IN: 'SET_LOGGED_IN',
@@ -9,7 +7,6 @@ export const types = {
 // ----------- Initialize Default State --------- //
 const INITIAL_STATE = {
   loggedIn: false,
-  history,
 }
 
 // ------------------- Reducers ------------------- //

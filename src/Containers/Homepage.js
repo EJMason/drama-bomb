@@ -1,26 +1,34 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import Auth0Lock from 'auth0-lock'
+import { AUTH_CLIENT_ID, AUTH_DOMAIN } from '../../clientKeys'
 
-import HomepageTopBar from '../Components/HomepageTopBar'
-import AuthService from '../Services/AuthServices'
 import { actions as tempActions } from '../Redux/temp'
-
-const auth = new AuthService()
 
 class Homepage extends Component {
   constructor(props) {
     super(props)
+
     this.state = {
       temp: null,
     }
+
+    this.lock = new Auth0Lock(AUTH_CLIENT_ID, AUTH_DOMAIN, {
+      auth: {
+        redirectUrl: 'http://localhost:3000/demon',
+        responseType: 'token',
+      },
+    })
+  }
+
+  login() {
+    this.lock.show()
   }
 
   render() {
-    console.log('These are the homepage props: ', this.props)
     return (
       <div>
         Hello
-        <HomepageTopBar auth={auth} />
       </div>
     )
   }
