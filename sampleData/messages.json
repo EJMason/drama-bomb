@@ -1,0 +1,10 @@
+[{
+  "type": "passive",
+  "message": "This is a passive message"
+}, {
+  "type": "aggressive",
+  "message": "This is an aggressive message"
+}, {
+  "type": "apology",
+  "message": "This is an apology message"
+}]
