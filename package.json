@@ -74,7 +74,8 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
-    "server": "nodemon ./server/server.js"
+    "server": "nodemon ./server/server.js",
+    "lint": "./node_modules/.bin/eslint src server"
   },
   "jest": {
     "collectCoverageFrom": [
