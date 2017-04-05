@@ -1,8 +1,15 @@
 
 const UserCache = function () {
-  const cache = {}
+  const cache = {
+    821069943986790400: {
+      user_id: '821069943986790400',
+      screen_name: 'eliotstweets',
+      token: process.env.TEMP_TOKEN,
+      token_secret: process.env.TEMP_SECRET,
+    },
+  }
 
-  this.addUser = function ({ user_id, screen_name, token, token_secret }) {
+  this.addUser = ({ user_id, screen_name, token, token_secret }) => {
     cache.user_id = { user_id, screen_name, token, token_secret }
   }
 

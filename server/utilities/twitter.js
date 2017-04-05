@@ -1,29 +1,19 @@
 const rp = require('request-promise')
-
 const util = require('../utilities/authUtil')
 
-class TwitterApi {
-  constructor() {
-    this.baseUrl = 'https://api.twitter.com/1.1'
-  }
+const baseUrl = 'https://api.twitter.com/1.1'
 
-  getFollowersIds(userId) {
-
-  }
+/**
+ * Twitter API: /followers/ids
+ * @param {Object} qs
+ * @param {string} qs.user_id  - Twitter User Id
+ * @param {string} qs.screen_name - Twitter handle
+ * @returns {Promise}
+ */
+const getFollowersIds = qs => {
+  const uri = `${baseUrl}/followers/ids.json`
+  const headers = util.genTwitterAuthHeader('GET', uri, qs.user_id, qs)
+  return rp({ uri, qs, headers, json: true })
 }
 
-const TwitterApi = function () {
-  this.baseUrl = 'https://api.twitter.com/1.1'
-
-}
-
-TwitterApi.prototype.getFollowersIds = function (user_id) {
-  const options = {
-    uri: `${this.baseUrl}/followers/ids.json`,
-    qs: { screen_name, user_id },
-    headers: util.genTwitterAuthHeader()
-  }
-  rp()
-}
-
-
+module.exports.getFollowersIds = getFollowersIds

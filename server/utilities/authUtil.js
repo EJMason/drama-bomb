@@ -29,20 +29,16 @@ const genDefaultAuthParams = () => {
 
 const genOAuthSignature = (authParams, tokenSecret, url, httpMethod) => {
   const consumerSecret = process.env.TWITTER_CONSUMER_SECRET
-
-  extraFields.forEach(tuple => {
-    authParams[tuple[0]] = tuple[1]
-  })
-
   return oauthSignature.generate(httpMethod, url, authParams, consumerSecret, tokenSecret)
 }
 
-const genTwitterAuthHeader = (httpMethod, url, userId, queryTuples) => {
-  const user = Cache[userId]
-  const authParams = genDefaultAuthParams()
+const genTwitterAuthHeader = (httpMethod, url, userId, query) => {
+  const user = Cache.getUser(userId)
+  let authParams = genDefaultAuthParams()
   authParams.oauth_token = user.token
 
-  queryTuples.forEach(tuple => { authParams[tuple[0]] = tuple[1] })
+  authParams = { ...authParams, ...query }
+
 
   const signature = genOAuthSignature(authParams, user.token_secret, url, httpMethod)
 
@@ -53,12 +49,9 @@ const genTwitterAuthHeader = (httpMethod, url, userId, queryTuples) => {
     `oauth_nonce=${authParams.oauth_nonce}, `,
     'oauth_version=1.0, ',
     `oauth_token=${authParams.oauth_token}, `,
-    `oauth_signature=${signature}`,
-  ]
+    `oauth_signature=${signature}`]
   return { Authorization: str.join('') }
 }
-
-
 
 module.exports.genNonce = genNonce
 module.exports.genTwitterAuthHeader = genTwitterAuthHeader
