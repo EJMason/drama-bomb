@@ -32,13 +32,20 @@ const genOAuthSignature = (authParams, tokenSecret, url, httpMethod) => {
   return oauthSignature.generate(httpMethod, url, authParams, consumerSecret, tokenSecret)
 }
 
+/**
+ * Generates OAuth compliant headers for making requests to twitter REST API
+ * @param {string} httpMethod - request method
+ * @param {string} url - Twitter endpoint url
+ * @param {string} userId - user id hash key
+ * @param {object} query - parameters
+ * @return {object} headers for twitter api
+ */
 const genTwitterAuthHeader = (httpMethod, url, userId, query) => {
   const user = Cache.getUser(userId)
+
   let authParams = genDefaultAuthParams()
   authParams.oauth_token = user.token
-
   authParams = { ...authParams, ...query }
-
 
   const signature = genOAuthSignature(authParams, user.token_secret, url, httpMethod)
 
@@ -53,5 +60,4 @@ const genTwitterAuthHeader = (httpMethod, url, userId, query) => {
   return { Authorization: str.join('') }
 }
 
-module.exports.genNonce = genNonce
-module.exports.genTwitterAuthHeader = genTwitterAuthHeader
+module.exports = { genNonce, genTwitterAuthHeader }
