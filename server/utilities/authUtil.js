@@ -1,0 +1,64 @@
+const oauthSignature = require('oauth-signature')
+const UserCache = require('../database/tempCache')
+
+module.exports.Cache = new UserCache()
+
+const genNonce = length => {
+  const lettersAndNumbers = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  let text = ''
+  for (let i = 0; i < length; i++) {
+    text += lettersAndNumbers.charAt(Math.floor(Math.random() * possible.length))
+  }
+  return text
+}
+
+const genTimestamp = () => {
+  const date = new Date()
+  return date.getHours()
+}
+
+const genDefaultAuthParams = () => {
+  return {
+    oauth_consumer_key: process.env.TWITTER_CONSUMER_KEY,
+    oauth_signature_method: 'HMAC-SHA1',
+    oauth_version: '1.0',
+    oauth_nonce: genNonce(12),
+    oauth_timestamp: genTimestamp(),
+  }
+}
+
+const genOAuthSignature = (authParams, tokenSecret, url, httpMethod) => {
+  const consumerSecret = process.env.TWITTER_CONSUMER_SECRET
+
+  extraFields.forEach(tuple => {
+    authParams[tuple[0]] = tuple[1]
+  })
+
+  return oauthSignature.generate(httpMethod, url, authParams, consumerSecret, tokenSecret)
+}
+
+const genTwitterAuthHeader = (httpMethod, url, userId, queryTuples) => {
+  const user = Cache[userId]
+  const authParams = genDefaultAuthParams()
+  authParams.oauth_token = user.token
+
+  queryTuples.forEach(tuple => { authParams[tuple[0]] = tuple[1] })
+
+  const signature = genOAuthSignature(authParams, user.token_secret, url, httpMethod)
+
+  const str = [
+    `OAuth oauth_consumer_key=${authParams.oauth_consumer_key}, `,
+    'oauth_signature_method=HMAC-SHA1, ',
+    `oauth_timestamp=${authParams.oauth_timestamp}, `,
+    `oauth_nonce=${authParams.oauth_nonce}, `,
+    'oauth_version=1.0, ',
+    `oauth_token=${authParams.oauth_token}, `,
+    `oauth_signature=${signature}`,
+  ]
+  return { Authorization: str.join('') }
+}
+
+
+
+module.exports.genNonce = genNonce
+module.exports.genTwitterAuthHeader = genTwitterAuthHeader
