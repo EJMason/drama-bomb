@@ -4,3 +4,7 @@ node_modules
 build/*
 scripts/*
 config/*
+yarn.lock
+README.md
+*.codekit3
+package.json
