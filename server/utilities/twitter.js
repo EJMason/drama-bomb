@@ -16,4 +16,23 @@ const getFollowersIds = qs => {
   return rp({ uri, qs, headers, json: true })
 }
 
-module.exports.getFollowersIds = getFollowersIds
+/**
+ * Twitter API: Once a users id is obtained, use that id to get
+ * otherProfile information about a user
+ */
+const getUserProfileInformation = () => {
+
+}
+
+/**
+ * Twitter API: Send private messages to other users
+ */
+const sendPrivateMessage = () => {
+
+}
+
+module.exports = {
+  getFollowersIds,
+  sendPrivateMessage,
+  getUserProfileInformation,
+}
