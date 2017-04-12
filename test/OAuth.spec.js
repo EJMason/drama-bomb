@@ -1,3 +1,4 @@
+require('dotenv').config()
 const chai = require('chai')
 const request = require('supertest')
 
@@ -8,12 +9,12 @@ const expect = chai.expect
 describe('Twitter API -> ', function() {
 
   describe('genNonce Helper Funciton', function() {
-    
+    let nonce, nonc1, nonce2, nonce3
     before(function() {
-      let nonce = authUtil.genNonce(12)
-      let nonce1 = authUtil.genNonce(12)
-      let nonce2 = authUtil.genNonce(12)
-      let nonce3 = authUtil.genNonce(12)
+      nonce = authUtil.genNonce(12)
+      nonce1 = authUtil.genNonce(12)
+      nonce2 = authUtil.genNonce(12)
+      nonce3 = authUtil.genNonce(12)
     })
 
     it('genNonce should generate a random string', function() {
@@ -28,7 +29,7 @@ describe('Twitter API -> ', function() {
     })
 
 
-    it('genTwitterAuthHeader should ', function() {
+    xit('genTwitterAuthHeader should ', function() {
       let header = authUtil.genTwitterAuthHeader('821069943986790400-M7M3hgXPxYCkLG8WryboS8Ih9kBB5hC', 'tH9%2FGL5idopCFyhdMiFnuFX%2FVo0%3D')
       expect(header).to.be.an('object')
       expect(header).to.have.all.keys('Authorization')
