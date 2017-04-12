@@ -25,6 +25,4 @@ const userSchema = new Schema({
 
 const Users = mongoose.model('User', userSchema)
 
-Users.on()
-
 module.exports = Users
