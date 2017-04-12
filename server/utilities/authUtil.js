@@ -1,10 +1,11 @@
 const oauthSignature = require('oauth-signature')
+const Cache = require('../database/tempCache')
 
 const genNonce = length => {
   const lettersAndNumbers = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
   let text = ''
   for (let i = 0; i < length; i++) {
-    text += lettersAndNumbers.charAt(Math.floor(Math.random() * possible.length))
+    text += lettersAndNumbers.charAt(Math.floor(Math.random() * lettersAndNumbers.length))
   }
   return text
 }
