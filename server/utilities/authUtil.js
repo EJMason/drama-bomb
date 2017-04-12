@@ -1,7 +1,8 @@
 const oauthSignature = require('oauth-signature')
 const UserCache = require('../database/tempCache')
 
-module.exports.Cache = new UserCache()
+let cache = new UserCache()
+console.log(cache)
 
 const genNonce = length => {
   const lettersAndNumbers = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -45,7 +46,7 @@ const genTwitterAuthHeader = (httpMethod, url, userId, query) => {
 
   let authParams = genDefaultAuthParams()
   authParams.oauth_token = user.token
-  authParams = { ...authParams, ...query }
+  authParams = Object.assign({}, authParams, query)
 
   const signature = genOAuthSignature(authParams, user.token_secret, url, httpMethod)
 
