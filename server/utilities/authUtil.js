@@ -1,8 +1,4 @@
 const oauthSignature = require('oauth-signature')
-const UserCache = require('../database/tempCache')
-
-let cache = new UserCache()
-console.log(cache)
 
 const genNonce = length => {
   const lettersAndNumbers = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'

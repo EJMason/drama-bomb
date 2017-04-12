@@ -6,9 +6,6 @@ class UserCache {
         screen_name: 'eliotstweets',
         token: process.env.TEMP_TOKEN,
         token_secret: process.env.TEMP_SECRET,
-        friends: [],
-        haters: [],
-        blocked: [],
       },
     }
   }
