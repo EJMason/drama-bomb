@@ -1,4 +1,11 @@
+const Users = require('../database/models/Users')
 
-module.exports.default = (req, res) => {
+const example = (req, res) => {
   res.status(200).send('Hello, Auth!')
 }
+
+const initLoginSequence = async (req, res) => {
+  
+}
+
+module.exports = { example, initLoginSequence }

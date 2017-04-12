@@ -23,4 +23,6 @@ class UserCache {
   }
 }
 
-module.exports = UserCache
+const cache = new UserCache()
+
+module.exports = cache
