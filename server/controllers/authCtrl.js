@@ -1,5 +1,6 @@
-const util = require('../database/dbUtil/UsersUtil')
-const rds = require('../database/redis/redisUtil')
+const userUtil = require('../database/dbUtil/UsersUtil')
+const authUtil = require('../utilities/authUtil')
+const redisUtil = require('../database/redis/redisUtil')
 
 const example = (req, res) => {
   res.status(200).send('Hello, Auth!')
@@ -10,14 +11,11 @@ const example = (req, res) => {
  * req.body - {user_id, simple_id, screen_name}
  */
 const loginInit = async (req, res) => {
-  // check if the user exists in the database, if not, add them to mongoose
-  const user = await util.findOrCreate(req.body)
+  const user = await userUtil.findOrCreate(req.body)
+  const tokens = await authUtil.getUserIdp(user.user_id)
+  await redisUtil.addUserKeysToRedisCache(user.user_id, tokens)
 
-  
-  // using the userId from auth0, get their idp tokens, save them to redis cache
-  await rds.addUserKeysToRedisCache()
-
-  res.status(200).send('Hello, Auth!')
+  res.status(200).send('Login Sequence Complete!')
 }
 
 module.exports = { example, loginInit }
