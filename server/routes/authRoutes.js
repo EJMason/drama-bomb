@@ -1,10 +1,11 @@
 const router = require('express').Router()
 
-const controller = require('../controllers/authCtrl')
+const ctrl = require('../controllers/authCtrl')
+const mw = require('../middleware/authMiddleware')
 
 // ----------------- Routes ----------------- //
 
-router.post('/token/idp', controller.example)
-router.post('/login/init', controller.example)
+router.post('/token/idp', ctrl.example)
+router.post('/login/init', mw.validateBody, ctrl.example)
 
 module.exports = router

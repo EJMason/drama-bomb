@@ -13,6 +13,7 @@ const generateManagmentOptions = () => {
   return { method: 'POST', url, headers, body }
 }
 
+
 const getTokenExpirationDate = token => {
   if (token === undefined) return null
   const dcd = jwtDecode(token)

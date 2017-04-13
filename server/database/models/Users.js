@@ -24,14 +24,6 @@ const userSchema = new Schema({
   user_id: String,
   simple_id: String,
   screen_name: String,
-  token: {
-    type: String,
-    default: '',
-  },
-  token_secret: {
-    type: String,
-    default: '',
-  },
   friends_ids: [Number],
   haters: [haterSchema],
 }, { autoIndex: false })
