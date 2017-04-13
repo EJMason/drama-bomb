@@ -26,7 +26,7 @@ describe('Mongoose DB Methods -->', function() {
   })
 
   it('database should add documents, if user does not already exist', async function() {
-    await usersUtil.findOrCreate({ user_id: 123, screen_name: 'bungles' })
+    await usersUtil.findOrCreate({ user_id: 'Twitter|123', simple_id: '123', screen_name: 'bungles' })
     let docs = await Users.find({})
 
     expect(docs).to.have.lengthOf(1)
@@ -34,14 +34,10 @@ describe('Mongoose DB Methods -->', function() {
   })
 
   it('should not create a new document if user is already in database', async function() {
-    await usersUtil.findOrCreate({ user_id: 123, screen_name: 'bungles' })
+    await usersUtil.findOrCreate({ user_id: 'Twitter|123', simple_id: '123', screen_name: 'bungles' })
     let docs = await Users.find({})
     
     expect(docs).to.have.lengthOf(1)
     
-  })
-
-  it('should throw error when properties are not correct', async function() {
-    let a = await usersUtil.findOrCreate({ user_bae: true })
   })
 })

@@ -20,7 +20,7 @@ describe('Auth0', function() {
 
   describe('Auth0 Managment API testing with valid token', function() {
 
-    it('should be able to access the endpoint /api/v2/users/{id}, through getUserIdp', async function() {
+    xit('should be able to access the endpoint /api/v2/users/{id}, through getUserIdp', async function() {
       twitterIdp = await util.getUserIdpTest('twitter|821069943986790400', token)
       expect(twitterIdp).to.be.an('object')
       expect(twitterIdp).to.have.property('token')

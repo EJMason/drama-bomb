@@ -25,5 +25,6 @@ describe('Redis', function() {
       expect(getItem).to.have.property('token')
 
     })
+
   })
 })
