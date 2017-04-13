@@ -1,4 +1,4 @@
-const twitter = require('../utilities/twitter')
+const twitter = require('../utilities/twitterUtil')
 
 const placeholder = (req, res) => {
   res.status(200).send('Hello, Friends!')
