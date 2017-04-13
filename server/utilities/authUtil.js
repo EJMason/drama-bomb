@@ -1,61 +1,41 @@
-const oauthSignature = require('oauth-signature')
-const Cache = require('../database/tempCache')
+const rp = require('request-promise')
+const services = require('../services/auth0Services')
+const usersUtil = require('../database/dbUtil/UsersUtil')
 
-const genNonce = length => {
-  const lettersAndNumbers = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-  let text = ''
-  for (let i = 0; i < length; i++) {
-    text += lettersAndNumbers.charAt(Math.floor(Math.random() * lettersAndNumbers.length))
-  }
-  return text
-}
+let explorerManagmentAccessToken = ''
 
-const genTimestamp = () => {
-  const date = new Date()
-  return date.getHours()
-}
-
-const genDefaultAuthParams = () => {
-  return {
-    oauth_consumer_key: process.env.TWITTER_CONSUMER_KEY,
-    oauth_signature_method: 'HMAC-SHA1',
-    oauth_version: '1.0',
-    oauth_nonce: genNonce(12),
-    oauth_timestamp: genTimestamp(),
-  }
-}
-
-const genOAuthSignature = (authParams, tokenSecret, url, httpMethod) => {
-  const consumerSecret = process.env.TWITTER_CONSUMER_SECRET
-  return oauthSignature.generate(httpMethod, url, authParams, consumerSecret, tokenSecret)
+/**
+ * Auth0 endpoint /oauth/token
+ * @returns {object} access_token and token_type
+ */
+const getManagmentToken = async () => {
+  const options = services.generateManagmentOptions()
+  const response = await rp(options)
+  return response.access_token
 }
 
 /**
- * Generates OAuth compliant headers for making requests to twitter REST API
- * @param {string} httpMethod - request method
- * @param {string} url - Twitter endpoint url
- * @param {string} userId - user id hash key
- * @param {object} query - parameters
- * @return {object} headers for twitter api
+ * Auth0 endpoint /api/v2/users/USER_ID
+ * @param {*} userId - id of user from Auth0 token
+ * @param {*} options - default object
  */
-const genTwitterAuthHeader = (httpMethod, url, userId, query) => {
-  const user = Cache.getUser(userId)
-
-  let authParams = genDefaultAuthParams()
-  authParams.oauth_token = user.token
-  authParams = Object.assign({}, authParams, query)
-
-  const signature = genOAuthSignature(authParams, user.token_secret, url, httpMethod)
-
-  const str = [
-    `OAuth oauth_consumer_key=${authParams.oauth_consumer_key}, `,
-    'oauth_signature_method=HMAC-SHA1, ',
-    `oauth_timestamp=${authParams.oauth_timestamp}, `,
-    `oauth_nonce=${authParams.oauth_nonce}, `,
-    'oauth_version=1.0, ',
-    `oauth_token=${authParams.oauth_token}, `,
-    `oauth_signature=${signature}`]
-  return { Authorization: str.join('') }
+const getUserIdp = async (userId, options = {}) => {
+  const encodedUri = encodeURIComponent(userId)
+  options.method = 'GET'
+  options.url = `${process.env.AUTH0_DOMAIN}/api/v2/users/${encodedUri}`
+  options.headers = { authorization: `Bearer ${ExplorerManagmentAccessToken}` }
+  
+  const response = await rp(options)
+  const keys = response.identities[0]
+  return { token: keys.access_token, token_secret: keys.access_token_secret }
 }
 
-module.exports = { genNonce, genTwitterAuthHeader }
+const loginSequence = async ({ user_id, simple_id, screen_name }) => {
+  if (!services.checkIfWebTokenIsExpired(explorerManagmentAccessToken)) {
+    explorerManagmentAccessToken = await getManagmentToken()
+  }
+  const idp = await getUserIdp(user_id)
+  await usersUtil.findAndUpdateUser({ user_id, simple_id, screen_name, idp })
+}
+
+module.exports = { requestManagmentToken, loginSequence }
