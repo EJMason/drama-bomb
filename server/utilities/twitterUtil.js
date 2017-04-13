@@ -1,5 +1,5 @@
 const rp = require('request-promise')
-const util = require('../utilities/authUtil')
+const services = require('../services/twitterServices')
 
 const baseUrl = 'https://api.twitter.com/1.1'
 
@@ -12,7 +12,7 @@ const baseUrl = 'https://api.twitter.com/1.1'
  */
 const getFollowersIds = qs => {
   const uri = `${baseUrl}/followers/ids.json`
-  const headers = util.genTwitterAuthHeader('GET', uri, qs.user_id, qs)
+  const headers = services.genTwitterAuthHeader('GET', uri, qs.user_id, qs)
   return rp({ uri, qs, headers, json: true })
 }
 
