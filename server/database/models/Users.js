@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 
 const haterSchema = new Schema({
   user_id: {
-    type: Number,
+    type: String,
     required: [true, 'user id is required'],
   },
   screen_name: {
@@ -21,10 +21,17 @@ const haterSchema = new Schema({
 }, { autoIndex: false })
 
 const userSchema = new Schema({
-  user_id: Number,
+  user_id: String,
+  simple_id: String,
   screen_name: String,
-  token: String,
-  token_secret: String,
+  token: {
+    type: String,
+    default: '',
+  },
+  token_secret: {
+    type: String,
+    default: '',
+  },
   friends_ids: [Number],
   haters: [haterSchema],
 }, { autoIndex: false })
