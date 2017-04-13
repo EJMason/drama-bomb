@@ -15,7 +15,6 @@ describe('Auth0', function() {
       token = await util.getManagmentToken()
       expect(token).to.be.a.string
       expect(token).to.not.be.undefined
-
     })
   })
 
