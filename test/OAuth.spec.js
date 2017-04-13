@@ -27,7 +27,6 @@ describe('Auth0', function() {
       expect(twitterIdp).to.have.property('token_secret')
       expect(twitterIdp.token).to.contain('ZykZ87h')
       expect(twitterIdp.token_secret).to.contain('NerNAr9AHhQq')
-
     })
   })
 })
