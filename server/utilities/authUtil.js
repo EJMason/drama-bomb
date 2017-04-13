@@ -10,8 +10,12 @@ let explorerManagmentAccessToken = ''
  */
 const getManagmentToken = async () => {
   const options = services.generateManagmentOptions()
-  const response = await rp(options)
-  return response.access_token
+  try {
+    const response = await rp(options)
+    return JSON.parse(response).access_token
+  } catch (err) {
+    throw err
+  }
 }
 
 /**
@@ -24,10 +28,29 @@ const getUserIdp = async (userId, options = {}) => {
   options.method = 'GET'
   options.url = `${process.env.AUTH0_DOMAIN}/api/v2/users/${encodedUri}`
   options.headers = { authorization: `Bearer ${ExplorerManagmentAccessToken}` }
-  
-  const response = await rp(options)
-  const keys = response.identities[0]
-  return { token: keys.access_token, token_secret: keys.access_token_secret }
+
+  try {
+    const response = await rp(options)
+    const keys = JSON.parse(response).identities[0]
+    return { token: keys.access_token, token_secret: keys.access_token_secret }
+  } catch (err) {
+    throw err
+  }
+}
+
+const getUserIdpTest = async (userId, tok, options = {}) => {
+  const encodedUri = encodeURIComponent(userId)
+  options.method = 'GET'
+  options.url = `${process.env.AUTH0_DOMAIN}/api/v2/users/${encodedUri}`
+  options.headers = { authorization: `Bearer ${tok}` }
+
+  try {
+    const response = await rp(options)
+    const keys = JSON.parse(response).identities[0]
+    return { token: keys.access_token, token_secret: keys.access_token_secret }
+  } catch (err) {
+    throw err
+  }
 }
 
 const loginSequence = async ({ user_id, simple_id, screen_name }) => {
@@ -38,4 +61,10 @@ const loginSequence = async ({ user_id, simple_id, screen_name }) => {
   await usersUtil.findAndUpdateUser({ user_id, simple_id, screen_name, idp })
 }
 
-module.exports = { requestManagmentToken, loginSequence }
+module.exports = {
+  getManagmentToken,
+  getUserIdp,
+  getUserIdpTest,
+  loginSequence,
+  explorerManagmentAccessToken,
+}

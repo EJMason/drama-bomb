@@ -43,6 +43,5 @@ describe('Mongoose DB Methods -->', function() {
 
   it('should throw error when properties are not correct', async function() {
     let a = await usersUtil.findOrCreate({ user_bae: true })
-    console.log(a)
   })
 })
