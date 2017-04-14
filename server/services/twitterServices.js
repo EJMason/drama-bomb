@@ -1,5 +1,5 @@
 const oauthSignature = require('oauth-signature')
-const Cache = require('../database/tempCache')
+const redis = require('../database/redis')
 
 const genNonce = length => {
   const lettersAndNumbers = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -10,18 +10,17 @@ const genNonce = length => {
   return text
 }
 
-const genTimestamp = () => {
-  const date = new Date()
-  return date.getHours()
-}
+const genTimestamp = () => Math.floor(Date.now() / 1000)
 
-const genDefaultAuthParams = () => {
+
+const genDefaultAuthParams = token => {
   return {
     oauth_consumer_key: process.env.TWITTER_CONSUMER_KEY,
     oauth_signature_method: 'HMAC-SHA1',
     oauth_version: '1.0',
     oauth_nonce: genNonce(12),
     oauth_timestamp: genTimestamp(),
+    oauth_token: token,
   }
 }
 
@@ -38,24 +37,28 @@ const genOAuthSignature = (authParams, tokenSecret, url, httpMethod) => {
  * @param {object} query - parameters
  * @return {object} headers for twitter api
  */
-const genTwitterAuthHeader = (httpMethod, url, userId, query) => {
-  const user = Cache.getUser(userId)
+const genTwitterAuthHeader = async (httpMethod, url, userId, query) => {
+  try {
+    let tokens = await redis.get(userId)
+    tokens = JSON.parse(tokens)
+    if (!tokens) { throw new Error('User Not in Database!') }
+    let authParams = genDefaultAuthParams(tokens.token)
+    authParams = Object.assign({}, authParams, query)
 
-  let authParams = genDefaultAuthParams()
-  authParams.oauth_token = user.token
-  authParams = Object.assign({}, authParams, query)
+    const signature = genOAuthSignature(authParams, tokens.token_secret, url, httpMethod)
 
-  const signature = genOAuthSignature(authParams, user.token_secret, url, httpMethod)
-
-  const str = [
-    `OAuth oauth_consumer_key=${authParams.oauth_consumer_key}, `,
-    'oauth_signature_method=HMAC-SHA1, ',
-    `oauth_timestamp=${authParams.oauth_timestamp}, `,
-    `oauth_nonce=${authParams.oauth_nonce}, `,
-    'oauth_version=1.0, ',
-    `oauth_token=${authParams.oauth_token}, `,
-    `oauth_signature=${signature}`]
-  return { Authorization: str.join('') }
+    const str = [
+      `OAuth oauth_consumer_key=${authParams.oauth_consumer_key}, `,
+      'oauth_signature_method=HMAC-SHA1, ',
+      `oauth_timestamp=${authParams.oauth_timestamp}, `,
+      `oauth_nonce=${authParams.oauth_nonce}, `,
+      'oauth_version=1.0, ',
+      `oauth_token=${authParams.oauth_token}, `,
+      `oauth_signature=${signature}`]
+    return { Authorization: str.join('') }
+  } catch (err) {
+    return err
+  }
 }
 
 module.exports = {

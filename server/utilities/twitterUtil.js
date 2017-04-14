@@ -10,9 +10,9 @@ const baseUrl = 'https://api.twitter.com/1.1'
  * @param {string} qs.screen_name - Twitter handle
  * @returns {Promise}
  */
-const getFollowersIds = qs => {
+const getFollowersIds = async qs => {
   const uri = `${baseUrl}/followers/ids.json`
-  const headers = services.genTwitterAuthHeader('GET', uri, qs.user_id, qs)
+  const headers = await services.genTwitterAuthHeader('GET', uri, qs.user_id, qs)
   return rp({ uri, qs, headers, json: true })
 }
 

@@ -7,7 +7,7 @@ mongoose.Promise = require('bluebird')
 
 const expect = chai.expect
 
-describe('Mongoose DB Methods -->', function() {
+describe('---------Mongoose DB Methods---------', function() {
 
   beforeEach(async function(done) {
     if(mongoose.connection.db) {

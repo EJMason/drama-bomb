@@ -14,13 +14,9 @@ const user_id = 'twitter|852672214348382208'
 const simple_id = '852672214348382208'
 const screen_name = 'test_ejm'
 
-describe('API ', function() {
+describe('---------API---------', function() {
 
     describe('POST auth/login/init', function() {
-
-      beforeEach(function() {
-
-      })
 
       afterEach(function() {
         redis.del('twitter|852672214348382208')
@@ -31,6 +27,17 @@ describe('API ', function() {
         .post('/auth/login/init')
         .send({ user_id })
         .expect(412)
+    })
+
+    it('should only write to redis if user not already in cache', async function() {
+      await request(app)
+        .post('/auth/login/init')
+        .send({ 
+          user_id: 'twitter|852718642722611200', 
+          simple_id: '852718642722611200', 
+          screen_name: 'EJTester1'
+        })
+        .expect(200)
     })
 
     it('should return 200 when completing a successful request', async function() {

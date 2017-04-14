@@ -4,7 +4,7 @@ const expect = chai.expect
 
 const redisUtil = require('../server/database/redis/redisUtil')
 
-describe('Redis', function() {
+describe('---------Redis---------', function() {
   
   describe('Adding to the redis cache', function() {
     

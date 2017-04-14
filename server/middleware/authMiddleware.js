@@ -10,18 +10,6 @@ const validateBody = (req, res, next) => {
   }
 }
 
-
-// const validateJwt = jwt({
-//   secret: process.env.AUTH0_CLIENT_SECRET,
-//   audience: process.env.AUTH0_CLIENT_ID,
-//   issuer: process.env.AUTH0_DOMAIN,
-//   algorithms: ['HS256'],
-// })
-
-// const dummy = (req, res, next) => { next() }
-
-// if(process.env.TESTING)
-
 const generateProductionMiddleware = () => {
   if (process.env.TESTING) {
     return (req, res, next) => { next() }
