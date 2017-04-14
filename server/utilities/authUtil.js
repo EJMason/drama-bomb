@@ -14,6 +14,7 @@ const getManagmentToken = async () => {
       const options = services.generateManagmentOptions()
       const response = await rp(options)
       mtoken = JSON.parse(response).access_token
+      redis.set('mtoken', mtoken)
     }
     return mtoken
   } catch (err) { throw err }
@@ -26,12 +27,12 @@ const getManagmentToken = async () => {
  */
 const getUserIdp = async userId => {
   try {
-    await getManagmentToken()
+    const mtoken = await getManagmentToken()
 
     const response = await rp({
       method: 'GET',
       url: `${process.env.AUTH0_DOMAIN}/api/v2/users/${encodeURIComponent(userId)}`,
-      headers: { authorization: `Bearer ${ExplorerManagmentAccessToken}` },
+      headers: { authorization: `Bearer ${mtoken}` },
     })
 
     const keys = JSON.parse(response).identities[0]

@@ -4,8 +4,8 @@ const generateManagmentOptions = () => {
   const url = `${process.env.AUTH0_DOMAIN}/oauth/token`
   const headers = { 'content-type': 'application/json' }
 
-  const clientId = `{"client_id":"${process.env.AUTH0_CLIENT_ID}",`
-  const clientSecret = `"client_secret":"${process.env.AUTH0_CLIENT_SECRET}",`
+  const clientId = `{"client_id":"${process.env.AUTH0_API_ID}",`
+  const clientSecret = `"client_secret":"${process.env.AUTH0_API_SECRET}",`
   const audience = `"audience":"${process.env.AUTH0_DOMAIN}/api/v2/",`
   const grantType = '"grant_type":"client_credentials"}'
 
@@ -13,9 +13,8 @@ const generateManagmentOptions = () => {
   return { method: 'POST', url, headers, body }
 }
 
-
 const getTokenExpirationDate = token => {
-  if (token === undefined) return null
+  if (!token) return null
   const dcd = jwtDecode(token)
   if (!dcd.exp) return null
 

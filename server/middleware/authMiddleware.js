@@ -1,3 +1,4 @@
+const jwt = require('express-jwt')
 
 const validateBody = (req, res, next) => {
   if (!req.body || !req.body.user_id || !req.body.simple_id || !req.body.screen_name) {
@@ -9,4 +10,28 @@ const validateBody = (req, res, next) => {
   }
 }
 
-module.exports = { validateBody }
+
+// const validateJwt = jwt({
+//   secret: process.env.AUTH0_CLIENT_SECRET,
+//   audience: process.env.AUTH0_CLIENT_ID,
+//   issuer: process.env.AUTH0_DOMAIN,
+//   algorithms: ['HS256'],
+// })
+
+// const dummy = (req, res, next) => { next() }
+
+// if(process.env.TESTING)
+
+const generateProductionMiddleware = () => {
+  if (process.env.TESTING) {
+    return (req, res, next) => { next() }
+  }
+  return jwt({
+    secret: process.env.AUTH0_CLIENT_SECRET,
+    audience: process.env.AUTH0_CLIENT_ID,
+    issuer: process.env.AUTH0_DOMAIN,
+    algorithms: ['HS256'],
+  })
+}
+
+module.exports = { validateBody, validateJwt: generateProductionMiddleware() }

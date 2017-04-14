@@ -5,7 +5,6 @@ const mw = require('../middleware/authMiddleware')
 
 // ----------------- Routes ----------------- //
 
-router.post('/token/idp', ctrl.example)
-router.post('/login/init', mw.validateBody, ctrl.example)
+router.post('/login/init', mw.validateBody, ctrl.loginInit)
 
 module.exports = router

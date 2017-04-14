@@ -6,7 +6,10 @@ const instantiateMiddleware = app => {
   app.use(bodyParser.urlencoded({ extended: false }))
   app.use(bodyParser.json())
   app.use(cors())
-  app.use(morgan('short'))
+
+  if (process.env.TESTNG) {
+    app.use(morgan('tiny'))
+  }
 }
 
 module.exports = instantiateMiddleware

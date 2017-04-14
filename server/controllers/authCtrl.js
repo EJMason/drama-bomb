@@ -11,11 +11,15 @@ const example = (req, res) => {
  * req.body - {user_id, simple_id, screen_name}
  */
 const loginInit = async (req, res) => {
-  const user = await userUtil.findOrCreate(req.body)
-  const tokens = await authUtil.getUserIdp(user.user_id)
-  await redisUtil.addUserKeysToRedisCache(user.user_id, tokens)
+  try {
+    const user = await userUtil.findOrCreate(req.body)
+    const tokens = await authUtil.getUserIdp(user.user_id)
+    await redisUtil.addUserKeysToRedisCache(user.user_id, tokens)
 
-  res.status(200).send('Login Sequence Complete!')
+    res.status(200).send('Login Sequence Complete!')
+  } catch (err) {
+    res.status(400).send(err)
+  }
 }
 
 module.exports = { example, loginInit }
