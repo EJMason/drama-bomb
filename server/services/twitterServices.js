@@ -39,13 +39,13 @@ const genOAuthSignature = (authParams, tokenSecret, url, httpMethod) => {
  */
 const genTwitterAuthHeader = async (httpMethod, url, userId, query) => {
   try {
-    let tokens = await redis.get(userId)
-    tokens = JSON.parse(tokens)
-    if (!tokens) { throw new Error('User Not in Database!') }
-    let authParams = genDefaultAuthParams(tokens.token)
+    let user = await redis.get(userId)
+    user = JSON.parse(user)
+    if (!user) { throw new Error('User Not in Database!') }
+    let authParams = genDefaultAuthParams(user.token)
     authParams = Object.assign({}, authParams, query)
 
-    const signature = genOAuthSignature(authParams, tokens.token_secret, url, httpMethod)
+    const signature = genOAuthSignature(authParams, user.token_secret, url, httpMethod)
 
     const str = [
       `OAuth oauth_consumer_key=${authParams.oauth_consumer_key}, `,
