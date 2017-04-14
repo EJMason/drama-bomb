@@ -24,8 +24,14 @@ const userSchema = new Schema({
   user_id: String,
   simple_id: String,
   screen_name: String,
-  friends_ids: [Number],
-  haters: [haterSchema],
+  friends_ids: {
+    type: [Number],
+    default: [],
+  },
+  haters: {
+    type: [haterSchema],
+    default: [],
+  },
 }, { autoIndex: false })
 
 const Users = mongoose.model('User', userSchema)

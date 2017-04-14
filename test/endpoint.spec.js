@@ -44,7 +44,12 @@ describe('---------API---------', function() {
       await request(app)
         .post('/auth/login/init')
         .send({ user_id, simple_id, screen_name })
-        .expect(200, 'Login Sequence Complete!')
+        .expect(200)
+        .then(resp => {
+          expect(resp.body).to.haveOwnProperty('user_id')
+          expect(resp.body).to.haveOwnProperty('simple_id')
+          expect(resp.body).to.haveOwnProperty('screen_name')
+        })
     })
 
     it('should get ipd tokens for users and cache them in redis', async function() {
