@@ -24,6 +24,8 @@ describe('---------Friends Utilities and Routes---------', function() {
     })
 
     describe('Utility: checkIdToken', function() {
+
+      
       
       it('should return null if an unsigned or invaled token is passed as a parameter', function() {
 
@@ -56,7 +58,7 @@ describe('---------Friends Utilities and Routes---------', function() {
     describe('Utility: updateDatabaseWithNewInfo', function() {
 
       it('should update the database with updated friends and haters', function() {
-        
+
       })
     })
     

@@ -6,14 +6,18 @@ const placeholder = (req, res) => {
   res.status(200).send('Hello, Friends!')
 }
 
+/**
+ * Using a client chron task, this should check if user has any new friends or haters
+ * req.params.idtoken should be a valid token
+ */
 const chronHaters = async (req, res) => {
   try {
     // make user token is valid, if valid return {user_id, screen_name}, else return null
     const idAndSn = util.checkIdToken(req.params.idtoken)
-    if (!idAndSn) return res.status(401).send('Token Invalid')
+    if (!idAndSn) throw util.throwErr(401, 'Token not valid')
     // get user Info from Redis, if not in Redis, log out the user from client
     const user = await redis.get(idAndSn.user_id)
-    if (!user) return res.status(400).send('User not in cache')
+    if (!user) throw util.throwErr(400, 'User not in cache')
     // get followers from twitter, sort the ids
     const followers = await twitter.getFollowersIds(idAndSn)
     // perform comparison algorithm, return object with new friends and haters and changed
@@ -28,9 +32,7 @@ const chronHaters = async (req, res) => {
     }
     // send client updated list of friends and haters
     return res.status(200).send(followersHaters)
-  } catch (err) {
-    return res.status(400).send('An error has occured')
-  }
+  } catch (err) { res.status(err.code).send(err.message) }
 }
 
 async function getUserIds(req, res) {
