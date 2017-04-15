@@ -11,6 +11,7 @@ export default class AuthService extends EventEmitter {
       auth: {
         redirectUrl: 'http://localhost:3000/login',
         responseType: 'token',
+        params: { scope: 'openid email user_id screen_name' },
       },
     })
     this.lock.getProfile = Promise.promisify(this.lock.getProfile)
@@ -31,9 +32,10 @@ export default class AuthService extends EventEmitter {
     console.log('THIS IS THE AUTHRESULT: ', authResult)
     try {
       const profile = await this.lock.getProfile(authResult.idToken)
+      console.log('THIS IS THE PROFILE: ', profile)
       this.setProfile(profile)
     } catch (err) {
-      console.err(err)
+      console.error(err)
     }
   }
 

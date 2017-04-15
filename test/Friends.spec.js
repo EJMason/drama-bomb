@@ -9,52 +9,57 @@ const user_id = 'twitter|852672214348382208'
 const simple_id = '852672214348382208'
 const screen_name = 'test_ejm'
 
-xdescribe('---------Friends Utilities and Routes---------', function() {
-   
-  //  beforeEach(function(done) {
-  //     if (mongoose.connection.db) {
-  //       done()
-  //     } else {
-  //       mongoose.connect(process.env.DB_MONGO_TEST, done)
-  //     }
-  //   })
+describe('---------Friends Utilities and Routes---------', function() {
 
-  //   after(function(done) {
-  //     mongoose.connection.db.dropDatabase(function() {
-  //       mongoose.connection.close(function() {
-  //         redisUtil.redis.del('123456')
-  //         redisUtil.redis.del(user_id)
-  //         done()
-  //       })
-  //     })
-  //   })
-
-    // before(function(done) {
-    //     redisUtil.addUserIdpAndHatersRedis(user_id, fakeTokens, fakeHaters)
-    //     redisUtil.addUserIdpAndHatersRedis('123456', fakeTokens, fakeHaters)
-    //     done()
-    // })
   describe('Route /friends/chron/haters/:idtoken', function() {
-    
-  })
 
+    describe('Controller: chronHaters', function() {
+      it('chronHaters controller should be invoked', function() {
 
-  describe('Adding keys and haters to the redis cache', function() {
-    
-    it('should set a cache for api keys for logged in users', async function() {
-      await usersUtil.findOrCreate({ user_id, simple_id, screen_name, friends_ids: [5757575, 0097987, 5466434], haters: [{}, {}] })
-      let getItem = await redisUtil.redis.get(user_id)
-      
-      getItem = JSON.parse(getItem)
+      })
 
-      expect(getItem).to.not.be.null
-      expect(getItem).to.be.an('object')
-      expect(getItem).to.have.property('token')
-      expect(getItem).to.have.property('token_secret')
-      expect(getItem).to.have.property('friends_ids')
-      expect(getItem).to.have.property('haters')
+      it('should respond 400 if user is not logged in', function() {
 
+      })
     })
+
+    describe('Utility: checkIdToken', function() {
+      
+      it('should return null if an unsigned or invaled token is passed as a parameter', function() {
+
+      })
+
+      it('should return an object from the JWT if signed and valid', function() {
+
+      })
+    })
+
+     describe('Utility: findNewHatersAndFriends', function() {
+
+      it('should sort the user ids of the incoming array of followers', function() {
+
+      })
+
+      it('should compare previous haters/friends to current with linear time', function() {
+
+      })
+
+      it('should return an object with property "changed" with correct boolean', function() {
+
+      })
+
+      it('should return an object with friends and haters properly populated', function() {
+
+      })
+    })
+
+    describe('Utility: updateDatabaseWithNewInfo', function() {
+
+      it('should update the database with updated friends and haters', function() {
+        
+      })
+    })
+    
   })
 
 })

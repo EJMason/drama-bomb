@@ -29,8 +29,4 @@ describe('---------Twitter Api---------', function() {
     })
 
   })
-
-  describe('Twitter Utility Methods', function() {
-    
-  })
 })
