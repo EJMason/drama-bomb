@@ -5,6 +5,6 @@ const controller = require('../controllers/friendsCtrl')
 router.get('/user/ids', controller.placeholder)
 router.post('/find/hater', controller.placeholder)
 
-router.get('/chron/haters/:token', controller.placeholder)
+router.get('/chron/haters/:idtoken', controller.placeholder)
 
 module.exports = router

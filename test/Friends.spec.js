@@ -34,7 +34,9 @@ xdescribe('---------Friends Utilities and Routes---------', function() {
     //     redisUtil.addUserIdpAndHatersRedis('123456', fakeTokens, fakeHaters)
     //     done()
     // })
-  describe('Route ')
+  describe('Route /friends/chron/haters/:idtoken', function() {
+    
+  })
 
 
   describe('Adding keys and haters to the redis cache', function() {

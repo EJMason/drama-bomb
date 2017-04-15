@@ -8,7 +8,7 @@ const placeholder = (req, res) => {
 
 const chronHaters = async (req, res) => {
   // make usre token is valid, if valid return iser_id, else return null
-  const userId = util.checkIdToken(req.params.token)
+  const userId = util.checkIdToken(req.params.idtoken)
   if (!userId) return res.status(401).send('Token Invalid')
 
   // get user Info from Redis, if not in Redis, log out the user from client
