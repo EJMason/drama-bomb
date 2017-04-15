@@ -18,16 +18,7 @@ const addUserIdpAndHatersRedis = (userId, tokens, user) => {
       token_secret: tokens.token_secret,
     }
     values = JSON.stringify(values)
-    redis.set(userId, values, 'ex', 86400)
-
-    // const friendsKey = `f_${userId}`
-    // const friendsValues = JSON.stringify(friendsAndHaters)
-    // redis.set(friendsKey, friendsValues, 'ex', 86400)
-    // redis.hset(userId, 'friends', friendsValues, 'ex', 86400)
-
-    // const keyValues = JSON.stringify(tokens)
-    // redis.set(userId, keyValues, 'ex', 86400) // expire after one day
-    // redis.hset(userId, 'keys', keyValues, 'ex', 86400)
+    redis.set(userId, values, 'ex', 3600)  // 2 hour expiry without chron ping
   }
 }
 

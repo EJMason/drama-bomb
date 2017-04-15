@@ -21,12 +21,16 @@ there isn't really an elegant way to automate this yet
 
 describe('---------Twitter Api---------', function() {
 
-    describe('GET followers/ids', function() {
+  describe('GET followers/ids', function() {
 
     it('getFollowersIds should return an object with an array of user ids', async function() {
       const response = await util.getFollowersIds({ user_id, screen_name })
       expect(response.ids).to.be.an('array')
     })
 
+  })
+
+  describe('Twitter Utility Methods', function() {
+    
   })
 })
