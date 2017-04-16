@@ -1,4 +1,3 @@
-const twitter = require('../utilities/twitterUtil')
 const redis = require('../database/redis')
 const util = require('../utilities/friendsUtil')
 
@@ -19,7 +18,7 @@ const chronHaters = async (req, res) => {
     const user = await redis.get(idAndSn.user_id)
     if (!user) throw util.throwErr(400, 'User not in cache')
     // get followers from twitter, sort the ids
-    const followers = await twitter.getFollowersIds(idAndSn)
+    const followers = await util.getSortedUserIds(idAndSn)
     // perform comparison algorithm, return object with new friends and haters and changed
     const followersHaters = await util.findNewHatersAndFriends(user, followers)
     // IF the object has any changes, update properties in the database
@@ -31,18 +30,8 @@ const chronHaters = async (req, res) => {
       redis.set(userId, user, 'ex', 3600)
     }
     // send client updated list of friends and haters
-    return res.status(200).send(followersHaters)
-  } catch (err) { res.status(err.code).send(err.message) }
+    res.status(200).send(followersHaters)
+  } catch (err) { err.code ? res.status(err.code).send(err.message) : res.status(400).send(err) }
 }
 
-async function getUserIds(req, res) {
-  try {
-    const arrayOfUserIds = await twitter.getFollowersIds(req.body.params)
-    arrayOfUserIds.sort((a, b) => a - b)
-  } catch (err) {
-    res.status(400).send('Hello, Friends!')
-  }
-  twitter.getFollowersIds()
-}
-
-module.exports = { placeholder, chronHaters, getUserIds }
+module.exports = { placeholder, chronHaters }
