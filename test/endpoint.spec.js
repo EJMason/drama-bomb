@@ -22,26 +22,26 @@ describe('---------API---------', function() {
         redis.del('twitter|852672214348382208')
       })
 
-    it('should only accept posts with a valid body', async function() {
-      await request(app)
+    it('should only accept posts with a valid body', function(done) {
+      request(app)
         .post('/auth/login/init')
         .send({ user_id })
-        .expect(412)
+        .expect(412, done)
     })
 
-    it('should only write to redis if user not already in cache', async function() {
-      await request(app)
+    it('should only write to redis if user not already in cache', function(done) {
+      request(app)
         .post('/auth/login/init')
         .send({ 
           user_id: 'twitter|852718642722611200', 
           simple_id: '852718642722611200', 
           screen_name: 'EJTester1'
         })
-        .expect(200)
+        .expect(200, done)
     })
 
-    it('should return 200 when completing a successful request', async function() {
-      await request(app)
+    it('should return 200 when completing a successful request', function(done) {
+      request(app)
         .post('/auth/login/init')
         .send({ user_id, simple_id, screen_name })
         .expect(200)
@@ -49,12 +49,12 @@ describe('---------API---------', function() {
           expect(resp.body).to.haveOwnProperty('user_id')
           expect(resp.body).to.haveOwnProperty('simple_id')
           expect(resp.body).to.haveOwnProperty('screen_name')
+          done()
         })
     })
 
     it('should get ipd tokens for users and cache them in redis', async function() {
       const getUserIdp = sinon.spy(authUtil, 'getUserIdp')
-
       await request(app)
         .post('/auth/login/init')
         .send({ user_id, simple_id, screen_name })
