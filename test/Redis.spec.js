@@ -16,21 +16,22 @@ const screen_name = 'test_ejm'
 xdescribe('---------Redis---------', function() {
    
    beforeEach(function(done) {
-      if(mongoose.connection.db) {
-        done()
-      } else {
-        mongoose.connect(process.env.DB_MONGO_TEST, done)
-      }
+      // if(mongoose.connection.db) {
+      //   done()
+      // } else {
+      //   mongoose.connect(process.env.DB_MONGO_TEST, done)
+      // }
+      done()
     })
 
     after(function(done) {
-      mongoose.connection.db.dropDatabase(function() {
+      // mongoose.connection.db.dropDatabase(function() {
         mongoose.connection.close(function() {
           redisUtil.redis.del('123456')
           redisUtil.redis.del(user_id)
           done()
         })
-      })
+      // })
     })
 
     before(function(done) {

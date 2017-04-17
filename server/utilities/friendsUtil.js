@@ -10,4 +10,8 @@ const getSortedUserIds = async ({ user_id, screen_name }) => {
   } catch (err) { return console.err(err) }
 }
 
-module.exports = { throwErr, getSortedUserIds }
+const findNewHatersAndFriends = (user, followers) => {
+
+}
+
+module.exports = { throwErr, getSortedUserIds, findNewHatersAndFriends }

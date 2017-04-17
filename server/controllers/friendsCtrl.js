@@ -20,7 +20,7 @@ const chronHaters = async (req, res) => {
     // get followers from twitter, sort the ids
     const followers = await util.getSortedUserIds(idAndSn)
     // perform comparison algorithm, return object with new friends and haters and changed
-    const followersHaters = await util.findNewHatersAndFriends(user, followers)
+    const followersHaters = util.findNewHatersAndFriends(user, followers)
     // IF the object has any changes, update properties in the database
     if (followersHaters.changed) {
       util.updateDatabaseWithNewInfo(followersHaters)
