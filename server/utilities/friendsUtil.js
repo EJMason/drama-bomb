@@ -1,6 +1,19 @@
 const twitter = require('../utilities/twitterUtil')
+const jwt = require('jsonwebtoken')
 
 const throwErr = (code, msg) => ({ code, msg })
+
+const checkIdToken = (token, scrt = process.env.AUTH0_CLIENT_SECRET) => {
+  try {
+    const valid = jwt.verify(token, scrt)
+    return {
+      user_id: valid.user_id,
+      screen_name: valid.screen_name,
+    }
+  } catch (err) {
+    return null
+  }
+}
 
 const getSortedUserIds = async ({ user_id, screen_name }) => {
   try {
@@ -8,10 +21,6 @@ const getSortedUserIds = async ({ user_id, screen_name }) => {
     arrayOfUserIds = arrayOfUserIds.sort((a, b) => a - b)
     return arrayOfUserIds
   } catch (err) { return console.err(err) }
-}
-
-const checkIdToken = () => {
-
 }
 
 const findNewHatersAndFriends = (user, followers) => {
@@ -24,8 +33,8 @@ const updateDatabaseWithNewInfo = (followersHaters) => {
 
 module.exports = {
   throwErr,
-  getSortedUserIds,
   checkIdToken,
+  getSortedUserIds,
   findNewHatersAndFriends,
   updateDatabaseWithNewInfo,
 }

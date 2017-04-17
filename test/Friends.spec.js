@@ -20,7 +20,8 @@ describe('---------Friends Utilities and Routes---------', function() {
     let correctToken, incorrectToken
 
     describe('Utility: checkIdToken', function() {
-      before(function() {
+      
+      before( function() {
         correctToken = util.checkIdToken(token, process.env.TEST_AUTH0_SECRET)
         incorrectToken = util.checkIdToken('1235i', process.env.TEST_AUTH0_SECRET)
       })
@@ -31,8 +32,12 @@ describe('---------Friends Utilities and Routes---------', function() {
 
       it('should return an object from the JWT if signed and valid', function() {
         expect(correctToken).to.be.an('object')
-        expect(correctToken).to.have.Property('screen_name', 'EJTester1')
-        expect(correctToken).to.have.Property('user_id', 'twitter|852718642722611200')
+        expect(correctToken).to.have.property('screen_name')
+          .that.is.a('string')
+          .that.equals('EJTester1')
+        expect(correctToken).to.have.property('user_id')
+          .that.is.a('string')
+          .that.equals('twitter|852718642722611200')
       })
     })
 
