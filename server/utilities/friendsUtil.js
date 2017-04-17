@@ -10,6 +10,10 @@ const getSortedUserIds = async ({ user_id, screen_name }) => {
   } catch (err) { return console.err(err) }
 }
 
+const checkIdToken = () => {
+  
+}
+
 const findNewHatersAndFriends = (user, followers) => {
 
 }

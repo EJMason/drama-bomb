@@ -23,4 +23,3 @@ const data = {
 redis.set('twitter|852718642722611200', JSON.stringify(data))
 
 module.exports = () => { redis.set('twitter|852718642722611200', JSON.stringify(data)) }
-console.log('complete')
