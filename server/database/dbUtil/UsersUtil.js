@@ -11,4 +11,15 @@ const findOrCreate = async ({ user_id, simple_id, screen_name, friends_ids, hate
   }
 }
 
-module.exports = { findOrCreate }
+const updateUserFriendsAndHaters = async (userId, haters, friends) => {
+  try {
+    const user = await Users.findOne({ userId })
+    user.friends_ids = friends
+    user.haters = haters
+    await user.save()
+  } catch (err) {
+    throw err
+  }
+}
+
+module.exports = { findOrCreate, updateUserFriendsAndHaters }

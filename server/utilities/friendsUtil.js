@@ -11,11 +11,21 @@ const getSortedUserIds = async ({ user_id, screen_name }) => {
 }
 
 const checkIdToken = () => {
-  
+
 }
 
 const findNewHatersAndFriends = (user, followers) => {
 
 }
 
-module.exports = { throwErr, getSortedUserIds, findNewHatersAndFriends }
+const updateDatabaseWithNewInfo = (followersHaters) => {
+
+}
+
+module.exports = {
+  throwErr,
+  getSortedUserIds,
+  checkIdToken,
+  findNewHatersAndFriends,
+  updateDatabaseWithNewInfo,
+}

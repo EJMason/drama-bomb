@@ -1,15 +1,9 @@
 const mongoose = require('mongoose')
-// const User = require('./models/Users')
+const chalk = require('chalk')
 mongoose.Promise = require('bluebird')
-
 
 mongoose.connect(process.env.DB_MONGO_CONN)
 
 mongoose.connection.on('open', () => {
-  // User.create({ user_id: 111, screen_name: 'apples' }).then(() => {
-  //   User.find({ user_id: 111 }).exec((a, b) => {
-  //     console.log(a)
-  //     console.log(b)
-  //   })
-  // })
+  console.log(chalk.bgBlue.black('\n\nConnection to Database has been established!\n'))
 })
