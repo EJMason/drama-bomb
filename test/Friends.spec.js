@@ -44,6 +44,7 @@ describe('---------Friends Utilities and Routes---------', function() {
     describe('Utility: findNewHatersAndFriends', function() {
       let srtdTwitterTwoHater, srtdTwitterNoneHater, srtdTwitterOneFriends, srtdTwitterNoneFriends
       let twoNewHater, noneNewHater, noneNewFriends, oneNewFriends
+      let cachedUserInfo
 
       before(function(done) {
         require('./utilities/testData')() // adds valid user to redis
@@ -51,13 +52,15 @@ describe('---------Friends Utilities and Routes---------', function() {
         srtdTwitterTwoHater = [57929458,231617496,239601600,697707365,995268086,1555162470,1698708957,1932028465,2632552626,2688892325,2804003565,3000965945,3337457192,3394363179,3467816149,3892750045,3965296254,4073454229,4604050084,4648654477,4938418363,5589151631,5650649614,5694271732,5747930101,5750060468,5792339707,5906579667,6985146101,7055720865,7788680008,7962722444,8237281085,8633061590,9441329172,9648836724,9853671194,9996353995]
         srtdTwitterNoneFriends = [57929458,231617496,239601600,697707365,995268086,1555162470,1698708957,1932028465,2632552626,2688892325,2804003565,3000965945,3337457192,3394363179,3467816149,3892750045,3965296254,4073454229,4604050084,4648654477,4938418363,5589151631,5650649614,5694271732,5747930101,5750060468,5792339707,5906579667,6985146101,7055720865,7788680008,7962722444,8237281085,8633061590,8673243842,9441329172,9648836724,9853671194,9889002061,9996353995]
         srtdTwitterOneFriends = [123, 57929458,231617496, 239601600,697707365,995268086,1555162470,1698708957,1932028465,2632552626,2688892325,2804003565,3000965945,3337457192,3394363179,3467816149,3892750045,3965296254,4073454229,4604050084,4648654477,4938418363,5589151631,5650649614,5694271732,5747930101,5750060468,5792339707,5906579667,6985146101,7055720865,7788680008,7962722444,8237281085,8633061590,8673243842,9441329172,9648836724,9853671194,9889002061,9996353995]
+        srtdTwitterThreeFriends = [123, 456, 789, 57929458,231617496, 239601600,697707365,995268086,1555162470,1698708957,1932028465,2632552626,2688892325,2804003565,3000965945,3337457192,3394363179,3467816149,3892750045,3965296254,4073454229,4604050084,4648654477,4938418363,5589151631,5650649614,5694271732,5747930101,5750060468,5792339707,5906579667,6985146101,7055720865,7788680008,7962722444,8237281085,8633061590,8673243842,9441329172,9648836724,9853671194,9889002061,9996353995]
 
-        cachedUserInfo = redis.get('twitter|852718642722611200').then(cachedUserInfo => {
-          cachedUserInfo = JSON.parse(cachedUserInfo)
+        redis.get('twitter|852718642722611200').then(uInfo => {
+          cachedUserInfo = JSON.parse(uInfo)
           twoNewHater = util.findNewHatersAndFriends(cachedUserInfo, srtdTwitterTwoHater)
           noneNewHater = util.findNewHatersAndFriends(cachedUserInfo, srtdTwitterNoneHater)
           noneNewFriends = util.findNewHatersAndFriends(cachedUserInfo, srtdTwitterNoneFriends)
           oneNewFriends = util.findNewHatersAndFriends(cachedUserInfo, srtdTwitterOneFriends)
+          threeNewFriends = util.findNewHatersAndFriends(cachedUserInfo, srtdTwitterThreeFriends)
           done()
         })
        })
@@ -70,10 +73,10 @@ describe('---------Friends Utilities and Routes---------', function() {
         expect(noneNewFriends).to.haveOwnProperty('changed')
         expect(noneNewFriends.changed).to.be.false
         expect(oneNewFriends).to.haveOwnProperty('changed')
-        expect(oneNewFriends.changed).to.be.false
+        expect(oneNewFriends.changed).to.be.true
       })
 
-      it('should return an object with [haters and newHaters] properly populated', function() {
+      it('should return an object with [newHaters] properly populated', function() {
         expect(twoNewHater).to.be.an('object')
         expect(twoNewHater).to.not.be.null
         expect(twoNewHater).to.have.property('newHaters')
@@ -87,26 +90,29 @@ describe('---------Friends Utilities and Routes---------', function() {
 
         expect(twoNewHater).to.have.property('haters')
         .that.is.an('array')
-        .to.have.lengthOf(cachedUserInfo.haters.length + 2)
       })
 
       it('should return an object with newFriends properly populated', function() {
         expect(oneNewFriends).to.be.an('object')
         expect(oneNewFriends).to.not.be.null
-
         expect(oneNewFriends).to.have.property('newFriends')
           .that.is.an('array')
           .to.have.lengthOf(1)
           .with.deep.property('[0]')
             .that.deep.equals(123)
-
+        
+        expect(threeNewFriends).to.have.property('newFriends')
+          .that.is.an('array')
+          .to.have.lengthOf(3)
+          .with.deep.property('[2]')
+            .that.deep.equals(789)
+  
         expect(noneNewFriends).to.have.property('newFriends')
           .that.is.an('array')
           .to.have.lengthOf(0)
         
-        expect(twoNewHater).to.have.property('friends')
+        expect(oneNewFriends).to.have.property('friends')
           .that.is.an('array')
-          .to.have.lengthOf(cachedUserInfo.friends.length + 1)
       })
     })
 

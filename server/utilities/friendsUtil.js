@@ -1,5 +1,6 @@
-const twitter = require('../utilities/twitterUtil')
 const jwt = require('jsonwebtoken')
+const twitter = require('../utilities/twitterUtil')
+const services = require('../services/friendsServices')
 
 const throwErr = (code, msg) => ({ code, msg })
 
@@ -23,12 +24,26 @@ const getSortedUserIds = async ({ user_id, screen_name }) => {
   } catch (err) { return console.err(err) }
 }
 
-const findNewHatersAndFriends = (user, followers) => {
+const findNewHatersAndFriends = ({ friends_ids, haters }, newArrFromTwitter) => {
+  const changes = services.findAllNew(friends_ids, newArrFromTwitter)
+  // remove any haters that may have readded you
+  haters = haters.filter(hater => {
+    let haterIsFriend = false
+    changes.newFriends.forEach(val => { if (hater.user_id === val) haterIsFriend = true })
+    return haterIsFriend
+  })
 
+  return {
+    newFriends: changes.newFriends,
+    newHaters: changes.newHaters,
+    friends: newArrFromTwitter,
+    changed: Boolean(changes.newFriends.length || changes.newHaters.length),
+    haters,
+  }
 }
 
-const updateDatabaseWithNewInfo = (followersHaters) => {
-
+const updateDatabaseWithNewInfo = followersHaters => {
+  return followersHaters
 }
 
 module.exports = {
