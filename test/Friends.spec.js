@@ -1,10 +1,13 @@
 const chai = require('chai')
 const request = require('supertest')
+const sinon = require('sinon')
 
 const util = require('../server/utilities/friendsUtil')
 const redisUtil = require('../server/database/redis/redisUtil')
 const redis = require('../server/database/redis')
 const tokenizer = require('./utilities/tokenizer')
+const twitter = require('../server/utilities/twitterUtil')
+const fakeData = require('./utilities/fakeData')
 
 const expect = chai.expect
 
@@ -114,6 +117,59 @@ describe('---------Friends Utilities and Routes---------', function() {
         expect(oneNewFriends).to.have.property('friends')
           .that.is.an('array')
       })
+    })
+
+    describe('Utility: getNewHatersFromTwitter', function() {
+      let ejstweetsUsers, stub
+
+      beforeEach(function() {
+        stub = sinon.stub(twitter, 'getUsersLookup')
+      })
+
+      afterEach(function() {
+        twitter.getUsersLookup.restore()
+      })
+
+      it('should return an array of objects', async function() {
+        stub.resolves(fakeData.fakeTwitterGetUsersLookup)
+        ejstweetsUsers = await util.getNewHatersFromTwitter([123,456], 123)
+
+        expect(ejstweetsUsers).to.be.an('array')
+          .that.has.lengthOf(24)
+      })
+
+      it('should have all the proper items on the object', async function() {
+        stub.resolves(fakeData.fakeTwitterGetUsersLookup)
+        ejstweetsUsers = await util.getNewHatersFromTwitter([123,456], 123)
+
+        expect(ejstweetsUsers[0])
+        .to.have.property('user_id')
+          .that.is.a('number')
+            .that.equals(849283995519008770)
+        expect(ejstweetsUsers[0])
+        .to.have.property('screen_name')
+          .that.is.a('string')
+            .that.equals('Sneaky_SOLE18')
+        expect(ejstweetsUsers[0])
+        .to.have.property('image')
+          .that.is.a('string')
+            .that.equals('http:\/\/pbs.twimg.com\/profile_images\/850030439079137280\/JJM4Gws6_normal.jpg')
+       expect(ejstweetsUsers[0])
+        .to.have.property('first_name')
+          .that.is.a('string')
+            .that.equals('George')
+      })
+
+      it('should behave normally if user does not have a last name', async function() {
+        stub.resolves(fakeData.fakeTwitterGetUsersLookup)
+        ejstweetsUsers = await util.getNewHatersFromTwitter([123,456], 123)
+        console.log('YEAH BOIIIIII ', ejstweetsUsers[2])
+        expect(ejstweetsUsers[2])
+        .to.have.property('last_name')
+          .that.is.a('string')
+            .that.equals('')
+      })
+
     })
 
     xdescribe('Utility: updateDatabaseWithNewInfo', function() {

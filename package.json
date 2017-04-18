@@ -86,7 +86,8 @@
     "build": "node scripts/build.js",
     "test": "TESTING=true mocha --reporter spec",
     "server": "nodemon ./server/server.js",
-    "lint": "./node_modules/.bin/eslint src server"
+    "lint": "./node_modules/.bin/eslint src server",
+    "play": "mocha ./test/_playground.spec.js --reporter spec"
   },
   "jest": {
     "collectCoverageFrom": [

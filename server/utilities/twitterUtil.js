@@ -17,11 +17,15 @@ const getFollowersIds = async qs => {
 }
 
 /**
- * Twitter API: Once a users id is obtained, use that id to get
- * otherProfile information about a user
+ * Twitter API: /users/lookup
+ * @param {Object} qs
+ * @param {string} qs.user_id  - Comma seperated list of user ids
+ * @returns {Promise}
  */
-const getUserProfileInformation = () => {
-
+const getUsersLookup = async (qs, userId) => {
+  const uri = `${baseUrl}/users/lookup.json`
+  const headers = await services.genTwitterAuthHeader('GET', uri, userId, qs)
+  return rp({ uri, qs, headers, json: true })
 }
 
 /**
@@ -34,5 +38,5 @@ const sendPrivateMessage = () => {
 module.exports = {
   getFollowersIds,
   sendPrivateMessage,
-  getUserProfileInformation,
+  getUsersLookup,
 }

@@ -14,9 +14,9 @@ const haterSchema = new Schema({
   image: String,
   first_name: String,
   family_name: String,
-  passive: Boolean,
-  aggressive: Boolean,
-  apology: Boolean,
+  passive: { type: Boolean, default: false },
+  aggressive: { type: Boolean, default: false },
+  apology: { type: Boolean, default: false },
   demon_mode: { type: Boolean, default: false },
 }, { autoIndex: false })
 
