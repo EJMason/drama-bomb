@@ -21,11 +21,15 @@ const chronHaters = async (req, res) => {
     const followers = await util.getSortedUserIds(idAndSn)
     // perform comparison algorithm, return object with new friends and haters and changed
     const followersHaters = util.findNewHatersAndFriends(user, followers)
-    // get all of the new Hater objects
-    const listOfUsers = followersHaters.haters.split()
-    followersHaters.haters = await util.getNewHatersFromTwitter(listOfUsers, idAndSn.user_id)
     // IF the object has any changes, update properties in the databas
     if (followersHaters.changed) {
+      // get all of the new Hater objects, if any
+      if (followersHaters.newHaters.length) {
+        const listOfNewHaters = followersHaters.newHaters.split()
+        followersHaters.newHaters = await util.getNewHatersFromTwitter(listOfNewHaters, idAndSn.user_id)
+        util.sortHaters(followersHaters)
+      }
+
       util.updateDatabaseWithNewInfo(followersHaters)
       // in the redis object, change the friends to the array pulled from twitter
       user.haters = followersHaters.haters

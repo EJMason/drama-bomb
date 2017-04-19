@@ -163,20 +163,12 @@ describe('---------Friends Utilities and Routes---------', function() {
       it('should behave normally if user does not have a last name', async function() {
         stub.resolves(fakeData.fakeTwitterGetUsersLookup)
         ejstweetsUsers = await util.getNewHatersFromTwitter([123,456], 123)
-        console.log('YEAH BOIIIIII ', ejstweetsUsers[2])
         expect(ejstweetsUsers[2])
         .to.have.property('last_name')
           .that.is.a('string')
             .that.equals('')
       })
 
-    })
-
-    xdescribe('Utility: updateDatabaseWithNewInfo', function() {
-
-      it('should update the database with updated friends and haters', function() {
-
-      })
     })
 
     xdescribe('ALL TOGETHER NOW! -> Controller: chronHaters', function() {

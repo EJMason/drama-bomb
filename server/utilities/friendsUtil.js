@@ -4,11 +4,6 @@ const services = require('../services/friendsServices')
 
 const throwErr = (code, msg) => ({ code, msg })
 
-const testMe = async () => {
-  const a = await twitter.getFollowersIds()
-  return a
-}
-
 const checkIdToken = (token, scrt = process.env.AUTH0_CLIENT_SECRET) => {
   try {
     const valid = jwt.verify(token, scrt)
@@ -31,6 +26,7 @@ const getSortedUserIds = async ({ user_id, screen_name }) => {
 
 const findNewHatersAndFriends = ({ friends_ids, haters }, newArrFromTwitter) => {
   const changes = services.findAllNew(friends_ids, newArrFromTwitter)
+  // check if any of the haters from the past have readded you
   haters = haters.filter(hater => {
     let haterIsFriend = false
     changes.newFriends.forEach(val => { if (hater.user_id === val) haterIsFriend = true })
@@ -68,6 +64,11 @@ const getNewHatersFromTwitter = async (haterIds, userId) => {
   }
 }
 
+const sortHaters = ({ haters, newHaters }) => {
+  haters = haters.concat(newHaters)
+  haters.sort((a, b) => a.user_id - b.user_id)
+}
+
 const updateDatabaseWithNewInfo = followersHaters => {
   return followersHaters
 }
@@ -78,6 +79,6 @@ module.exports = {
   getSortedUserIds,
   findNewHatersAndFriends,
   getNewHatersFromTwitter,
+  sortHaters,
   updateDatabaseWithNewInfo,
-  testMe,
 }
