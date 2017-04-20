@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const chalk = require('chalk')
 mongoose.Promise = require('bluebird')
 
-const conn = (process.env.NODE_ENV === 'testing') ? process.env.DB_MONGO_CONN : DB_MONGO_TEST
+const conn = (process.env.NODE_ENV !== 'testing') ? process.env.DB_MONGO_CONN : process.env.DB_MONGO_TEST
 mongoose.connect(conn)
 
 const userSchema = require('./models/Users')(mongoose.Schema)

@@ -8,6 +8,7 @@ const app = require('../server/server')
 const redis = require('../server/database/redis')
 const authServices = require('../server/services/auth0Services')
 const authUtil = require('../server/utilities/authUtil')
+const Users = require('../server/database/').Users
 
 const expect = chai.expect
 
@@ -22,15 +23,17 @@ describe('---------API---------', function() {
     })
 
     after(function(done) {
-    // Users.remove({ user_id: 'Twitter|123' }).then(()=> {
+    Users.remove({ user_id: 'twitter|852672214348382208' }).then(()=> {
       mongoose.connection.close(function() { done() })
-    // })
+    })
     })
 
     describe('POST auth/login/init', function() {
 
       afterEach(function() {
-        redis.del('twitter|852672214348382208')
+        Users.remove({ user_id: 'twitter|852672214348382208' }).then(()=> {
+          redis.del('twitter|852672214348382208')
+        })
       })
 
     it('should only accept posts with a valid body', function(done) {
@@ -77,15 +80,17 @@ describe('---------API---------', function() {
       getUserIdp.restore()
     })
 
-    it('should generate a new Managment Token if it is expired or does not exist', async function() {
+    it('should generate a new Managment Token if it is expired or does not exist', function(done) {
       const genOpts = sinon.spy(authServices, 'generateManagmentOptions')
       redis.del('mtoken')
-      await request(app)
+      request(app)
         .post('/auth/login/init')
         .send({ user_id, simple_id, screen_name })
-
-      sinon.assert.calledOnce(genOpts)
-      genOpts.restore()
+        .then(() => {
+          sinon.assert.calledOnce(genOpts)
+          genOpts.restore()
+          done()
+        })
     })
 
   })

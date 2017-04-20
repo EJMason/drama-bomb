@@ -16,7 +16,6 @@ app.get('*', (req, res) => {
 })
 
 app.listen(process.env.PORT || 2020, () => {
-  console.log(process.env.NODE_ENV)
   console.log(chalk.bgGreen.black('\nExpress server now running on port 2020'))
 })
 
