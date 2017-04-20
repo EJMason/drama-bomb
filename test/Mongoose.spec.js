@@ -1,7 +1,7 @@
 require('dotenv').config()
 const chai = require('chai')
 const mongoose = require('mongoose')
-const Users = require('../server/database/models/Users')
+const Users = require('../server/database/').Users
 const usersUtil = require('../server/database/dbUtil/UsersUtil')
 mongoose.Promise = require('bluebird')
 

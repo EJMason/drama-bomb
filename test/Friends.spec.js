@@ -8,8 +8,10 @@ const redis = require('../server/database/redis')
 const tokenizer = require('./utilities/tokenizer')
 const twitter = require('../server/utilities/twitterUtil')
 const fakeData = require('./utilities/fakeData')
+const haters = require('./utilities/haters')
 
 const expect = chai.expect
+chai.use(require("chai-sorted"))
 
 describe('---------Friends Utilities and Routes---------', function() {
   let token
@@ -169,6 +171,25 @@ describe('---------Friends Utilities and Routes---------', function() {
             .that.equals('')
       })
 
+    })
+
+    describe('SortHaters', function() {
+      let oldHaters, newHaters, params
+      before(function() {
+        oldHaters = haters.slice()
+        newHaters = [{user_id: 849127100}, {user_id: 263551500}, {user_id: 84912000}, {user_id: 849127890}]
+        params = { haters: oldHaters, newHaters }
+      })
+
+      it('should modify the original array', function() {
+        util.sortHaters(params)
+        expect(oldHaters).to.deep.equal(params.haters)
+        expect(oldHaters).to.have.lengthOf(14)
+      })
+
+      it('new array should be sorted from smallest to largest user_id', function() {
+        expect(oldHaters).to.be.sortedBy('user_id')
+      })
     })
 
     xdescribe('ALL TOGETHER NOW! -> Controller: chronHaters', function() {

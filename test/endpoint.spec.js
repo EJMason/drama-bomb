@@ -1,5 +1,6 @@
 require('dotenv').config()
 const chai = require('chai')
+const mongoose = require('mongoose')
 const request = require('supertest')
 const sinon = require('sinon')
 
@@ -16,6 +17,16 @@ const screen_name = 'test_ejm'
 
 describe('---------API---------', function() {
 
+    before(function(done){
+      mongoose.connection.on('open', () => { done() })
+    })
+
+    after(function(done) {
+    // Users.remove({ user_id: 'Twitter|123' }).then(()=> {
+      mongoose.connection.close(function() { done() })
+    // })
+    })
+
     describe('POST auth/login/init', function() {
 
       afterEach(function() {
@@ -29,15 +40,11 @@ describe('---------API---------', function() {
         .expect(412, done)
     })
 
-    it('should only write to redis if user not already in cache', function(done) {
-      request(app)
+    it('should only write to redis if user not already in cache', async function() {
+      await request(app)
         .post('/auth/login/init')
-        .send({ 
-          user_id: 'twitter|852718642722611200', 
-          simple_id: '852718642722611200', 
-          screen_name: 'EJTester1'
-        })
-        .expect(200, done)
+        .send({ user_id, simple_id, screen_name })
+        .expect(200)
     })
 
     it('should return 200 when completing a successful request', function(done) {
@@ -49,6 +56,8 @@ describe('---------API---------', function() {
           expect(resp.body).to.haveOwnProperty('user_id')
           expect(resp.body).to.haveOwnProperty('simple_id')
           expect(resp.body).to.haveOwnProperty('screen_name')
+          done()
+        }).catch(err => {
           done()
         })
     })
