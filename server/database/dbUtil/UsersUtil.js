@@ -1,4 +1,4 @@
-const Users = require('../models/Users')
+const Users = require('../').Users
 
 const findOrCreate = async ({ user_id, simple_id, screen_name, friends_ids, haters = [] }) => {
   try {
