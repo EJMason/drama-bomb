@@ -19,12 +19,17 @@ const screen_name = 'test_ejm'
 describe('---------API---------', function() {
 
     before(function(done){
-      mongoose.connection.on('open', () => { done() })
+      if(mongoose.connection.readyState) {
+        done()
+      } else {
+        mongoose.connect(process.env.DB_MONGO_TEST, done)
+      }
     })
 
     after(function(done) {
     Users.remove({ user_id: 'twitter|852672214348382208' }).then(()=> {
-      mongoose.connection.close(function() { done() })
+      // mongoose.connection.close(function() { done() })
+      done()
     })
     })
 
@@ -86,7 +91,7 @@ describe('---------API---------', function() {
       request(app)
         .post('/auth/login/init')
         .send({ user_id, simple_id, screen_name })
-        .then(() => {
+        .end(() => {
           sinon.assert.calledOnce(genOpts)
           genOpts.restore()
           done()

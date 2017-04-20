@@ -10,19 +10,18 @@ const expect = chai.expect
 describe('---------Mongoose DB Methods---------', function() {
 
   beforeEach(function(done) {
-    // if(mongoose.connection.db) {
-    //   done()
-    // } else {
-    //   mongoose.connect(process.env.DB_MONGO_TEST, done)
-    // }
-    done()
+    if(mongoose.connection.readyState) {
+      done()
+    } else {
+      mongoose.connect(process.env.DB_MONGO_TEST, done)
+    }
   })
 
   after(function(done) {
-
-    // Users.remove({ user_id: 'Twitter|123' }).then(()=> {
-      mongoose.connection.close(function() { done() })
-    // })
+    Users.remove({ user_id: 'Twitter|123' }).then(()=> {
+      // mongoose.connection.close(function() { done() })
+      done()
+    })
   })
 
   it('database should add documents, if user does not already exist', async function() {

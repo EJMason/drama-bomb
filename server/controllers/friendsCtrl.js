@@ -14,14 +14,13 @@ const chronHaters = async (req, res) => {
     // make user token is valid, if valid return {user_id, screen_name}, else return null
     const idAndSn = await util.checkIdToken(req.params.idtoken)
     if (!idAndSn) throw util.throwErr(401, 'Token not valid')
-
     // get user Info from Redis, if not in Redis, log out the user from client
     const user = await redis.get(idAndSn.user_id)
     if (!user) throw util.throwErr(400, 'User not in cache')
 
     // get current followers from twitter Api, sort the ids
     const followers = await util.getSortedUserIds(idAndSn)
-
+    console.log('Here is the token: ', followers)
     // perform comparison algorithm, return object with new friends and haters and changed
     const followersHaters = util.findNewHatersAndFriends(user, followers)
 

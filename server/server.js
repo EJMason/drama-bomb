@@ -11,7 +11,6 @@ require('./middleware')(app)
 require('./routes')(app)
 
 app.get('*', (req, res) => {
-  console.log(req.url)
   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'))
 })
 

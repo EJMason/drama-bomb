@@ -3,9 +3,13 @@ const twitter = require('../utilities/twitterUtil')
 const services = require('../services/friendsServices')
 const dbUtil = require('../database/dbUtil/UsersUtil')
 
+const shhh = (process.env.NODE_ENV === 'testing')
+? process.env.TEST_AUTH0_SECRET
+: process.env.AUTH0_CLIENT_SECRET
+
 const throwErr = (code, msg) => ({ code, msg })
 
-const checkIdToken = (token, scrt = process.env.AUTH0_CLIENT_SECRET) => {
+const checkIdToken = (token, scrt = shhh) => {
   try {
     const valid = jwt.verify(token, scrt)
     return {
@@ -41,9 +45,9 @@ const findNewHatersAndFriends = ({ friends_ids, haters }, newArrFromTwitter) => 
 
 const getNewHatersFromTwitter = async (haterIds, userId) => {
   let names
-  haterIds = haterIds.split()
+  const stringOfUserIds = haterIds.join()
   try {
-    const haters = await twitter.getUsersLookup({ user_id: haterIds }, userId)
+    const haters = await twitter.getUsersLookup({ user_id: stringOfUserIds }, userId)
     return haters.map(hater => {
       names = hater.name.split(' ')
       if (!names[1]) {

@@ -2,7 +2,9 @@ const chai = require('chai')
 const request = require('supertest')
 const sinon = require('sinon')
 
+const app = require('../server/server')
 const util = require('../server/utilities/friendsUtil')
+const ctrl = require('../server/controllers/friendsCtrl')
 const redisUtil = require('../server/database/redis/redisUtil')
 const redis = require('../server/database/redis')
 const tokenizer = require('./utilities/tokenizer')
@@ -11,6 +13,7 @@ const fakeData = require('./utilities/fakeData')
 const haters = require('./utilities/haters')
 
 const expect = chai.expect
+const assert = chai.assert
 chai.use(require("chai-sorted"))
 
 describe('---------Friends Utilities and Routes---------', function() {
@@ -122,7 +125,15 @@ describe('---------Friends Utilities and Routes---------', function() {
     })
 
     describe('Utility: getNewHatersFromTwitter', function() {
-      let ejstweetsUsers, stub
+      let ejstweetsUsers, stub, gnhftSpy
+
+      before(function() {
+        gnhftSpy = sinon.spy(util,'getNewHatersFromTwitter')
+      })
+
+      after(function() {
+        util.getNewHatersFromTwitter.restore()
+      })
 
       beforeEach(function() {
         stub = sinon.stub(twitter, 'getUsersLookup')
@@ -136,6 +147,7 @@ describe('---------Friends Utilities and Routes---------', function() {
         stub.resolves(fakeData.fakeTwitterGetUsersLookup)
         ejstweetsUsers = await util.getNewHatersFromTwitter([123,456], 123)
 
+        sinon.assert.calledWith(util.getNewHatersFromTwitter, sinon.match.array)
         expect(ejstweetsUsers).to.be.an('array')
           .that.has.lengthOf(24)
       })
@@ -175,6 +187,7 @@ describe('---------Friends Utilities and Routes---------', function() {
 
     describe('SortHaters', function() {
       let oldHaters, newHaters, params
+
       before(function() {
         oldHaters = haters.slice()
         newHaters = [{user_id: 849127100}, {user_id: 263551500}, {user_id: 84912000}, {user_id: 849127890}]
@@ -192,13 +205,44 @@ describe('---------Friends Utilities and Routes---------', function() {
       })
     })
 
-    xdescribe('ALL TOGETHER NOW! -> Controller: chronHaters', function() {
-      it('chronHaters controller should be invoked', function() {
+    describe('ALL TOGETHER NOW! -> Controller: chronHaters', function() {
+      let mock, stub, spy
 
+      beforeEach(function() {
+        checkIdTokenSpy = sinon.spy(util, 'checkIdToken')
+        getSortedUserIdsSpy = sinon.spy(util, 'getSortedUserIds')
+
+        stubUserLookup = sinon.stub(twitter, 'getUsersLookup')
+        stubGetIds = sinon.stub(twitter, 'getFollowersIds')
+        // stub.resolves(fakeData.fakeTwitterGetUsersLookup)
       })
 
-      it('should respond 400 if user is not logged in', function() {
+      afterEach(function() {
+        twitter.getUsersLookup.restore()
+        twitter.getFollowersIds.restore()
 
+        checkIdTokenSpy.restore()
+        getSortedUserIdsSpy.restore()
+      })
+      
+      it('chronHaters controller recieve a proper token, checkIdToken', async function() {
+        await request(app)
+          .get(`/friends/chron/haters/${token}`)
+
+        sinon.assert.calledWith(checkIdTokenSpy, token)
+        assert(checkIdTokenSpy.returned({
+          user_id: 'twitter|852718642722611200',
+          screen_name: 'EJTester1'}), `checkIdToken incorrect return value: ${checkIdTokenSpy.returnValues[0]}`)
+      })
+
+      it('gerSortedUserIds should hit the correct endpoint and return an array of ids', async function() {
+        await request(app)
+          .get(`/friends/chron/haters/${token}`)
+        
+        assert(getSortedUserIdsSpy.calledOnce)
+        assert(getSortedUserIdsSpy.calledAfter(checkIdTokenSpy), 'GetSorted should be called after token check')
+        assert(getSortedUserIdsSpy.calledWith({ user_id: 'twitter|852718642722611200', screen_name: 'EJTester1' }))
+        assert()
       })
     })
     

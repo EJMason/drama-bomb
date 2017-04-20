@@ -19,11 +19,11 @@ Make sure when deploying to add user to redis,
 there isn't really an elegant way to automate this yet
 */
 
-describe('---------Twitter Api---------', function() {
+xdescribe('---------Twitter Api---------', function() {
 
-  describe('GET followers/ids', function() {
+  xdescribe('GET followers/ids', function() {
 
-    it('getFollowersIds should return an object with an array of user ids', async function() {
+    xit('getFollowersIds should return an object with an array of user ids', async function() {
       const response = await util.getFollowersIds({ user_id, screen_name })
       expect(response.ids).to.be.an('array')
     })
