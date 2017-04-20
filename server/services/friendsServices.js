@@ -25,6 +25,17 @@ const findAllNew = (friends, twitter) => {
   return { newFriends, newHaters }
 }
 
+const checkIfHatersHaveAddedYou = (haters, changes) => {
+  let haterIsFriend
+  haters = haters.filter(hater => {
+    haterIsFriend = false
+    changes.newFriends.forEach(val => { if (hater.user_id === val) haterIsFriend = true })
+    return !haterIsFriend
+  })
+  return haters
+}
+
 module.exports = {
   findAllNew,
+  checkIfHatersHaveAddedYou,
 }

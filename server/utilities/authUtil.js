@@ -17,7 +17,9 @@ const getManagmentToken = async () => {
       redis.set('mtoken', mtoken)
     }
     return mtoken
-  } catch (err) { throw err }
+  } catch (err) {
+    return err
+  }
 }
 
 /**
@@ -27,7 +29,6 @@ const getManagmentToken = async () => {
 const getUserIdp = async userId => {
   try {
     const mtoken = await getManagmentToken()
-
     const response = await rp({
       method: 'GET',
       url: `${process.env.AUTH0_DOMAIN}/api/v2/users/${encodeURIComponent(userId)}`,
@@ -36,7 +37,10 @@ const getUserIdp = async userId => {
 
     const keys = JSON.parse(response).identities[0]
     return { token: keys.access_token, token_secret: keys.access_token_secret }
-  } catch (err) { throw err }
+  } catch (err) {
+    console.log('THERE WAS AN ERROR: ', err)
+    throw err
+  }
 }
 
 module.exports = { getManagmentToken, getUserIdp }

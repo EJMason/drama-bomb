@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 const twitter = require('../utilities/twitterUtil')
 const services = require('../services/friendsServices')
+const dbUtil = require('../database/dbUtil/UsersUtil')
 
 const throwErr = (code, msg) => ({ code, msg })
 
@@ -25,14 +26,10 @@ const getSortedUserIds = async ({ user_id, screen_name }) => {
 }
 
 const findNewHatersAndFriends = ({ friends_ids, haters }, newArrFromTwitter) => {
+  // Meat and potatoes to check if there are any new friends or enemies
   const changes = services.findAllNew(friends_ids, newArrFromTwitter)
   // check if any of the haters from the past have readded you
-  haters = haters.filter(hater => {
-    let haterIsFriend = false
-    changes.newFriends.forEach(val => { if (hater.user_id === val) haterIsFriend = true })
-    return haterIsFriend
-  })
-
+  haters = services.checkIfHatersHaveAddedYou(haters, changes)
   return {
     newFriends: changes.newFriends,
     newHaters: changes.newHaters,
@@ -44,6 +41,7 @@ const findNewHatersAndFriends = ({ friends_ids, haters }, newArrFromTwitter) => 
 
 const getNewHatersFromTwitter = async (haterIds, userId) => {
   let names
+  haterIds = haterIds.split()
   try {
     const haters = await twitter.getUsersLookup({ user_id: haterIds }, userId)
     return haters.map(hater => {
@@ -65,12 +63,16 @@ const getNewHatersFromTwitter = async (haterIds, userId) => {
 }
 
 const sortHaters = ({ haters, newHaters }) => {
-  haters = haters.concat(newHaters)
+  haters.push(...newHaters)
   haters.sort((a, b) => a.user_id - b.user_id)
 }
 
-const updateDatabaseWithNewInfo = followersHaters => {
-  return followersHaters
+const updateDatabaseWithNewInfo = async (userId, { haters, friends }) => {
+  try {
+    await dbUtil.updateUserFriendsAndHaters(userId, haters, friends)
+  } catch (err) {
+    throw err
+  }
 }
 
 module.exports = {
