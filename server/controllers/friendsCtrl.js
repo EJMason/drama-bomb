@@ -15,15 +15,14 @@ const chronHaters = async (req, res) => {
     const idAndSn = await util.checkIdToken(req.params.idtoken)
     if (!idAndSn) throw util.throwErr(401, 'Token not valid')
     // get user Info from Redis, if not in Redis, log out the user from client
-    const user = await redis.get(idAndSn.user_id)
+    let user = await redis.get(idAndSn.user_id)
     if (!user) throw util.throwErr(400, 'User not in cache')
+    user = JSON.parse(user)
 
     // get current followers from twitter Api, sort the ids
     const followers = await util.getSortedUserIds(idAndSn)
-    console.log('Here is the token: ', followers)
     // perform comparison algorithm, return object with new friends and haters and changed
     const followersHaters = util.findNewHatersAndFriends(user, followers)
-
     // If the object has any changes, update properties in the databas
     if (followersHaters.changed) {
       // get all of the new Hater objects from twitter api, if any and sort them
@@ -34,15 +33,16 @@ const chronHaters = async (req, res) => {
 
       // send the updated users and haters to the database only if something has changed
       util.updateDatabaseWithNewInfo(idAndSn.user_id, followersHaters)
-
       // in the redis object, change the friends to the array pulled from twitter
       user.haters = followersHaters.haters
       user.friends_ids = followersHaters.friends
-      redis.set(userId, user, 'ex', 3600)
+      await redis.set(idAndSn.user_id, user, 'ex', 3600)
     }
     // send client updated list of friends and haters
     res.status(200).send(followersHaters)
-  } catch (err) { err.code ? res.status(err.code).send(err.message) : res.status(400).send(err) }
+  } catch (err) {
+    err.code ? res.status(err.code).send(err.message) : res.status(400).send(err)
+  }
 }
 
 module.exports = { placeholder, chronHaters }

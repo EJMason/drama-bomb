@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const twitter = require('../utilities/twitterUtil')
+const twitter = require('./twitterUtil')
 const services = require('../services/friendsServices')
 const dbUtil = require('../database/dbUtil/UsersUtil')
 
@@ -24,9 +24,9 @@ const checkIdToken = (token, scrt = shhh) => {
 const getSortedUserIds = async ({ user_id, screen_name }) => {
   try {
     let arrayOfUserIds = await twitter.getFollowersIds({ user_id, screen_name })
-    arrayOfUserIds = arrayOfUserIds.sort((a, b) => a - b)
+    arrayOfUserIds = arrayOfUserIds.ids.sort((a, b) => a - b)
     return arrayOfUserIds
-  } catch (err) { return console.err(err) }
+  } catch (err) { throw err }
 }
 
 const findNewHatersAndFriends = ({ friends_ids, haters }, newArrFromTwitter) => {

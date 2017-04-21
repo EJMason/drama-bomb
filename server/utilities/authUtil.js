@@ -38,7 +38,6 @@ const getUserIdp = async userId => {
     const keys = JSON.parse(response).identities[0]
     return { token: keys.access_token, token_secret: keys.access_token_secret }
   } catch (err) {
-    console.log('THERE WAS AN ERROR: ', err)
     throw err
   }
 }

@@ -48,13 +48,6 @@ describe('---------API---------', function() {
         .expect(412, done)
     })
 
-    it('should only write to redis if user not already in cache', async function() {
-      await request(app)
-        .post('/auth/login/init')
-        .send({ user_id, simple_id, screen_name })
-        .expect(200)
-    })
-
     it('should return 200 when completing a successful request', function(done) {
       request(app)
         .post('/auth/login/init')
