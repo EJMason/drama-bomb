@@ -5,6 +5,7 @@ import { actions } from '../Redux/Login'
 import { logoutStorage } from '../Services/AuthServices'
 import Topbar from '../Components/Topbar'
 import Sidebar from '../Components/Sidebar'
+import './Styles/css/Dashboard.css'
 
 class Dashboard extends Component {
   constructor(props) {
@@ -38,16 +39,26 @@ class Dashboard extends Component {
   render() {
     if (!this.props.profile) return null
     return (
-      <div>
-        <Topbar
-          logout={this.logout}
-          {...this.props.profile}
-          screen={this.props.profile.screen_name}
-        />
+      <div className="dashboard-container">
+        <div className="topbar-container-grd">
+          <Topbar
+            logout={this.logout}
+            {...this.props.profile}
+            screen={this.props.profile.screen_name}
+          />
+        </div>
+        <div className="sidebar-container-grd">
+          <Sidebar />
+        </div>
+        <div className="content-container-grd">
+          here
+        </div>
       </div>
     )
   }
 }
+
+// ------------------ REDUX -------------------- //
 
 const mapStateToProps = state => ({
   loggedIn: state.temp.mounted,
