@@ -11,6 +11,7 @@ class Homepage extends Component {
     this.state = {
       temp: null,
     }
+    console.log('THIS IS THE HOMEPAGE PROPS', this.props)
   }
 
   render() {

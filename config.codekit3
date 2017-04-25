@@ -7,8 +7,14 @@
 		"uuidString": "15E7DDFC-FD14-42C8-90EA-4A0A421DE393"
 		}
 	],
-"creatorBuild": "25704",
+"creatorBuild": "25813",
 "files": {
+	"\/.env": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/.env",
+		"oF": 0
+		},
 	"\/.eslintignore": {
 		"ft": 8192,
 		"oA": 2,
@@ -29,129 +35,20 @@
 		"oAP": "\/.gitignore",
 		"oF": 0
 		},
-	"\/build\/asset-manifest.json": {
-		"ft": 524288,
+	"\/clientKeys.js": {
+		"ft": 64,
+		"mi": 1,
 		"oA": 1,
-		"oAP": "\/build\/asset-manifest-min.json",
+		"oAP": "\/clientKeys-min.js",
 		"oF": 0,
-		"oO": 0,
-		"oS": 1
+		"sC": 0,
+		"tS": 0
 		},
-	"\/build\/favicon.ico": {
-		"ft": 8192,
-		"oA": 2,
-		"oAP": "\/build\/favicon.ico",
+	"\/config": {
+		"ft": 65536,
+		"oA": 1,
+		"oAP": "\/build\/config",
 		"oF": 0
-		},
-	"\/build\/index.html": {
-		"ft": 8192,
-		"oA": 2,
-		"oAP": "\/build\/index.html",
-		"oF": 0
-		},
-	"\/build\/static\/css\/main.9a0fe4f1.css": {
-		"aP": 1,
-		"bl": 0,
-		"ft": 16,
-		"ma": 0,
-		"oA": 0,
-		"oAP": "\/build\/static\/css\/main.9a0fe4f1-min.css",
-		"oF": 0,
-		"oS": 0
-		},
-	"\/build\/static\/css\/main.9a0fe4f1.css.map": {
-		"ft": 8192,
-		"oA": 2,
-		"oAP": "\/build\/static\/css\/main.9a0fe4f1.css.map",
-		"oF": 0
-		},
-	"\/build\/static\/js\/main.26028e38.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/build\/static\/js\/main.26028e38-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
-	"\/build\/static\/js\/main.26028e38.js.map": {
-		"ft": 8192,
-		"oA": 2,
-		"oAP": "\/build\/static\/js\/main.26028e38.js.map",
-		"oF": 0
-		},
-	"\/build\/static\/media\/logo.5d5d9eef.svg": {
-		"ft": 2097152,
-		"miP": 0,
-		"oA": 2,
-		"oAP": "\/build\/static\/media\/logo.5d5d9eef.svg",
-		"oF": 0,
-		"opt": 0,
-		"plM": 3758088159,
-		"prP": 0
-		},
-	"\/config\/env.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/config\/env-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
-	"\/config\/jest\/cssTransform.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/config\/jest\/cssTransform-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
-	"\/config\/jest\/fileTransform.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/config\/jest\/fileTransform-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
-	"\/config\/paths.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/config\/paths-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
-	"\/config\/polyfills.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/config\/polyfills-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
-	"\/config\/webpack.config.dev.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/config\/webpack.config.dev-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
-	"\/config\/webpack.config.prod.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/config\/webpack.config.prod-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
 		},
 	"\/node_modules": {
 		"ft": 65536,
@@ -167,16 +64,10 @@
 		"oO": 0,
 		"oS": 1
 		},
-	"\/public\/favicon.ico": {
-		"ft": 8192,
-		"oA": 2,
-		"oAP": "\/public\/favicon.ico",
-		"oF": 0
-		},
-	"\/public\/index.html": {
-		"ft": 8192,
-		"oA": 2,
-		"oAP": "\/public\/index.html",
+	"\/public": {
+		"ft": 65536,
+		"oA": 1,
+		"oAP": "\/build\/public",
 		"oF": 0
 		},
 	"\/README.md": {
@@ -197,60 +88,23 @@
 		"rFN": 0,
 		"uCM": 0
 		},
-	"\/scripts\/build.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/scripts\/build-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
+	"\/sampleData": {
+		"ft": 65536,
+		"oA": 1,
+		"oAP": "\/build\/sampleData",
+		"oF": 0
 		},
-	"\/scripts\/start.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/scripts\/start-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
+	"\/scripts": {
+		"ft": 65536,
+		"oA": 1,
+		"oAP": "\/build\/scripts",
+		"oF": 0
 		},
-	"\/scripts\/test.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/scripts\/test-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
-	"\/server\/routes\/index.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/server\/routes\/index-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
-	"\/server\/server.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/server\/server-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
-	"\/src\/App.css": {
-		"aP": 1,
-		"bl": 0,
-		"ft": 16,
-		"ma": 0,
-		"oA": 0,
-		"oAP": "\/src\/App-min.css",
-		"oF": 0,
-		"oS": 0
+	"\/server": {
+		"ft": 65536,
+		"oA": 1,
+		"oAP": "\/build\/server",
+		"oF": 0
 		},
 	"\/src\/App.js": {
 		"ft": 64,
@@ -258,56 +112,107 @@
 		"oA": 1,
 		"oAP": "\/src\/App-min.js",
 		"oF": 0,
-		"sC": 1,
+		"sC": 0,
 		"tS": 0
-		},
-	"\/src\/App.scss": {
-		"aP": 0,
-		"bl": 0,
-		"dP": 10,
-		"dS": 0,
-		"ft": 4,
-		"ma": 0,
-		"oA": 0,
-		"oAP": "\/src\/App.css",
-		"oF": 0,
-		"oS": 0,
-		"uL": 1
 		},
 	"\/src\/App.test.js": {
 		"ft": 64,
 		"mi": 1,
-		"oA": 0,
+		"oA": 1,
 		"oAP": "\/src\/App.test-min.js",
 		"oF": 0,
-		"sC": 1,
+		"sC": 0,
 		"tS": 0
 		},
-	"\/src\/Components\/HomePageTopBar.js": {
+	"\/src\/Components\/Login.js": {
 		"ft": 64,
 		"mi": 1,
-		"oA": 0,
-		"oAP": "\/src\/Components\/HomePageTopBar-min.js",
+		"oA": 1,
+		"oAP": "\/src\/Components\/Login-min.js",
 		"oF": 0,
-		"sC": 1,
+		"sC": 0,
+		"tS": 0
+		},
+	"\/src\/Components\/Styles\/css\/Dashboard.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/src\/Components\/Styles\/css\/Dashboard-min.css",
+		"oF": 0,
+		"oS": 0
+		},
+	"\/src\/Components\/Styles\/css\/Homepage.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/src\/Components\/Styles\/css\/Homepage-min.css",
+		"oF": 0,
+		"oS": 0
+		},
+	"\/src\/Components\/Styles\/Dashboard.sass": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 2,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/src\/Components\/Styles\/css\/Dashboard.css",
+		"oF": 0,
+		"oS": 0,
+		"uL": 1
+		},
+	"\/src\/Components\/Styles\/Homepage.sass": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 2,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/src\/Components\/Styles\/css\/Homepage.css",
+		"oF": 0,
+		"oS": 0,
+		"uL": 1
+		},
+	"\/src\/Components\/Topbar.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/src\/Components\/Topbar-min.js",
+		"oF": 0,
+		"sC": 0,
 		"tS": 0
 		},
 	"\/src\/Containers\/Dashboard.js": {
 		"ft": 64,
 		"mi": 1,
-		"oA": 0,
+		"oA": 1,
 		"oAP": "\/src\/Containers\/Dashboard-min.js",
 		"oF": 0,
-		"sC": 1,
+		"sC": 0,
 		"tS": 0
 		},
 	"\/src\/Containers\/Homepage.js": {
 		"ft": 64,
 		"mi": 1,
-		"oA": 0,
+		"oA": 1,
 		"oAP": "\/src\/Containers\/Homepage-min.js",
 		"oF": 0,
-		"sC": 1,
+		"sC": 0,
+		"tS": 0
+		},
+	"\/src\/Containers\/HomeTopBar.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/src\/Containers\/HomeTopBar-min.js",
+		"oF": 0,
+		"sC": 0,
 		"tS": 0
 		},
 	"\/src\/index.css": {
@@ -323,10 +228,10 @@
 	"\/src\/index.js": {
 		"ft": 64,
 		"mi": 1,
-		"oA": 0,
+		"oA": 1,
 		"oAP": "\/src\/index-min.js",
 		"oF": 0,
-		"sC": 1,
+		"sC": 0,
 		"tS": 0
 		},
 	"\/src\/logo.svg": {
@@ -339,22 +244,229 @@
 		"plM": 3758088159,
 		"prP": 0
 		},
-	"\/test\/endpointSpec-min.js": {
+	"\/src\/Redux\/CreateStore.js": {
 		"ft": 64,
 		"mi": 1,
-		"oA": 0,
-		"oAP": "\/test\/endpointSpec-min-min.js",
+		"oA": 1,
+		"oAP": "\/src\/Redux\/CreateStore-min.js",
 		"oF": 0,
-		"sC": 1,
+		"sC": 0,
 		"tS": 0
 		},
-	"\/test\/endpointSpec.js": {
+	"\/src\/Redux\/Login.js": {
 		"ft": 64,
 		"mi": 1,
-		"oA": 0,
-		"oAP": "\/test\/endpointSpec-min.js",
+		"oA": 1,
+		"oAP": "\/src\/Redux\/Login-min.js",
 		"oF": 0,
-		"sC": 1,
+		"sC": 0,
+		"tS": 0
+		},
+	"\/src\/Redux\/Reducers.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/src\/Redux\/Reducers-min.js",
+		"oF": 0,
+		"sC": 0,
+		"tS": 0
+		},
+	"\/src\/Redux\/temp.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/src\/Redux\/temp-min.js",
+		"oF": 0,
+		"sC": 0,
+		"tS": 0
+		},
+	"\/src\/Routing.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/src\/Routing-min.js",
+		"oF": 0,
+		"sC": 0,
+		"tS": 0
+		},
+	"\/src\/Sagas\/index.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/src\/Sagas\/index-min.js",
+		"oF": 0,
+		"sC": 0,
+		"tS": 0
+		},
+	"\/src\/Sagas\/tempSaga.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/src\/Sagas\/tempSaga-min.js",
+		"oF": 0,
+		"sC": 0,
+		"tS": 0
+		},
+	"\/src\/Services\/AuthServices.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/src\/Services\/AuthServices-min.js",
+		"oF": 0,
+		"sC": 0,
+		"tS": 0
+		},
+	"\/src\/Styles\/App.sass": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 2,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/src\/Styles\/css\/App.css",
+		"oF": 0,
+		"oS": 0,
+		"uL": 1
+		},
+	"\/src\/Styles\/Colors.sass": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 2,
+		"ma": 0,
+		"oA": 1,
+		"oAP": "\/src\/Styles\/css\/Colors.css",
+		"oF": 0,
+		"oS": 0,
+		"uL": 1
+		},
+	"\/src\/Styles\/css\/App.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/src\/Styles\/css\/App-min.css",
+		"oF": 0,
+		"oS": 0
+		},
+	"\/src\/Styles\/css\/Colors.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/src\/Styles\/css\/Colors-min.css",
+		"oF": 0,
+		"oS": 0
+		},
+	"\/src\/Styles\/Fonts.sass": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 2,
+		"ma": 0,
+		"oA": 1,
+		"oAP": "\/src\/Styles\/css\/Fonts.css",
+		"oF": 0,
+		"oS": 0,
+		"uL": 1
+		},
+	"\/src\/Styles\/Tools.scss": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 4,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/src\/Styles\/css\/Tools.css",
+		"oF": 0,
+		"oS": 0,
+		"uL": 1
+		},
+	"\/test\/_Playground.spec.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/test\/_Playground.spec-min.js",
+		"oF": 0,
+		"sC": 0,
+		"tS": 0
+		},
+	"\/test\/Endpoint.spec.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/test\/Endpoint.spec-min.js",
+		"oF": 0,
+		"sC": 0,
+		"tS": 0
+		},
+	"\/test\/Friends.spec.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/test\/Friends.spec-min.js",
+		"oF": 0,
+		"sC": 0,
+		"tS": 0
+		},
+	"\/test\/Mongoose.spec.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/test\/Mongoose.spec-min.js",
+		"oF": 0,
+		"sC": 0,
+		"tS": 0
+		},
+	"\/test\/Twitter.spec.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/test\/Twitter.spec-min.js",
+		"oF": 0,
+		"sC": 0,
+		"tS": 0
+		},
+	"\/test\/utilities\/fakeData.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/test\/utilities\/fakeData-min.js",
+		"oF": 0,
+		"sC": 0,
+		"tS": 0
+		},
+	"\/test\/utilities\/haters.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/test\/utilities\/haters-min.js",
+		"oF": 0,
+		"sC": 0,
+		"tS": 0
+		},
+	"\/test\/utilities\/testData.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/test\/utilities\/testData-min.js",
+		"oF": 0,
+		"sC": 0,
+		"tS": 0
+		},
+	"\/test\/utilities\/tokenizer.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/test\/utilities\/tokenizer-min.js",
+		"oF": 0,
+		"sC": 0,
 		"tS": 0
 		},
 	"\/yarn.lock": {
@@ -1332,6 +1444,10 @@
 			"active": 0,
 			"optionString": ""
 			},
+		"no-prototype-builtins": {
+			"active": 0,
+			"optionString": ""
+			},
 		"no-redeclare": {
 			"active": 1,
 			"optionString": "{'builtinGlobals': false}"
@@ -2135,7 +2251,7 @@
 		"quality": 100
 		},
 	"languageDefaultsJS": {
-		"autoOutputAction": 0,
+		"autoOutputAction": 1,
 		"autoOutputPathFilenamePattern": "*-min.js",
 		"autoOutputPathRelativePath": "\/min",
 		"autoOutputPathReplace1": "",
@@ -2143,7 +2259,7 @@
 		"autoOutputPathStyle": 0,
 		"createSourceMap": 0,
 		"minifyOutput": 1,
-		"syntaxCheckerStyle": 1,
+		"syntaxCheckerStyle": 0,
 		"transpilerStyle": 0
 		},
 	"languageDefaultsJSON": {
@@ -2155,14 +2271,6 @@
 		"autoOutputPathStyle": 0,
 		"orderOutput": 0,
 		"outputStyle": 1
-		},
-	"languageDefaultsJSX": {
-		"autoOutputAction": 0,
-		"autoOutputPathFilenamePattern": "*.js",
-		"autoOutputPathRelativePath": "",
-		"autoOutputPathReplace1": "jsx",
-		"autoOutputPathReplace2": "js",
-		"autoOutputPathStyle": 0
 		},
 	"languageDefaultsKIT": {
 		"autoOutputAction": 0,
@@ -2226,7 +2334,7 @@
 		"autoOutputPathReplace1": "",
 		"autoOutputPathReplace2": "",
 		"autoOutputPathStyle": 0,
-		"enableLossy": 1,
+		"optimizerType": 1,
 		"quality": 100
 		},
 	"languageDefaultsPUG": {
@@ -2242,10 +2350,10 @@
 	"languageDefaultsSASS": {
 		"autoOutputAction": 0,
 		"autoOutputPathFilenamePattern": "*.css",
-		"autoOutputPathRelativePath": "..\/css",
+		"autoOutputPathRelativePath": ".\/css",
 		"autoOutputPathReplace1": "sass",
 		"autoOutputPathReplace2": "css",
-		"autoOutputPathStyle": 0,
+		"autoOutputPathStyle": 2,
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
@@ -2313,7 +2421,7 @@
 	"languageDefaultsUserDefined": [
 		],
 	"previewPathAddition": "",
-	"skippedFoldersString": "log, _logs, logs, _cache, cache, \/storage\/framework\/sessions, node_modules",
+	"skippedFoldersString": "log, _logs, logs, _cache, cache, \/storage\/framework\/sessions, node_modules, \/server, \/public, \/sampledata, \/scripts, \/config",
 	"sourceFolderName": "source",
 	"uglifyDefinesString": "",
 	"uglifyFlags2": {

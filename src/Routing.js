@@ -4,9 +4,9 @@ import { Route, Redirect } from 'react-router'
 import { ConnectedRouter } from 'react-router-redux'
 import createHistory from 'history/createBrowserHistory'
 
-import Dashboard from '../Containers/Dashboard'
-import App from '../App'
-import Login from '../Components/Login'
+import Dashboard from './Containers/Dashboard'
+import Login from './Components/Login'
+import Homepage from './Containers/Homepage'
 
 export const history = createHistory()
 
@@ -21,12 +21,12 @@ class Routing extends Component {
     this.renderCorrectPage = this.renderCorrectPage.bind(this)
   }
 
-  buildAppComponent() {
-    return (<App />)
+  buildAppComponent(props) {
+    return (<Homepage {...props} />)
   }
 
-  renderCorrectPage() {
-    return (localStorage.getItem('id_token')) ? (<Dashboard />) : (<Redirect to="/" />)
+  renderCorrectPage(props) {
+    return (localStorage.getItem('id_token')) ? (<Dashboard {...props} />) : (<Redirect to="/" />)
   }
 
   render() {

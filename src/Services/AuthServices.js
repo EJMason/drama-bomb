@@ -28,6 +28,7 @@ export default class AuthService extends EventEmitter {
   }
 
   async _doAuthentication(authResult) {
+    console.log('This is the auth result: ', authResult)
     this.setToken(authResult.idToken)
     try {
       const profile = await this.lock.getProfile(authResult.idToken)
@@ -66,6 +67,11 @@ export default class AuthService extends EventEmitter {
   logout() {
     localStorage.removeItem('id_token')
   }
+}
+
+export const logoutStorage = () => {
+  localStorage.removeItem('id_token')
+  localStorage.removeItem('profile')
 }
 
 export const getProfileInfo = () => {
