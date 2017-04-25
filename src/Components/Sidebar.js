@@ -1,11 +1,14 @@
 import React from 'react'
 
-// import './Styles/css/'
+import HaterCard from './HaterCard'
+import './Styles/css/Sidebar.css'
 
 const Sidebar = () => {
   return (
-    <div className="container-sidebar see">
-    This is the sidebar
+    <div className="container-all see">
+      <div>
+        <HaterCard />
+      </div>
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import tweet from '../../public/tweet.svg'
-import './Styles/css/Dashboard.css'
+import './Styles/css/Topbar.css'
 
 const Topbar = ({ logout, picture, name, screen }) => {
   const names = name.split(' ')

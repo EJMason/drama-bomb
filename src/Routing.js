@@ -7,6 +7,7 @@ import createHistory from 'history/createBrowserHistory'
 import Dashboard from './Containers/Dashboard'
 import Login from './Containers/Login'
 import Homepage from './Containers/Homepage'
+import './Styles/css/App.css'
 
 export const history = createHistory()
 
@@ -31,7 +32,7 @@ class Routing extends Component {
   render() {
     return (
       <ConnectedRouter history={history}>
-        <div>
+        <div className="container">
           <Route exact path="/" render={this.buildAppComponent} />
           <Route path="/demon" render={this.renderCorrectPage} />
           <Route path="/login" component={Login} />
