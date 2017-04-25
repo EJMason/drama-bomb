@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { actions } from '../Redux/Login'
 import { logoutStorage } from '../Services/AuthServices'
 import Topbar from '../Components/Topbar'
+import Sidebar from '../Components/Sidebar'
 
 class Dashboard extends Component {
   constructor(props) {

@@ -3,9 +3,6 @@ import { connect } from 'react-redux'
 import { replace } from 'react-router-redux'
 
 import { actions as tempActions } from '../Redux/temp'
-import AuthService from '../Services/AuthServices'
-
-const auth = new AuthService()
 
 class HomeTopBar extends Component {
   constructor(props) {

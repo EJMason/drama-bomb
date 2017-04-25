@@ -17,7 +17,7 @@ const Topbar = ({ logout, picture, name, screen }) => {
       <div className="profile-container">
         <div className="profile-text-container">
           <div className="handle">@{screen}</div>
-          <div className="username">{fName} {lName}.</div>
+          <div className="username">{fName} {lName}</div>
         </div>
         <input
           type="image"
@@ -32,5 +32,3 @@ const Topbar = ({ logout, picture, name, screen }) => {
 }
 
 export default Topbar
-
-// { image, first_name, family_name, screen_name }

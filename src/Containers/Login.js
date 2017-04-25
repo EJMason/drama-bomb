@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-// import { getProfileInfo, getIdToken, emtr } from '../Services/AuthServices'
 import { actions } from '../Redux/Login'
 import { emtr } from '../Services/AuthServices'
 
