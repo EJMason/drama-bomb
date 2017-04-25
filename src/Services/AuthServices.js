@@ -4,6 +4,8 @@ import Promise from 'bluebird'
 
 import { AUTH_CLIENT_ID, AUTH_DOMAIN } from '../../clientKeys'
 
+const emitter = new EventEmitter()
+
 export default class AuthService extends EventEmitter {
   constructor() {
     super()
@@ -30,8 +32,8 @@ export default class AuthService extends EventEmitter {
   async _doAuthentication(authResult) {
     this.setToken(authResult.idToken)
     try {
-      const profile = await this.lock.getProfile(authResult.idToken)
-      this.setProfile(profile)
+      const prfl = await this.lock.getProfile(authResult.idToken)
+      this.setProfile(prfl, authResult.idToken)
     } catch (err) {
       console.error(err)
     }
@@ -50,9 +52,9 @@ export default class AuthService extends EventEmitter {
     return profile ? JSON.parse(localStorage.profile) : {}
   }
 
-  setProfile(profile) {
+  setProfile(profile, idToken) {
     localStorage.setItem('profile', JSON.stringify(profile))
-    this.emit('profile_updated', profile)
+    emitter.emit('profile_updated', { profile, idToken })
   }
 
   setToken(idToken) {
@@ -66,6 +68,13 @@ export default class AuthService extends EventEmitter {
   logout() {
     localStorage.removeItem('id_token')
   }
+}
+
+export const emtr = emitter
+
+export const logoutStorage = () => {
+  localStorage.removeItem('id_token')
+  localStorage.removeItem('profile')
 }
 
 export const getProfileInfo = () => {

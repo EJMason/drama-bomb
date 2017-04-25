@@ -133,6 +133,16 @@
 		"oAP": "\/public\/index.html",
 		"oF": 0
 		},
+	"\/public\/tweet.svg": {
+		"ft": 2097152,
+		"miP": 0,
+		"oA": 2,
+		"oAP": "\/public\/tweet.svg",
+		"oF": 0,
+		"opt": 0,
+		"plM": 3758088159,
+		"prP": 0
+		},
 	"\/README.md": {
 		"cS": 0,
 		"eF": 1,
@@ -438,16 +448,6 @@
 		"sC": 1,
 		"tS": 0
 		},
-	"\/src\/App.css": {
-		"aP": 1,
-		"bl": 0,
-		"ft": 16,
-		"ma": 0,
-		"oA": 0,
-		"oAP": "\/src\/App-min.css",
-		"oF": 0,
-		"oS": 0
-		},
 	"\/src\/App.js": {
 		"ft": 64,
 		"mi": 1,
@@ -457,42 +457,11 @@
 		"sC": 1,
 		"tS": 0
 		},
-	"\/src\/App.scss": {
-		"aP": 0,
-		"bl": 0,
-		"dP": 10,
-		"dS": 0,
-		"ft": 4,
-		"ma": 0,
-		"oA": 0,
-		"oAP": "\/src\/App.css",
-		"oF": 0,
-		"oS": 0,
-		"uL": 1
-		},
 	"\/src\/App.test.js": {
 		"ft": 64,
 		"mi": 1,
 		"oA": 0,
 		"oAP": "\/src\/App.test-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
-	"\/src\/Components\/HomepageTopBar.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/src\/Components\/HomepageTopBar-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
-	"\/src\/Components\/Login.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 1,
-		"oAP": "\/src\/Components\/Login-min.js",
 		"oF": 0,
 		"sC": 1,
 		"tS": 0
@@ -517,6 +486,41 @@
 		"oF": 0,
 		"oS": 0
 		},
+	"\/src\/Components\/Styles\/Dashboard.sass": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 2,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/src\/Components\/Styles\/Dashboard.css",
+		"oF": 0,
+		"oS": 0,
+		"uL": 1
+		},
+	"\/src\/Components\/Styles\/Homepage.sass": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 2,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/src\/Components\/Styles\/Homepage.css",
+		"oF": 0,
+		"oS": 0,
+		"uL": 1
+		},
+	"\/src\/Components\/Topbar.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/src\/Components\/Topbar-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
 	"\/src\/Containers\/Dashboard.js": {
 		"ft": 64,
 		"mi": 1,
@@ -540,6 +544,15 @@
 		"mi": 1,
 		"oA": 1,
 		"oAP": "\/src\/Containers\/HomeTopBar-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
+	"\/src\/Containers\/Login.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/src\/Containers\/Login-min.js",
 		"oF": 0,
 		"sC": 1,
 		"tS": 0
@@ -609,6 +622,15 @@
 		"sC": 0,
 		"tS": 0
 		},
+	"\/src\/Routing.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/src\/Routing-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
 	"\/src\/Sagas\/index.js": {
 		"ft": 64,
 		"mi": 1,
@@ -636,14 +658,31 @@
 		"sC": 1,
 		"tS": 0
 		},
-	"\/src\/Services\/Routing.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 1,
-		"oAP": "\/src\/Services\/Routing-min.js",
+	"\/src\/Styles\/App.sass": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 2,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/src\/Styles\/App.css",
 		"oF": 0,
-		"sC": 1,
-		"tS": 0
+		"oS": 0,
+		"uL": 1
+		},
+	"\/src\/Styles\/Colors.sass": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 2,
+		"ma": 0,
+		"oA": 1,
+		"oAP": "\/src\/Styles\/Colors.css",
+		"oF": 0,
+		"oS": 0,
+		"uL": 1
 		},
 	"\/src\/Styles\/css\/App.css": {
 		"aP": 1,
@@ -675,15 +714,15 @@
 		"oF": 0,
 		"oS": 0
 		},
-	"\/src\/Styles\/Homepage.scss": {
+	"\/src\/Styles\/Fonts.sass": {
 		"aP": 0,
 		"bl": 0,
 		"dP": 10,
 		"dS": 0,
-		"ft": 4,
+		"ft": 2,
 		"ma": 0,
-		"oA": 0,
-		"oAP": "\/src\/Styles\/Homepage.css",
+		"oA": 1,
+		"oAP": "\/src\/Styles\/Fonts.css",
 		"oF": 0,
 		"oS": 0,
 		"uL": 1
