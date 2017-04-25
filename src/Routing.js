@@ -5,7 +5,7 @@ import { ConnectedRouter } from 'react-router-redux'
 import createHistory from 'history/createBrowserHistory'
 
 import Dashboard from './Containers/Dashboard'
-import Login from './Components/Login'
+import Login from './Containers/Login'
 import Homepage from './Containers/Homepage'
 
 export const history = createHistory()
@@ -16,7 +16,6 @@ class Routing extends Component {
     this.state = {
       loggedIn: false,
     }
-
     this.buildAppComponent = this.buildAppComponent.bind(this)
     this.renderCorrectPage = this.renderCorrectPage.bind(this)
   }

@@ -3,8 +3,10 @@ import React from 'react'
 import tweet from '../../public/tweet.svg'
 import './Styles/css/Dashboard.css'
 
-const Topbar = ({ image, logout }) => {
-  image = 'http://staging1.dima.co.nz/wp-content/uploads/2016/07/4.jpg'
+const Topbar = ({ logout, picture, name, screen }) => {
+  const names = name.split(' ')
+  const fName = names[0]
+  const lName = names[1] ? names[1].charAt(0) : ''
   return (
     <div className="topbar-container">
       <img
@@ -12,14 +14,14 @@ const Topbar = ({ image, logout }) => {
         src={tweet}
         alt="logo"
       />
-      <div className="profile-container see">
+      <div className="profile-container">
         <div className="profile-text-container">
-          <div className="handle">@myHandle</div>
-          <div className="username">Eliot M</div>
+          <div className="handle">@{screen}</div>
+          <div className="username">{fName} {lName}.</div>
         </div>
         <input
           type="image"
-          src={image}
+          src={picture}
           className="userImage"
           onClick={logout}
         />

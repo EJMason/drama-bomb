@@ -124,15 +124,6 @@
 		"sC": 0,
 		"tS": 0
 		},
-	"\/src\/Components\/Login.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 1,
-		"oAP": "\/src\/Components\/Login-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
 	"\/src\/Components\/Styles\/css\/Dashboard.css": {
 		"aP": 1,
 		"bl": 0,
@@ -211,6 +202,15 @@
 		"mi": 1,
 		"oA": 1,
 		"oAP": "\/src\/Containers\/HomeTopBar-min.js",
+		"oF": 0,
+		"sC": 0,
+		"tS": 0
+		},
+	"\/src\/Containers\/Login.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/src\/Containers\/Login-min.js",
 		"oF": 0,
 		"sC": 0,
 		"tS": 0
@@ -359,6 +359,16 @@
 		"ma": 0,
 		"oA": 0,
 		"oAP": "\/src\/Styles\/css\/Colors-min.css",
+		"oF": 0,
+		"oS": 0
+		},
+	"\/src\/Styles\/css\/Fonts.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/src\/Styles\/css\/Fonts-min.css",
 		"oF": 0,
 		"oS": 0
 		},

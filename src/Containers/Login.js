@@ -1,23 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { getProfileInfo, getIdToken } from '../Services/AuthServices'
+// import { getProfileInfo, getIdToken, emtr } from '../Services/AuthServices'
 import { actions } from '../Redux/Login'
+import { emtr } from '../Services/AuthServices'
+
 
 class Login extends Component {
-
-  componentDidUpdate() {
-    // push to the end of the async queue
-    setTimeout(() => {
-      const idToken = getIdToken()
-      const profile = getProfileInfo()
-      if (idToken) {
-        this.props.history.push('/demon')
-        this.props.dispatchUpdateProfile(profile, idToken)
-      } else {
-        this.props.history.push('/')
-      }
-    }, 0)
+  componentDidMount() {
+    emtr.on('profile_updated', val => {
+      this.props.dispatchUpdateProfile(val.profile, val.idToken)
+      this.props.history.push('/demon')
+    })
   }
 
   render() {

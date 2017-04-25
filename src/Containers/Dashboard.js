@@ -12,20 +12,37 @@ class Dashboard extends Component {
       temp: null,
     }
     this.logout = this.logout.bind(this)
-    console.log(this.props)
+  }
+
+  componentDidMount() {
+    if (!this.props.profile) {
+      let prfl = localStorage.getItem('profile')
+      const id = localStorage.getItem('id_token')
+      if (prfl && id) {
+        prfl = JSON.parse(prfl)
+        this.props.updateProfile(prfl, id)
+      } else {
+        this.logout()
+      }
+    }
   }
 
   logout() {
-    console.log(this.props)
     this.props.history.push('/')
     this.props.logoutRdx()
     logoutStorage()
   }
 
+
   render() {
+    if (!this.props.profile) return null
     return (
       <div>
-        <Topbar logout={this.logout} />
+        <Topbar
+          logout={this.logout}
+          {...this.props.profile}
+          screen={this.props.profile.screen_name}
+        />
       </div>
     )
   }
@@ -34,10 +51,13 @@ class Dashboard extends Component {
 const mapStateToProps = state => ({
   loggedIn: state.temp.mounted,
   router: state.router,
+  profile: state.login.profile,
+  state,
 })
 
 const mapDispatchToProps = dispatch => ({
   logoutRdx: () => dispatch(actions.logout()),
+  updateProfile: (profile, idToken) => dispatch(actions.setLoginInfo(profile, idToken)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
