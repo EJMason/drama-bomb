@@ -44,68 +44,11 @@
 		"sC": 0,
 		"tS": 0
 		},
-	"\/config\/env.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/config\/env-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/config\/jest\/cssTransform.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/config\/jest\/cssTransform-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/config\/jest\/fileTransform.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/config\/jest\/fileTransform-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/config\/paths.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/config\/paths-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/config\/polyfills.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/config\/polyfills-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/config\/webpack.config.dev.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/config\/webpack.config.dev-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/config\/webpack.config.prod.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/config\/webpack.config.prod-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
+	"\/config": {
+		"ft": 65536,
+		"oA": 1,
+		"oAP": "\/build\/config",
+		"oF": 0
 		},
 	"\/node_modules": {
 		"ft": 65536,
@@ -121,27 +64,11 @@
 		"oO": 0,
 		"oS": 1
 		},
-	"\/public\/favicon.ico": {
-		"ft": 8192,
-		"oA": 2,
-		"oAP": "\/public\/favicon.ico",
+	"\/public": {
+		"ft": 65536,
+		"oA": 1,
+		"oAP": "\/build\/public",
 		"oF": 0
-		},
-	"\/public\/index.html": {
-		"ft": 8192,
-		"oA": 2,
-		"oAP": "\/public\/index.html",
-		"oF": 0
-		},
-	"\/public\/tweet.svg": {
-		"ft": 2097152,
-		"miP": 0,
-		"oA": 2,
-		"oAP": "\/public\/tweet.svg",
-		"oF": 0,
-		"opt": 0,
-		"plM": 3758088159,
-		"prP": 0
 		},
 	"\/README.md": {
 		"cS": 0,
@@ -161,292 +88,23 @@
 		"rFN": 0,
 		"uCM": 0
 		},
-	"\/sampleData\/messages.json": {
-		"ft": 524288,
+	"\/sampleData": {
+		"ft": 65536,
 		"oA": 1,
-		"oAP": "\/sampleData\/messages-min.json",
-		"oF": 0,
-		"oO": 0,
-		"oS": 1
+		"oAP": "\/build\/sampleData",
+		"oF": 0
 		},
-	"\/scripts\/build.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/scripts\/build-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
+	"\/scripts": {
+		"ft": 65536,
+		"oA": 1,
+		"oAP": "\/build\/scripts",
+		"oF": 0
 		},
-	"\/scripts\/start.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/scripts\/start-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/scripts\/test.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/scripts\/test-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/server\/apiDocs.md": {
-		"cS": 0,
-		"eF": 1,
-		"eL": 1,
-		"eLB": 0,
-		"ema": 1,
-		"eSQ": 1,
-		"ft": 4096,
-		"oA": 0,
-		"oAP": "\/server\/apiDocs.html",
-		"oF": 0,
-		"oFM": 0,
-		"oS": 0,
-		"pHT": 0,
-		"pME": 1,
-		"rFN": 0,
-		"uCM": 0
-		},
-	"\/server\/appInstance.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/server\/appInstance-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/server\/controllers\/authCtrl.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/server\/controllers\/authCtrl-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/server\/controllers\/demonCtrl.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/server\/controllers\/demonCtrl-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/server\/controllers\/friendsCtrl.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/server\/controllers\/friendsCtrl-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/server\/controllers\/messagesCtrl.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/server\/controllers\/messagesCtrl-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/server\/database\/dbUtil\/UsersUtil.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/server\/database\/dbUtil\/UsersUtil-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/server\/database\/index.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/server\/database\/index-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/server\/database\/models\/Users.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/server\/database\/models\/Users-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/server\/database\/redis\/index.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/server\/database\/redis\/index-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/server\/database\/redis\/redisUtil.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/server\/database\/redis\/redisUtil-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/server\/httpServer.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/server\/httpServer-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/server\/middleware\/authMiddleware.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/server\/middleware\/authMiddleware-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/server\/middleware\/index.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/server\/middleware\/index-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/server\/routes\/authRoutes.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/server\/routes\/authRoutes-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/server\/routes\/demonRoutes.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/server\/routes\/demonRoutes-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/server\/routes\/friendsRoutes.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/server\/routes\/friendsRoutes-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/server\/routes\/index.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/server\/routes\/index-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/server\/routes\/messagesRoutes.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/server\/routes\/messagesRoutes-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/server\/server.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/server\/server-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/server\/services\/auth0Services.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/server\/services\/auth0Services-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/server\/services\/friendsServices.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/server\/services\/friendsServices-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/server\/services\/tokenServices.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/server\/services\/tokenServices-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/server\/services\/twitterServices.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/server\/services\/twitterServices-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/server\/utilities\/authUtil.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/server\/utilities\/authUtil-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/server\/utilities\/friendsUtil.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/server\/utilities\/friendsUtil-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"\/server\/utilities\/twitterUtil.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/server\/utilities\/twitterUtil-min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
+	"\/server": {
+		"ft": 65536,
+		"oA": 1,
+		"oAP": "\/build\/server",
+		"oF": 0
 		},
 	"\/src\/App.js": {
 		"ft": 64,
@@ -460,8 +118,17 @@
 	"\/src\/App.test.js": {
 		"ft": 64,
 		"mi": 1,
-		"oA": 0,
+		"oA": 1,
 		"oAP": "\/src\/App.test-min.js",
+		"oF": 0,
+		"sC": 0,
+		"tS": 0
+		},
+	"\/src\/Components\/HaterCard.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/src\/Components\/HaterCard-min.js",
 		"oF": 0,
 		"sC": 0,
 		"tS": 0
@@ -475,16 +142,6 @@
 		"sC": 0,
 		"tS": 0
 		},
-	"\/src\/Components\/Styles\/css\/Dashboard.css": {
-		"aP": 1,
-		"bl": 0,
-		"ft": 16,
-		"ma": 0,
-		"oA": 0,
-		"oAP": "\/src\/Components\/Styles\/css\/Dashboard-min.css",
-		"oF": 0,
-		"oS": 0
-		},
 	"\/src\/Components\/Styles\/css\/Homepage.css": {
 		"aP": 1,
 		"bl": 0,
@@ -495,7 +152,27 @@
 		"oF": 0,
 		"oS": 0
 		},
-	"\/src\/Components\/Styles\/Dashboard.sass": {
+	"\/src\/Components\/Styles\/css\/Sidebar.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/src\/Components\/Styles\/css\/Sidebar-min.css",
+		"oF": 0,
+		"oS": 0
+		},
+	"\/src\/Components\/Styles\/css\/Topbar.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/src\/Components\/Styles\/css\/Topbar-min.css",
+		"oF": 0,
+		"oS": 0
+		},
+	"\/src\/Components\/Styles\/HaterCard.sass": {
 		"aP": 0,
 		"bl": 0,
 		"dP": 10,
@@ -503,7 +180,7 @@
 		"ft": 2,
 		"ma": 0,
 		"oA": 0,
-		"oAP": "\/src\/Components\/Styles\/Dashboard.css",
+		"oAP": "\/src\/Components\/Styles\/css\/HaterCard.css",
 		"oF": 0,
 		"oS": 0,
 		"uL": 1
@@ -516,7 +193,7 @@
 		"ft": 2,
 		"ma": 0,
 		"oA": 0,
-		"oAP": "\/src\/Components\/Styles\/Homepage.css",
+		"oAP": "\/src\/Components\/Styles\/css\/Homepage.css",
 		"oF": 0,
 		"oS": 0,
 		"uL": 1
@@ -529,7 +206,20 @@
 		"ft": 2,
 		"ma": 0,
 		"oA": 0,
-		"oAP": "\/src\/Components\/Styles\/Sidebar.css",
+		"oAP": "\/src\/Components\/Styles\/css\/Sidebar.css",
+		"oF": 0,
+		"oS": 0,
+		"uL": 1
+		},
+	"\/src\/Components\/Styles\/TopBar.sass": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 2,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/src\/Components\/Styles\/css\/TopBar.css",
 		"oF": 0,
 		"oS": 0,
 		"uL": 1
@@ -579,6 +269,39 @@
 		"sC": 0,
 		"tS": 0
 		},
+	"\/src\/Containers\/Styles\/css\/Dashboard.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/src\/Containers\/Styles\/css\/Dashboard-min.css",
+		"oF": 0,
+		"oS": 0
+		},
+	"\/src\/Containers\/Styles\/Dashboard.sass": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 2,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/src\/Containers\/Styles\/css\/Dashboard.css",
+		"oF": 0,
+		"oS": 0,
+		"uL": 1
+		},
+	"\/src\/index-min.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/src\/index-min-min.css",
+		"oF": 0,
+		"oS": 0
+		},
 	"\/src\/index.css": {
 		"aP": 1,
 		"bl": 0,
@@ -592,7 +315,7 @@
 	"\/src\/index.js": {
 		"ft": 64,
 		"mi": 1,
-		"oA": 0,
+		"oA": 1,
 		"oAP": "\/src\/index-min.js",
 		"oF": 0,
 		"sC": 0,
@@ -688,7 +411,7 @@
 		"ft": 2,
 		"ma": 0,
 		"oA": 0,
-		"oAP": "\/src\/Styles\/App.css",
+		"oAP": "\/src\/Styles\/css\/App.css",
 		"oF": 0,
 		"oS": 0,
 		"uL": 1
@@ -701,7 +424,7 @@
 		"ft": 2,
 		"ma": 0,
 		"oA": 1,
-		"oAP": "\/src\/Styles\/Colors.css",
+		"oAP": "\/src\/Styles\/css\/Colors.css",
 		"oF": 0,
 		"oS": 0,
 		"uL": 1
@@ -744,7 +467,7 @@
 		"ft": 2,
 		"ma": 0,
 		"oA": 1,
-		"oAP": "\/src\/Styles\/Fonts.css",
+		"oAP": "\/src\/Styles\/css\/Fonts.css",
 		"oF": 0,
 		"oS": 0,
 		"uL": 1
@@ -757,7 +480,7 @@
 		"ft": 4,
 		"ma": 0,
 		"oA": 0,
-		"oAP": "\/src\/Styles\/Tools.css",
+		"oAP": "\/src\/Styles\/css\/Tools.css",
 		"oF": 0,
 		"oS": 0,
 		"uL": 1
@@ -2724,10 +2447,10 @@
 	"languageDefaultsSASS": {
 		"autoOutputAction": 0,
 		"autoOutputPathFilenamePattern": "*.css",
-		"autoOutputPathRelativePath": "..\/css",
+		"autoOutputPathRelativePath": ".\/css",
 		"autoOutputPathReplace1": "sass",
 		"autoOutputPathReplace2": "css",
-		"autoOutputPathStyle": 0,
+		"autoOutputPathStyle": 2,
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
@@ -2795,7 +2518,7 @@
 	"languageDefaultsUserDefined": [
 		],
 	"previewPathAddition": "",
-	"skippedFoldersString": "log, _logs, logs, _cache, cache, \/storage\/framework\/sessions, node_modules",
+	"skippedFoldersString": "log, _logs, logs, _cache, cache, \/storage\/framework\/sessions, node_modules, \/server, \/public, \/sampledata, \/scripts, \/config",
 	"sourceFolderName": "source",
 	"uglifyDefinesString": "",
 	"uglifyFlags2": {
