@@ -7,7 +7,8 @@ const instantiateMiddleware = app => {
   app.use(bodyParser.json())
   app.use(cors())
 
-  if (process.env.TESTNG) {
+  console.log('THIS IS THE PROCESS: ', process.env.NODE_ENV)
+  if (process.env.NODE_ENV === 'development') {
     app.use(morgan('tiny'))
   }
 }
