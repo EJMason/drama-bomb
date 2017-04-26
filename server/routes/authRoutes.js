@@ -4,7 +4,10 @@ const ctrl = require('../controllers/authCtrl')
 const mw = require('../middleware/authMiddleware')
 
 // ----------------- Routes ----------------- //
+router.get('/test', (req, res) => {
+  res.status(200).send('yoyoyo')
+})
 
-router.post('/login/init', mw.validateBody, ctrl.loginInit)
+router.post('/login/init', mw.checkJWT, ctrl.loginInit)
 
 module.exports = router

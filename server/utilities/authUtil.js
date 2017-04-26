@@ -10,7 +10,7 @@ const redis = require('../database/redis')
 const getManagmentToken = async () => {
   try {
     let mtoken = await redis.get('mtoken')
-    if (!services.checkIfWebTokenIsExpired(mtoken)) {
+    if (services.checkIfWebTokenIsExpired(mtoken)) {
       const options = services.generateManagmentOptions()
       const response = await rp(options)
       mtoken = JSON.parse(response).access_token
@@ -34,7 +34,6 @@ const getUserIdp = async userId => {
       url: `${process.env.AUTH0_DOMAIN}/api/v2/users/${encodeURIComponent(userId)}`,
       headers: { authorization: `Bearer ${mtoken}` },
     })
-
     const keys = JSON.parse(response).identities[0]
     return { token: keys.access_token, token_secret: keys.access_token_secret }
   } catch (err) {

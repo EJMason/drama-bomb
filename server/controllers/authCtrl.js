@@ -12,7 +12,13 @@ const example = (req, res) => {
  */
 const loginInit = async (req, res) => {
   try {
-    const user = await userUtil.findOrCreate(req.body)
+    const userInfo = {
+      user_id: req.profile.user_id,
+      simple_id: req.profile.simple_id,
+      screen_name: req.profile.screen_name,
+    }
+
+    const user = await userUtil.findOrCreate(userInfo)
     const tokens = await authUtil.getUserIdp(user.user_id)
     await redisUtil.addUserIdpAndHatersRedis(user.user_id, tokens, user)
 
