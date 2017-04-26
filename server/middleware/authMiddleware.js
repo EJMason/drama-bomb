@@ -1,4 +1,3 @@
-const jwt = require('express-jwt')
 const jsonwt = require('jsonwebtoken')
 
 const shhh = (process.env.NODE_ENV === 'testing')
@@ -28,16 +27,4 @@ const checkJWT = (req, res, next) => {
   }
 }
 
-const generateProductionMiddleware = () => {
-  if (process.env.TESTING) {
-    return (req, res, next) => { next() }
-  }
-  return jwt({
-    secret: process.env.AUTH0_CLIENT_SECRET,
-    audience: process.env.AUTH0_CLIENT_ID,
-    issuer: process.env.AUTH0_DOMAIN,
-    algorithms: ['HS256'],
-  })
-}
-
-module.exports = { validateBody, checkJWT, validateJwt: generateProductionMiddleware() }
+module.exports = { validateBody, checkJWT }
