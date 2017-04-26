@@ -13,8 +13,13 @@ const test = () => {
   return axios.get('/auth/test')
 }
 
+const friendsCronHaters = () => {
+  return axios.get('/friends/cron/haters')
+}
+
 export const get = {
   test,
+  friendsCronHaters,
 }
 
 export const post = {

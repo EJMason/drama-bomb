@@ -3,10 +3,11 @@ import { connect } from 'react-redux'
 
 import { actions } from '../Redux/Login'
 import { logoutStorage } from '../Services/AuthServices'
-import { setDefaults } from '../Services/Api'
+import { setDefaults, get } from '../Services/Api'
 import Topbar from '../Components/Topbar'
 import Sidebar from '../Components/Sidebar'
 import './Styles/css/Dashboard.css'
+
 
 class Dashboard extends Component {
   constructor(props) {
@@ -19,20 +20,31 @@ class Dashboard extends Component {
 
   componentDidMount() {
     if (!this.props.profile) {
-      let profile = localStorage.getItem('profile')
-      const idToken = localStorage.getItem('id_token')
-      setDefaults(idToken)
-      if (profile && idToken) {
-        profile = JSON.parse(profile)
-        this.props.dispBeginInit({ profile, idToken })
-      } else {
-        this.logout()
-      }
+      this.checkLocalstorageForToken()
     }
   }
 
-  chronCheck() {
-    
+  cronCheck() {
+    console.log('HERE WE ARE')
+    get.friendsCronHaters()
+      .then(data => {
+        console.log(data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+  checkLocalstorageForToken() {
+    let profile = localStorage.getItem('profile')
+    const idToken = localStorage.getItem('id_token')
+    setDefaults(idToken)
+    if (profile && idToken) {
+      profile = JSON.parse(profile)
+      this.props.dispBeginInit({ profile, idToken })
+    } else {
+      this.logout()
+    }
   }
 
   logout() {
@@ -41,6 +53,14 @@ class Dashboard extends Component {
     logoutStorage()
   }
 
+  handleMouseDown = () => {
+    this.cronCheck()
+  }
+
+  handleTouchStart = e => {
+    e.preventDefault()
+    this.handleMouseDown()
+  }
 
   render() {
     if (!this.props.profile) return null
@@ -57,6 +77,13 @@ class Dashboard extends Component {
           <Sidebar />
         </div>
         <div className="content-container-grd">
+
+          <button
+            onMouseDown={this.handleMouseDown}
+            onTouchStart={this.handleTouchStart}
+          >Cron Check Tester
+          </button>
+
           {
             this.props.loggedIn ? 'I AM LOGGED IN!!!' : 'ERROR!!'
           }
