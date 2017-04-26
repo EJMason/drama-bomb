@@ -80,6 +80,10 @@ class HaterCard extends Component {
                     height: `${x}px`,
                   }}
                 />
+                <div className="textArea">
+                  <div className="cardText card-name">Bob Jones</div>
+                  <div className="cardText card-handle">@bobIsTheCoolest</div>
+                </div>
               </div>
             </div>
           }

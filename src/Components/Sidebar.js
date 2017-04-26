@@ -5,7 +5,7 @@ import './Styles/css/Sidebar.css'
 
 const Sidebar = () => {
   return (
-    <div className="container-all see">
+    <div className="container-all">
       <div>
         <HaterCard />
       </div>

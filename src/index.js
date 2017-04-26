@@ -5,7 +5,7 @@ import createHistory from 'history/createBrowserHistory'
 
 import Routing from './Routing'
 import createStore from './Redux/Reducers'
-import './index.css'
+import './Styles/css/index.css'
 
 const history = createHistory()
 
