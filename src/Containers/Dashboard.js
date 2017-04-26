@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import { actions } from '../Redux/Login'
 import { logoutStorage } from '../Services/AuthServices'
+import { setDefaults } from '../Services/Api'
 import Topbar from '../Components/Topbar'
 import Sidebar from '../Components/Sidebar'
 import './Styles/css/Dashboard.css'
@@ -18,15 +19,20 @@ class Dashboard extends Component {
 
   componentDidMount() {
     if (!this.props.profile) {
-      let prfl = localStorage.getItem('profile')
-      const id = localStorage.getItem('id_token')
-      if (prfl && id) {
-        prfl = JSON.parse(prfl)
-        this.props.updateProfile(prfl, id)
+      let profile = localStorage.getItem('profile')
+      const idToken = localStorage.getItem('id_token')
+      setDefaults(idToken)
+      if (profile && idToken) {
+        profile = JSON.parse(profile)
+        this.props.dispBeginInit({ profile, idToken })
       } else {
         this.logout()
       }
     }
+  }
+
+  chronCheck() {
+    
   }
 
   logout() {
@@ -51,7 +57,9 @@ class Dashboard extends Component {
           <Sidebar />
         </div>
         <div className="content-container-grd">
-          here
+          {
+            this.props.loggedIn ? 'I AM LOGGED IN!!!' : 'ERROR!!'
+          }
         </div>
       </div>
     )
@@ -61,7 +69,7 @@ class Dashboard extends Component {
 // ------------------ REDUX -------------------- //
 
 const mapStateToProps = state => ({
-  loggedIn: state.temp.mounted,
+  loggedIn: state.login.loggedIn,
   router: state.router,
   profile: state.login.profile,
   state,
@@ -69,6 +77,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   logoutRdx: () => dispatch(actions.logout()),
+  dispBeginInit: idToken => dispatch(actions.beginInitSeq(idToken)),
   updateProfile: (profile, idToken) => dispatch(actions.setLoginInfo(profile, idToken)),
 })
 

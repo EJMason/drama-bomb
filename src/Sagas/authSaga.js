@@ -3,16 +3,19 @@ import { delay } from 'redux-saga'
 import axios from 'axios'
 
 import { actions } from '../Redux/Login'
+import { actions as userActions } from '../Redux/User'
 
 export function* sagaInitSeq({ payload }) {
-  console.log('This is in the saga: ', payload)
   try {
     // add profile info to redux
     yield put(actions.setLoginInfo(payload.profile, payload.idToken))
     // endpoint auth/login/init
-    const val = yield call(axios.post, '/auth/login/init')
-    console.log(val)
+    const { data } = yield call(axios.post, '/auth/login/init')
+    yield put(actions.finishedInitSeq(data))
+
+    yield put(userActions.initialUsers(data.friends_ids, data.haters))
   } catch (err) {
+    yield put(actions.initSeqErr(err))
     console.error(err)
   }
 }
