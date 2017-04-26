@@ -23,6 +23,7 @@ const getFollowersIds = async qs => {
  * @returns {Promise}
  */
 const getUsersLookup = async (qs, userId) => {
+  console.log('QUERY STRING: ', qs)
   const uri = `${baseUrl}/users/lookup.json`
   const headers = await services.genTwitterAuthHeader('GET', uri, userId, qs)
   return rp({ uri, qs, headers, json: true })

@@ -13,7 +13,7 @@ const findOrCreate = async ({ user_id, simple_id, screen_name, friends_ids, hate
 
 const updateUserFriendsAndHaters = async (userId, haters, friends) => {
   try {
-    const user = await Users.findOne({ userId })
+    const user = await Users.findOne({ user_id: userId })
     user.friends_ids = friends
     user.haters = haters
     await user.save()

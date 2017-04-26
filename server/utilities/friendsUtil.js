@@ -62,7 +62,7 @@ const getNewHatersFromTwitter = async (haterIds, userId) => {
       }
     })
   } catch (err) {
-    return err
+    throw err
   }
 }
 

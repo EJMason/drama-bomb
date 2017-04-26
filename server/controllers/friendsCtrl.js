@@ -17,14 +17,14 @@ const chronHaters = async (req, res) => {
     // if (!userData) throw util.throwErr(401, 'Token not valid')
     // get user Info from Redis, if not in Redis, log out the user from client
     let user = await redis.get(userData.user_id)
-    if (!user) throw util.throwErr(400, 'User not in cache')
+    if (!user) throw util.throwErr(403, 'User not in cache')
     user = JSON.parse(user)
-
     // get current followers from twitter Api, sort the ids
     const followers = await util.getSortedUserIds(userData)
     // perform comparison algorithm, return object with new friends and haters and changed
     const followersHaters = util.findNewHatersAndFriends(user, followers)
-    // If the object has any changes, update properties in the databas
+    // If the object has any changes, update properties in the database
+
     if (followersHaters.changed) {
       // get all of the new Hater objects from twitter api, if any and sort them
       if (followersHaters.newHaters.length) {
@@ -33,16 +33,22 @@ const chronHaters = async (req, res) => {
       }
 
       // send the updated users and haters to the database only if something has changed
-      util.updateDatabaseWithNewInfo(userData.user_id, followersHaters)
+      await util.updateDatabaseWithNewInfo(userData.user_id, followersHaters)
       // in the redis object, change the friends to the array pulled from twitter
       user.haters = followersHaters.haters
       user.friends_ids = followersHaters.friends
+      user = JSON.stringify(user)
       await redis.set(userData.user_id, user, 'ex', 3600)
     }
     // send client updated list of friends and haters
-    res.status(200).send(followersHaters)
+    return res.status(200).send(followersHaters)
   } catch (err) {
-    err.code ? res.status(err.code).send(err.message) : res.status(400).send(err)
+    if (err.statusCode) {
+      console.error(err.message)
+      return res.status(err.statusCode).send(err.message)
+    }
+    console.error('There was an error at chronHaters.ctrl: ', err)
+    return err.code ? res.status(err.code).send(err.message) : res.status(400).send(err)
   }
 }
 
