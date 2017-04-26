@@ -3,8 +3,9 @@ import AuthService from '../Services/AuthServices'
 // ------------------ Action Names ----------------- //
 export const types = {
   SET_LOGGED_IN: 'SET_LOGGED_IN',
-  SET_LOGIN_INFO: 'SET_LOGIN_INFO',
+  SET_LOGIN_INFO: 'AUTH/SET_LOGIN_INFO',
   LOGOUT: 'LOGOUT',
+  BEGIN_INIT_SEQUENCE: 'AUTH/BEGIN_INIT_SEQUENCE',
 }
 
 // ----------- Initialize Default State --------- //
@@ -38,6 +39,7 @@ export const actions = {
   setLoggedIn: () => ({ type: types.SET_LOGGED_IN }),
   setLoginInfo: (profile, idToken) => ({ type: types.SET_LOGIN_INFO, payload: { profile, idToken } }),
   logout: () => ({ type: types.LOGOUT }),
+  beginInitSeq: idToken => ({ type: types.BEGIN_INIT_SEQUENCE, payload: idToken }),
 }
 
 // -------------- Selectors ------------ //

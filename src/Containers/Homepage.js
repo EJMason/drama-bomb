@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { actions as tempActions } from '../Redux/temp'
-// import { emtr } from '../Services/AuthServices'
+import { setDefaults } from '../Services/Api'
 // import HomeTopBar from './HomeTopBar'
 
 class Homepage extends Component {
@@ -12,7 +12,7 @@ class Homepage extends Component {
     this.state = {
       temp: null,
     }
-    console.log('HERE ARE THE PROPS: ', props)
+    setDefaults()
   }
 
   componentDidMount() {

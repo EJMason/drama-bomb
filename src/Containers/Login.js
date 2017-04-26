@@ -3,12 +3,14 @@ import { connect } from 'react-redux'
 
 import { actions } from '../Redux/Login'
 import { emtr } from '../Services/AuthServices'
-
+import { setDefaults } from '../Services/Api'
 
 class Login extends Component {
   componentDidMount() {
     emtr.on('profile_updated', val => {
-      this.props.dispatchUpdateProfile(val.profile, val.idToken)
+      setDefaults(val.idToken)
+      this.props.dispBeginInit(val)
+      // this.props.dispatchUpdateProfile(val.profile, val.idToken)
       this.props.history.push('/demon')
     })
   }
@@ -27,6 +29,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  dispBeginInit: idToken => dispatch(actions.beginInitSeq(idToken)),
   dispatchUpdateProfile: (profile, idToken) => dispatch(actions.setLoginInfo(profile, idToken)),
 })
 

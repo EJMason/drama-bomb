@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import createHistory from 'history/createBrowserHistory'
-
 import Routing from './Routing'
 import createStore from './Redux/Reducers'
 import './Styles/css/index.css'
