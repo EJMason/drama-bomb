@@ -47,8 +47,8 @@
     "whatwg-fetch": "2.0.2"
   },
   "dependencies": {
-    "asyncawait": "^1.0.6",
     "auth0-lock": "^10.14.0",
+    "axios": "^0.16.1",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
     "bootstrap": "4.0.0-alpha.6",
@@ -87,7 +87,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "NODE_ENV=testing mocha  --reporter spec",
-    "server": "nodemon ./server/server.js",
+    "server": "NODE_ENV=development nodemon ./server/server.js",
     "lint": "./node_modules/.bin/eslint src server",
     "play": "NODE_ENV=testing mocha ./test/Mongoose.spec.js --reporter spec"
   },

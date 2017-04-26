@@ -356,6 +356,15 @@
 		"sC": 0,
 		"tS": 0
 		},
+	"\/src\/Sagas\/authSaga.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/src\/Sagas\/authSaga-min.js",
+		"oF": 0,
+		"sC": 0,
+		"tS": 0
+		},
 	"\/src\/Sagas\/index.js": {
 		"ft": 64,
 		"mi": 1,
@@ -370,6 +379,15 @@
 		"mi": 1,
 		"oA": 1,
 		"oAP": "\/src\/Sagas\/tempSaga-min.js",
+		"oF": 0,
+		"sC": 0,
+		"tS": 0
+		},
+	"\/src\/Services\/Api.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/src\/Services\/Api-min.js",
 		"oF": 0,
 		"sC": 0,
 		"tS": 0

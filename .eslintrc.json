@@ -52,7 +52,8 @@
         "no-plusplus": "off",
         "react/jsx-no-bind": [0, {"allowBind": true}],
         "class-methods-use-this": ["off", { "exceptMethods": ["setToken", "getProfile", "getToken", "logout", "render"] }],
-        "camelcase": ["error", {"properties": "never"}] 
+        "camelcase": ["error", {"properties": "never"}],
+        "dot-notation": "off"
     },
     "extends": "airbnb",
     "plugins": [
