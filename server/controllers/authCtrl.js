@@ -18,8 +18,13 @@ const loginInit = async (req, res) => {
       screen_name: req.profile.screen_name,
     }
 
+    // Upon logging in,
+      // check if user is in the database,
+      // do not add if they are, get info
     const user = await userUtil.findOrCreate(userInfo)
+    // Auth0 managment API, get their idp token
     const tokens = await authUtil.getUserIdp(user.user_id)
+    // Once complete, add them to redis db
     await redisUtil.addUserIdpAndHatersRedis(user.user_id, tokens, user)
 
     res.status(200).send(user)

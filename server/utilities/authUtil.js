@@ -24,7 +24,7 @@ const getManagmentToken = async () => {
 
 /**
  * Auth0 endpoint /api/v2/users/USER_ID
- * @param {*} userId - id of user from Auth0 token
+ * @param {String} userId - id of user from Auth0 token
  */
 const getUserIdp = async userId => {
   try {
