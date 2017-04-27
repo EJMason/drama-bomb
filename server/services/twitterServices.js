@@ -1,6 +1,6 @@
 const oauthSignature = require('oauth-signature')
-const redis = require('../database/redis')
 
+// ----------------- Helper Methods ----------------- //
 const genNonce = length => {
   const lettersAndNumbers = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
   let text = ''
@@ -12,9 +12,8 @@ const genNonce = length => {
 
 const genTimestamp = () => Math.floor(Date.now() / 1000)
 
-
-const genDefaultAuthParams = token => {
-  return {
+const genDefaultAuthParams = (token, query) => {
+  const defaultObj = {
     oauth_consumer_key: process.env.TWITTER_CONSUMER_KEY,
     oauth_signature_method: 'HMAC-SHA1',
     oauth_version: '1.0',
@@ -22,6 +21,7 @@ const genDefaultAuthParams = token => {
     oauth_timestamp: genTimestamp(),
     oauth_token: token,
   }
+  return Object.assign({}, defaultObj, query)
 }
 
 const genOAuthSignature = (authParams, tokenSecret, url, httpMethod) => {
@@ -29,6 +29,7 @@ const genOAuthSignature = (authParams, tokenSecret, url, httpMethod) => {
   return oauthSignature.generate(httpMethod, url, authParams, consumerSecret, tokenSecret)
 }
 
+// ----------------- Exported Methods ----------------- //
 /**
  * Generates OAuth compliant headers for making requests to twitter REST API
  * @param {string} httpMethod - request method
@@ -37,16 +38,10 @@ const genOAuthSignature = (authParams, tokenSecret, url, httpMethod) => {
  * @param {object} query - parameters
  * @return {object} headers for twitter api
  */
-const genTwitterAuthHeader = async (httpMethod, url, userId, query) => {
+const genTwitterAuthHeader = async (httpMethod, url, userId, query, { token, token_secret }) => {
   try {
-    let user = await redis.get(userId)
-    user = JSON.parse(user)
-    if (!user) { throw new Error('User Not in Database!') }
-    let authParams = genDefaultAuthParams(user.token)
-    authParams = Object.assign({}, authParams, query)
-
-    const signature = genOAuthSignature(authParams, user.token_secret, url, httpMethod)
-
+    const authParams = genDefaultAuthParams(token, query)
+    const signature = genOAuthSignature(authParams, token_secret, url, httpMethod)
     const str = [
       `OAuth oauth_consumer_key=${authParams.oauth_consumer_key}, `,
       'oauth_signature_method=HMAC-SHA1, ',
@@ -57,7 +52,12 @@ const genTwitterAuthHeader = async (httpMethod, url, userId, query) => {
       `oauth_signature=${signature}`]
     return { Authorization: str.join('') }
   } catch (err) {
-    return err
+    const error = {
+      defaultError: err,
+      message: 'error generating headers',
+      method: 'twitterServices/genTwitterAuthHeader',
+    }
+    throw error
   }
 }
 

@@ -3,6 +3,15 @@ const services = require('../services/twitterServices')
 
 const baseUrl = 'https://api.twitter.com/1.1'
 
+const throwErr = (statusCode, message, method, defaultError = null) => {
+  return {
+    statusCode,
+    message,
+    method,
+    defaultError,
+  }
+}
+
 /**
  * Twitter API: /followers/ids
  * @param {Object} qs
@@ -10,10 +19,21 @@ const baseUrl = 'https://api.twitter.com/1.1'
  * @param {string} qs.screen_name - Twitter handle
  * @returns {Promise}
  */
-const getFollowersIds = async qs => {
-  const uri = `${baseUrl}/followers/ids.json`
-  const headers = await services.genTwitterAuthHeader('GET', uri, qs.user_id, qs)
-  return rp({ uri, qs, headers, json: true })
+const getFollowersIds = async ({ user_id, screen_name, token, token_secret }) => {
+  try {
+    const uri = `${baseUrl}/followers/ids.json`
+    const qs = { user_id, screen_name }
+    const headers = await services.genTwitterAuthHeader('GET', uri, user_id, { user_id, screen_name }, { token, token_secret })
+    return rp({ uri, qs, headers, json: true })
+  } catch (err) {
+    const errParams = [
+      400,
+      'There was an error in twitterUtil : getFollowersIds',
+      'twitterUtil : getFollowersIds',
+      err,
+    ]
+    throw throwErr(...errParams)
+  }
 }
 
 /**
@@ -29,15 +49,7 @@ const getUsersLookup = async (qs, userId) => {
   return rp({ uri, qs, headers, json: true })
 }
 
-/**
- * Twitter API: Send private messages to other users
- */
-const sendPrivateMessage = () => {
-
-}
-
 module.exports = {
   getFollowersIds,
-  sendPrivateMessage,
   getUsersLookup,
 }
