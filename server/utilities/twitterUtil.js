@@ -43,10 +43,19 @@ const getFollowersIds = async ({ user_id, screen_name, token, token_secret }) =>
  * @returns {Promise}
  */
 const getUsersLookup = async (qs, userId) => {
-  console.log('QUERY STRING: ', qs)
-  const uri = `${baseUrl}/users/lookup.json`
-  const headers = await services.genTwitterAuthHeader('GET', uri, userId, qs)
-  return rp({ uri, qs, headers, json: true })
+  try {
+    const uri = `${baseUrl}/users/lookup.json`
+    const headers = await services.genTwitterAuthHeader('GET', uri, userId, qs)
+    return rp({ uri, qs, headers, json: true })
+  } catch (err) {
+    const errParams = [
+      400,
+      'There was an error in twitterUtil : getUsersLookup',
+      'twitterUtil : getUsersLookup',
+      err,
+    ]
+    throw throwErr(...errParams)
+  }
 }
 
 module.exports = {
