@@ -1,5 +1,14 @@
 const redis = require('./')
 
+const throwErr = (statusCode, message, method, defaultError = null) => {
+  return {
+    statusCode,
+    message,
+    method,
+    defaultError,
+  }
+}
+
 /**
  * Add to cache
  * @param {String} userId
@@ -22,4 +31,26 @@ const addUserIdpAndHatersRedis = (userId, tokens, user) => {
   }
 }
 
-module.exports = { addUserIdpAndHatersRedis, redis }
+const getUserInfoFromCache = async userId => {
+  try {
+    const user = await redis.get(userId)
+    if (!user) {
+      const errParams = [
+        400,
+        'There was an error in redisUtil : getUserInfoFromCache',
+        'redisUtil : getUserInfoFromCache',
+        err,
+      ]
+      throw throwErr(...errParams)
+    }
+    return JSON.parse(user)
+  } catch (err) {
+    throw err
+  }
+}
+
+module.exports = {
+  addUserIdpAndHatersRedis,
+  getUserInfoFromCache,
+  redis,
+}
