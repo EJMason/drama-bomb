@@ -1,55 +1,51 @@
-const redis = require('../database/redis')
+const redisUtil = require('../database/redis/redisUtil')
 const util = require('../utilities/friendsUtil')
-
-const placeholder = (req, res) => {
-  res.status(200).send('Hello, Friends!')
-}
 
 /**
  * Using a client chron task, this should check if user has any new friends or haters
  * req.params.idtoken should be a valid token
  */
-const chronHaters = async (req, res) => {
+const checkForNewFriendsAndHaters = async (req, res) => {
   try {
-    // make user token is valid, if valid return {user_id, screen_name}, else return null
-    const userData = req.profile
-    // const userData = await util.checkIdToken(req.params.idtoken)
-    // if (!userData) throw util.throwErr(401, 'Token not valid')
+    const { user_id, screen_name } = req.profile
     // get user Info from Redis, if not in Redis, log out the user from client
-    let user = await redis.get(userData.user_id)
-    if (!user) throw util.throwErr(403, 'User not in cache')
-    user = JSON.parse(user)
+    const { friends_ids, haters, token, token_secret } = await redisUtil.getUserInfoFromCache(user_id)
+
     // get current followers from twitter Api, sort the ids
-    const followers = await util.getSortedUserIds(userData)
+    const newArrFromTwitter = await util.getSortedUserIds({ user_id, screen_name, token, token_secret })
+
     // perform comparison algorithm, return object with new friends and haters and changed
-    const followersHaters = util.findNewHatersAndFriends(user, followers)
+    let followersHaters = util.findNewHatersAndFriends({ friends_ids, haters }, newArrFromTwitter)
+    /* followersHaters:
+   newFriends: array of new user ids
+    newHaters: array of new hater ids
+      friends: most recent array from twitter of ALL friend's user_id(s)
+      changed: Bollean if there are any bew friends or haters
+       haters: at this pont, HATERS IS JUST THE OLD LIST FROM REDIS CACHE,
+              but any haters that readded you are removed
+    */
+    if (followersHaters.newHaters.length) {
+      followersHaters = util.getUpdateHatersAndSort(followersHaters, user_id)
+    }
+
     // If the object has any changes, update properties in the database
-
     if (followersHaters.changed) {
-      // get all of the new Hater objects from twitter api, if any and sort them
-      if (followersHaters.newHaters.length) {
-        followersHaters.newHaters = await util.getNewHatersFromTwitter(followersHaters.newHaters, userData.user_id)
-        util.sortHaters(followersHaters)
-      }
+      await util.updateDatabaseWithNewInfo(user_id, followersHaters)
+      // util.updateDatabaseWithNewInfo(user_id, followersHaters).then()
+      redisUtil.addUserIdpAndHatersRedis(
+        user_id,
+        { token, token_secret },
+        { friends_ids, haters: followersHaters.haters })
+    }
 
-      // send the updated users and haters to the database only if something has changed
-      await util.updateDatabaseWithNewInfo(userData.user_id, followersHaters)
-      // in the redis object, change the friends to the array pulled from twitter
-      user.haters = followersHaters.haters
-      user.friends_ids = followersHaters.friends
-      user = JSON.stringify(user)
-      await redis.set(userData.user_id, user, 'ex', 3600)
-    }
-    // send client updated list of friends and haters
-    return res.status(200).send(followersHaters)
+    res.status(200).send(followersHaters)
   } catch (err) {
-    if (err.statusCode) {
-      console.error(err.message)
-      return res.status(err.statusCode).send(err.message)
-    }
-    console.error('There was an error at chronHaters.ctrl: ', err)
-    return err.code ? res.status(err.code).send(err.message) : res.status(400).send(err)
+    console.log(err)
+    const status = err.statusCode || 400
+    res.status(status).send(err)
   }
 }
 
-module.exports = { placeholder, chronHaters }
+module.exports = {
+  checkForNewFriendsAndHaters,
+}
