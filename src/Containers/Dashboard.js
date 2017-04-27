@@ -25,7 +25,6 @@ class Dashboard extends Component {
   }
 
   cronCheck() {
-    console.log('HERE WE ARE')
     get.friendsCronHaters()
       .then(data => {
         console.log(data)
