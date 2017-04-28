@@ -17,7 +17,6 @@ const loginInit = async (req, res) => {
       simple_id: req.profile.simple_id,
       screen_name: req.profile.screen_name,
     }
-    console.log('\n\n THIS IS PROFILE: ', userInfo)
     // Upon logging in,
       // check if user is in the database,
       // do not add if they are, get info
@@ -28,7 +27,11 @@ const loginInit = async (req, res) => {
     await redisUtil.addUserIdpAndHatersRedis(user.user_id, tokens, user)
 
     res.status(200).send(user)
-  } catch (err) { res.status(400).send(err) }
+  } catch (err) {
+    console.log(Object.keys(err))
+    console.log(err.message)
+    res.status(400).send(err)
+  }
 }
 
 module.exports = { example, loginInit }

@@ -10,14 +10,16 @@ const redis = require('../database/redis')
 const getManagmentToken = async () => {
   try {
     let mtoken = await redis.get('mtoken')
-    if (services.checkIfWebTokenIsExpired(mtoken)) {
+    if (!mtoken || services.checkIfWebTokenIsExpired(mtoken)) {
       const options = services.generateManagmentOptions()
       const response = await rp(options)
       mtoken = JSON.parse(response).access_token
+      console.log('IT IS THE TOKEN: ', mtoken)
       redis.set('mtoken', mtoken)
     }
     return mtoken
   } catch (err) {
+    console.log('ERROR IN getManagmentToken')
     return err
   }
 }
@@ -37,6 +39,7 @@ const getUserIdp = async userId => {
     const keys = JSON.parse(response).identities[0]
     return { token: keys.access_token, token_secret: keys.access_token_secret }
   } catch (err) {
+    console.log('ERROR IN getUserIdp')
     throw err
   }
 }

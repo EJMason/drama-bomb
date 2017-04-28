@@ -4,6 +4,7 @@ import tweet from '../../public/tweet.svg'
 import './Styles/css/Topbar.css'
 
 const Topbar = ({ logout, picture, name, screen }) => {
+  const biggerImage = picture.replace('_normal', '')
   const names = name.split(' ')
   const fName = names[0]
   const lName = names[1] ? names[1].charAt(0) : ''
@@ -21,7 +22,7 @@ const Topbar = ({ logout, picture, name, screen }) => {
         </div>
         <input
           type="image"
-          src={picture}
+          src={biggerImage}
           className="userImage"
           onClick={logout}
         />

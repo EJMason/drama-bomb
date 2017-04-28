@@ -45,6 +45,10 @@ const getFollowersIds = async ({ user_id, screen_name, token, token_secret }) =>
 const getUsersLookup = async (qs, userId) => {
   try {
     const uri = `${baseUrl}/users/lookup.json`
+    /*
+    WHY DOES services.genTwitterAuthHeader NOT HAVE LAST PARAMETER: KEYS?!?!?!?!
+    THIS SHOULD NOT WORK!!!!!!!
+    */
     const headers = await services.genTwitterAuthHeader('GET', uri, userId, qs)
     return rp({ uri, qs, headers, json: true })
   } catch (err) {

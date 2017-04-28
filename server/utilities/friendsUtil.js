@@ -71,7 +71,7 @@ const getSortedUserIds = async ({ user_id, screen_name, token, token_secret }) =
   } catch (err) {
     const errParams = [
       400,
-      'There was an error in friendsUtil : getNewHatersFromTwitter',
+      'There was an error in friendsUtil : getSortedUserIds',
       'friendsUtil : getSortedIds',
       err,
     ]

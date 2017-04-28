@@ -23,7 +23,9 @@ const addUserIdpAndHatersRedis = (userId, tokens, user) => {
       throw throwErr(400, 'addUserIdpAndHatersRedis', 'Object must have properties token & token_secret')
     } else {
       let values = {
+        user_id: user.simple_id,
         friends_ids: user.friends_ids,
+        followers_count: user.friends_ids.length,
         haters: user.haters,
         token: tokens.token,
         token_secret: tokens.token_secret,
@@ -55,9 +57,14 @@ const updateExpiry = async key => {
   }
 }
 
+const getAllActiveUsers = async () => {
+
+}
+
 module.exports = {
   addUserIdpAndHatersRedis,
   getUserInfoFromCache,
   updateExpiry,
+  getAllActiveUsers,
   redis,
 }
