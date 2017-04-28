@@ -17,7 +17,7 @@ const loginInit = async (req, res) => {
       simple_id: req.profile.simple_id,
       screen_name: req.profile.screen_name,
     }
-
+    console.log('\n\n THIS IS PROFILE: ', userInfo)
     // Upon logging in,
       // check if user is in the database,
       // do not add if they are, get info

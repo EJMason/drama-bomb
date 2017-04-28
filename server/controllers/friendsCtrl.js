@@ -36,6 +36,20 @@ const checkForNewFriendsAndHaters = async (req, res) => {
   }
 }
 
+const userPingisLoggedIn = (req, res) => {
+  try {
+    const { user_id } = req.profile
+    redisUtil.updateExpiry(user_id)
+    res.status(200).send('success')
+  } catch (err) {
+    console.log(err)
+    const status = err.statusCode || 400
+    res.status(status).send(err)
+  }
+}
+
+
 module.exports = {
   checkForNewFriendsAndHaters,
+  userPingisLoggedIn,
 }
