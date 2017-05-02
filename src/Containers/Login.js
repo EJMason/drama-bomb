@@ -10,7 +10,6 @@ class Login extends Component {
     emtr.on('profile_updated', val => {
       setDefaults(val.idToken)
       this.props.dispBeginInit(val)
-      // this.props.dispatchUpdateProfile(val.profile, val.idToken)
       this.props.history.push('/demon')
     })
   }

@@ -40,16 +40,15 @@ const getFollowersIds = async ({ user_id, screen_name, token, token_secret }) =>
  * Twitter API: /users/lookup
  * @param {Object} qs
  * @param {string} qs.user_id  - Comma seperated list of user ids
+ * @param {Object} keys
+ * @param {string} keys.token
+ * @param {string} keys.token_secret
  * @returns {Promise}
  */
-const getUsersLookup = async (qs, userId) => {
+const getUsersLookup = async (qs, userId, keys) => {
   try {
     const uri = `${baseUrl}/users/lookup.json`
-    /*
-    WHY DOES services.genTwitterAuthHeader NOT HAVE LAST PARAMETER: KEYS?!?!?!?!
-    THIS SHOULD NOT WORK!!!!!!!
-    */
-    const headers = await services.genTwitterAuthHeader('GET', uri, userId, qs)
+    const headers = await services.genTwitterAuthHeader('GET', uri, userId, qs, keys)
     return rp({ uri, qs, headers, json: true })
   } catch (err) {
     const errParams = [

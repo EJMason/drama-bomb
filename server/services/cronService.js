@@ -1,25 +1,27 @@
 const redis = require('../database/redis/redisUtil')
+const twitter = require('../utilities/twitterUtil')
 
 const maxTwitterSearch = 99
 
 const genRandomIdx = max => Math.floor(Math.random() * max)
 
-
-const getFollowerCountsFromTwitter = active => {
+// return all the users that have a different follower number
+const getFollowerCountsFromTwitter = async active => {
   try {
+    // splits all the users into groups of 100, that is the max query size twitter api can accomodate
     const activeGroups = []
     while (active.length) { activeGroups.push(active.splice(0, maxTwitterSearch)) }
 
+    // this will _____ with each group
     const finished = activeGroups.map(group => {
-      // let lucky = group[genRandomIdx(group.length)]
-      let query = group.map(user => user.user_id).join(',')
+      // this is creating the query string to send to the twitter api
+      const query = group.map(user => user.user_id).join(',')
+      const { user_id, token, token_secret } = group[genRandomIdx(group.length)]
 
-      // select a random user to use their api key to get info about all individual users, 100 per request
-
-
+      return twitter.getUsersLookup(query, user_id, { token, token_secret })
     })
   } catch (err) {
-
+    throw
   }
 }
 
