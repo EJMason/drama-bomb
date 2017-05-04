@@ -14,12 +14,8 @@ describe('Cron', function() {
     redis.redis.scanStream({match: 'twitter*'}).on('data', (res) => {
       console.log(res)
     })
-    // const apple = await redis.redis.get('a')
-    // console.log('THIS IS THE APPLE: ', apple)
+
   })
-
-  
-
 
   it('get all logged in users from redis', function() {
       expect()
