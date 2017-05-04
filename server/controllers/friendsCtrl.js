@@ -22,10 +22,7 @@ const checkForNewFriendsAndHaters = async (req, res) => {
     // If the object has any changes, update properties in the database
     if (followersHaters.changed) {
       util.updateDatabaseWithNewInfo(user_id, followersHaters).then()
-      redisUtil.addUserIdpAndHatersRedis(
-        user_id,
-        { token, token_secret },
-        { friends_ids, haters: followersHaters.haters })
+      redisUtil.addUserIdpAndHatersRedis(user_id, { token, token_secret }, followersHaters)
     }
     // complete
     res.status(200).send(followersHaters)

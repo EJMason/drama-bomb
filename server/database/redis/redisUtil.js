@@ -15,7 +15,7 @@ const throwErr = (statusCode, method, message, defaultError = null) => {
  * @param {String} userId
  * @param {Object} tokens
  */
-const addUserIdpAndHatersRedis = (userId, tokens, user) => {
+const addUserIdpAndHatersRedis = (key, tokens, user) => {
   try {
     if (typeof tokens !== 'object') {
       throw throwErr(400, 'addUserIdpAndHatersRedis', 'must be of type Object')
@@ -23,7 +23,7 @@ const addUserIdpAndHatersRedis = (userId, tokens, user) => {
       throw throwErr(400, 'addUserIdpAndHatersRedis', 'Object must have properties token & token_secret')
     } else {
       let values = {
-        user_id: user.simple_id,
+        user_id: key.substr(key.indexOf('|') + 1),
         friends_ids: user.friends_ids,
         followers_count: user.friends_ids.length,
         haters: user.haters,
@@ -32,7 +32,7 @@ const addUserIdpAndHatersRedis = (userId, tokens, user) => {
         updated: Date.now(),
       }
       values = JSON.stringify(values)
-      redis.set(userId, values, 'ex', 3600)  // 2 hour expiry without chron ping
+      redis.set(key, values, 'ex', 3600)  // 2 hour expiry without chron ping
     }
   } catch (err) {
     throw throwErr(400, 'addUserIdpAndHatersRedis', null, err)
