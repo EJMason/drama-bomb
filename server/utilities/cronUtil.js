@@ -15,22 +15,26 @@ const throwErr = (statusCode, message, method, defaultError = null) => {
 module.exports.cronCheck = async () => {
   try {
     // get all of the users from redis, that means they are logged in
-    const activeUsers = await redis.getAllActiveUsers()
-
     // put them into groups of 100
-    const activeGroups = cronService.groupsUsers(activeUsers)
-
+    const groupsOfUsers = cronService.groupsUsers(await redis.getAllActiveUserIds())
+    console.log('\n\n Here are the active groups: ', groupsOfUsers)
     // generate the twitter queries for each group, request twitter api
-    const twitterRequests = cronService.genTwitterQueries(activeGroups)
+
+    console.log('\nBegin cronService.genTwitterQueries')
+    const twitterRequests = cronService.genTwitterQueries(groupsOfUsers)
+    console.log('\nBegin Promise.all')
     const arrOfResponses = await Promise.all(twitterRequests)
+    arrOfResponses.forEach((val, i) => {
+      console.log(`${i}. ${val}`)
+    })
 
     // take the multi-dimensional array, flatten it, and sort it
-    const sortedResponses = cronService.updateResponses(arrOfResponses)
+    // const sortedResponses = cronService.updateResponses(arrOfResponses)
 
-    // compare the active to changed using a binary search
-    const changedUsers = cronService.compareUserVersions(sortedResponses)
+    // // compare the active to changed using a binary search
+    // const changedUsers = cronService.compareUserVersions(sortedResponses)
 
-    console.log('Here are the changed Users: ', changedUsers)
+    // console.log('Here are the changed Users: ', changedUsers)
     // now we need to modify the endpoint method in friends to
     // accomodate the ability to find updated data on multiple users
     // lets just get to here first

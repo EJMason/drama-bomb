@@ -1,10 +1,11 @@
 const redis = require('./')
+const Promise = require('bluebird')
 
 const throwErr = (statusCode, method, message, defaultError = null) => {
   message = message || 'Error message unspecified'
   return {
     statusCode,
-    message: 'There was an error in redisUtil : getUserInfoFromCache',
+    message,
     method: `redisUtil.js : ${method}`,
     defaultError,
   }
@@ -57,14 +58,28 @@ const updateExpiry = async key => {
   }
 }
 
-const getAllActiveUsers = async () => {
-
+const getAllActiveUserIds = () => {
+  const params = { match: 'twitter|*' }
+  let pipeQueries
+  return new Promise((resolve, reject) => {
+    const stream = redis.scanStream(params)
+    stream.on('data', value => { pipeQueries = value })
+    stream.on('end', () => {
+      redis.pipeline(pipeQueries.map(val => ['get', val])).exec((err, results) => {
+        if (results[0][0]) {
+          reject(throwErr(400, 'getAllActiveUsers', null, results[0][0]))
+        } else {
+          resolve(results.map(val => JSON.parse(val[1])))
+        }
+      })
+    })
+  })
 }
 
 module.exports = {
   addUserIdpAndHatersRedis,
   getUserInfoFromCache,
   updateExpiry,
-  getAllActiveUsers,
+  getAllActiveUserIds,
   redis,
 }

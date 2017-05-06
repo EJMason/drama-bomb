@@ -3,37 +3,53 @@ const redis = require('../server/database/redis/redisUtil')
 
 const expect = chai.expect
 
-describe('Cron', function() {
+describe('Cron ', function() {
 
-  before(async function() {
-    // await redis.redis.set('a', 'one')
-    // await redis.redis.set('b', 'two')
+  describe('Helper Functions', function() {
+    let allUsers_one
 
-    // const stream = redis.redis.scanStream()
+    beforeEach(async function() {
+      await redis.redis.set('twitter|one', 'one')
+      await redis.redis.set('twitter|two', 'two')
+      await redis.redis.set('twitter|three', 'three')
+      await redis.redis.set('twitter|four', 'four')
 
-    redis.redis.scanStream({match: 'twitter*'}).on('data', (res) => {
-      console.log(res)
+    })
+
+    afterEach(async function() {
+      await redis.redis.del('twitter|one', 'one')
+      await redis.redis.del('twitter|two', 'two')
+      await redis.redis.del('twitter|three', 'three')
+      await redis.redis.del('twitter|four', 'four')
+    })
+
+    it('get all users from redis', async function() {
+      allUsers_one = await redis.getAllActiveUsers(100)
+      expect(allUsers_one).to.be.an('array')
     })
 
   })
 
-  it('get all logged in users from redis', function() {
-      expect()
-  })
+  xdescribe('Cron Overall', function() {
 
-  it('select a random user within the range of users for their key', function() {
+    it('get all logged in users from redis', function() {
+        expect()
+    })
 
-  })
+    it('select a random user within the range of users for their key', function() {
 
-  it('hit Twitter Api users/lookup.json', function() {
+    })
 
-  })
+    it('hit Twitter Api users/lookup.json', function() {
 
-  it('find and add all users that have differing properties', function() {
+    })
 
-  })
+    it('find and add all users that have differing properties', function() {
 
-  it('updates database and redis only for users that needed to be updated', function() {
+    })
 
+    it('updates database and redis only for users that needed to be updated', function() {
+
+    })
   })
 })
