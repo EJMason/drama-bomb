@@ -14,7 +14,6 @@ const getManagmentToken = async () => {
       const options = services.generateManagmentOptions()
       const response = await rp(options)
       mtoken = JSON.parse(response).access_token
-      console.log('IT IS THE TOKEN: ', mtoken)
       redis.set('mtoken', mtoken)
     }
     return mtoken

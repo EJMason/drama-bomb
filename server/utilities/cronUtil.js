@@ -16,8 +16,8 @@ module.exports.cronCheck = async () => {
   try {
     // get all of the users from redis, that means they are logged in, groups of 100
     const groupsOfUsers = cronService.groupsUsers(await redis.getAllActiveUserIds())
-    console.log('\n\n Here are the active groups: ', groupsOfUsers)
-    /*
+
+   /*
       What should I do here if groupsOfUsers is empty?
     */
 
@@ -25,6 +25,7 @@ module.exports.cronCheck = async () => {
     const twitterRequests = cronService.genTwitterQueries(groupsOfUsers)
     const arrOfResponses = await Promise.all(twitterRequests)
 
+    // compare twitter to redis to see if anyone was unfollowed
     const changedUsers = cronService.compareItems(groupsOfUsers, arrOfResponses)
 
     console.log('HERE ARE THE CHANGED USERS: ', changedUsers)

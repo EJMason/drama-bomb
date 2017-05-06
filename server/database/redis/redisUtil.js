@@ -66,7 +66,6 @@ const getAllActiveUserIds = () => {
     stream.on('data', value => { pipeQueries = value })
     stream.on('end', () => {
       redis.pipeline(pipeQueries.map(val => ['get', val])).exec((err, results) => {
-        console.log('HERE ARE RESULTS: ', results)
         if (!results.length) {
           resolve([])
         } else if (results[0][0]) {

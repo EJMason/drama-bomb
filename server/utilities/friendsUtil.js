@@ -94,7 +94,7 @@ const findNewHatersAndFriends = ({ friends_ids, haters }, newArrFromTwitter) => 
   return {
     newFriends,
     newHaters,
-    friends: newArrFromTwitter,
+    friends_ids: newArrFromTwitter,
     changed: Boolean(newFriends.length || newHaters.length),
     haters,
   }
@@ -131,9 +131,9 @@ const getUpdateHatersAndSort = async (followersHaters, userId) => {
  * @param {*} userId
  * @param {*} param1
  */
-const updateDatabaseWithNewInfo = async (userId, { haters, friends }) => {
+const updateDatabaseWithNewInfo = async (userId, { haters, friends_ids }) => {
   try {
-    await dbUtil.updateUserFriendsAndHaters(userId, haters, friends)
+    await dbUtil.updateUserFriendsAndHaters(userId, haters, friends_ids)
   } catch (err) {
     const errParams = [
       400,

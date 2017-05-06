@@ -6,12 +6,11 @@ const maxTwitterSearch = 99
 const genRandomIdx = max => Math.floor(Math.random() * max)
 
 const binarySearch = (val, arr, key) => {
-  console.log('THE VALUEEEE: ', val)
-  console.log('THE ARRAAYYYY: ', arr)
   let min = 0
   let max = arr.length - 1
   let currentIdx
   let currentEle
+
   while (min <= max) {
     currentIdx = Math.floor((min + max) / 2)
     currentEle = arr[currentIdx][key]
@@ -55,9 +54,14 @@ module.exports.compareItems = (groupsOfUsers, responses) => {
     group.users.sort((a, b) => a.user_id - b.user_id)
     responses[i].forEach(twitterObj => {
       // find idx of pair
-      idx = binarySearch(twitterObj.id_str, group.users)
-      console.log('IT IS AT INDEX: ', idx)
+      console.log('---------------------------')
+      console.log(twitterObj.id_str)
+      idx = binarySearch(twitterObj.id_str, group.users, 'user_id')
+      console.log(group.users[idx].user_id)
+      console.log('---------------------------')
       if (twitterObj.followers_count !== group.users[idx].followers_count) {
+        console.log('TWITTER FOLLOWERS: ', twitterObj.followers_count)
+        console.log('PREV FOLLOWERS: ', group.users[idx].followers_count)
         changed.push(group.users[idx])
       }
     })
