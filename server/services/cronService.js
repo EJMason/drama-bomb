@@ -5,6 +5,28 @@ const maxTwitterSearch = 99
 
 const genRandomIdx = max => Math.floor(Math.random() * max)
 
+const binarySearch = (val, arr, key) => {
+  console.log('THE VALUEEEE: ', val)
+  console.log('THE ARRAAYYYY: ', arr)
+  let min = 0
+  let max = arr.length - 1
+  let currentIdx
+  let currentEle
+  while (min <= max) {
+    currentIdx = Math.floor((min + max) / 2)
+    currentEle = arr[currentIdx][key]
+
+    if (currentEle < val) {
+      min = currentIdx + 1
+    } else if (currentEle > val) {
+      max = currentIdx - 1
+    } else {
+      return currentIdx
+    }
+  }
+  return -1
+}
+
 module.exports.groupsUsers = arr => {
   const grouped = []
   while (arr.length) {
@@ -23,5 +45,23 @@ module.exports.genTwitterQueries = groups => {
     const { user_id, token, token_secret } = group.users[genRandomIdx(group.ids.length)]
     return twitter.getUsersLookup({ user_id: queryStr }, user_id, { token, token_secret })
   })
+}
+
+module.exports.compareItems = (groupsOfUsers, responses) => {
+  const changed = []
+  let idx
+  groupsOfUsers.forEach((group, i) => {
+    // sort users in array by user_id
+    group.users.sort((a, b) => a.user_id - b.user_id)
+    responses[i].forEach(twitterObj => {
+      // find idx of pair
+      idx = binarySearch(twitterObj.id_str, group.users)
+      console.log('IT IS AT INDEX: ', idx)
+      if (twitterObj.followers_count !== group.users[idx].followers_count) {
+        changed.push(group.users[idx])
+      }
+    })
+  })
+  return changed
 }
 
