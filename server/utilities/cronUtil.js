@@ -2,6 +2,7 @@ const Promise = require('bluebird')
 
 const redis = require('../database/redis/redisUtil')
 const cronService = require('../services/cronService')
+const friendsUtil = require('../utilities/friendsUtil')
 
 const throwErr = (statusCode, message, method, defaultError = null) => {
   return {
@@ -22,19 +23,17 @@ module.exports.cronCheck = async () => {
     */
 
     // generate the twitter queries for each group, request twitter api
-    const twitterRequests = cronService.genTwitterQueries(groupsOfUsers)
-    const arrOfResponses = await Promise.all(twitterRequests)
+    const arrOfResponses = await Promise.all(cronService.genTwitterQueries(groupsOfUsers))
 
     // compare twitter to redis to see if anyone was unfollowed
     const changedUsers = cronService.compareItems(groupsOfUsers, arrOfResponses)
 
-    console.log('HERE ARE THE CHANGED USERS: ', changedUsers)
-
-    // now we need to modify the endpoint method in friends to
-    // accomodate the ability to find updated data on multiple users
-    // lets just get to here first
+    if (changedUsers.length) {
+      const result = await Promise.all(changedUsers.map(user => friendsUtil.updateFromTwitter(user)))
+      console.log('THIS IS THE RESULT: ', result)
+    }
   } catch (err) {
-    console.error('ERROR IN CRONUTIL')
+    console.error('ERROR IN CRONUTIL: ', err)
     throw throwErr(null, 'Error in chron job', 'cronCheck', err)
   }
 }

@@ -54,14 +54,8 @@ module.exports.compareItems = (groupsOfUsers, responses) => {
     group.users.sort((a, b) => a.user_id - b.user_id)
     responses[i].forEach(twitterObj => {
       // find idx of pair
-      console.log('---------------------------')
-      console.log(twitterObj.id_str)
       idx = binarySearch(twitterObj.id_str, group.users, 'user_id')
-      console.log(group.users[idx].user_id)
-      console.log('---------------------------')
       if (twitterObj.followers_count !== group.users[idx].followers_count) {
-        console.log('TWITTER FOLLOWERS: ', twitterObj.followers_count)
-        console.log('PREV FOLLOWERS: ', group.users[idx].followers_count)
         changed.push(group.users[idx])
       }
     })
