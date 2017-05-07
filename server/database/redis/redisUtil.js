@@ -24,6 +24,7 @@ const addUserIdpAndHatersRedis = (key, tokens, user) => {
       throw throwErr(400, 'addUserIdpAndHatersRedis', 'Object must have properties token & token_secret')
     } else {
       let values = {
+        screen_name: user.screen_name,
         user_id: key.substr(key.indexOf('|') + 1),
         friends_ids: user.friends_ids,
         followers_count: user.friends_ids.length,
@@ -78,10 +79,26 @@ const getAllActiveUserIds = () => {
   })
 }
 
+const updateChangedUser = async (key, updatedInfo, oldUser) => {
+  try {
+    const newUser = Object.assign({}, oldUser)
+    newUser.friends_ids = updatedInfo.friends_ids
+    newUser.haters = updatedInfo.haters
+    newUser.followers_count = updatedInfo.friends_ids.length
+    newUser.updated = Date.now()
+
+    await redis.set(key, JSON.stringify(newUser), 'ex', 3600)
+    return newUser
+  } catch (err) {
+    throw throwErr(400, 'updateChangeduser', null, err)
+  }
+}
+
 module.exports = {
   addUserIdpAndHatersRedis,
   getUserInfoFromCache,
   updateExpiry,
   getAllActiveUserIds,
+  updateChangedUser,
   redis,
 }
