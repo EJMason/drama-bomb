@@ -5,6 +5,7 @@ const chalk = require('chalk')
 const app = require('./appInstance')
 // const http = require('./httpServer')
 require('./database')
+require('./services/errorHandling')
 
 app.use(express.static(path.resolve(__dirname, '..', 'build')))
 require('./middleware')(app)
