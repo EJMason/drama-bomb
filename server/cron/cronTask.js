@@ -13,7 +13,7 @@ class CronTask {
     this.initializer = this.initializer.bind(this)
 
     this.workerBee = new CronJob({
-      cronTime: '*/10 * * * * *',
+      cronTime: '*/5 * * * * *',
       onTick: this.ticker,
       onComplete: () => {},
       start: false,
