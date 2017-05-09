@@ -8,6 +8,7 @@ import Topbar from '../Components/Topbar'
 import Sidebar from '../Components/Sidebar'
 import './Styles/css/Dashboard.css'
 
+const url = 'http://localhost:2020'
 
 class Dashboard extends Component {
   constructor(props) {
@@ -22,12 +23,20 @@ class Dashboard extends Component {
     if (!this.props.profile) {
       this.checkLocalstorageForToken()
     }
+    // const numid = this.getUserId(this.props.profile)
+    const numid = '821069943986790400'
+    console.log('THIS IS THE NUMID: ', numid)
+    const source = new EventSource(`${url}/friends/cron/updater/${numid}`)
+    source.addEventListener(`${numid}`, val => {
+      console.log('THE TRIGGER WORKED: ', val)
+    }, false)
+  }
 
-    // console.log('HERE WE ARE!!!!!')
-    // const source = new EventSource('http://localhost:2020/blah')
-    // source.addEventListener('something', val => {
-    //   console.log('THIS IS THE EVENT LISTENER: ', val.data)
-    // }, false)
+  getUserId(profile) {
+    console.log('HERE IS PROFILE: ', profile)
+    return profile.identities.reduce((acc, ident) => {
+      return (ident.proveider === 'twitter') ? ident.user_id : acc
+    }, null)
   }
 
   cronCheck() {

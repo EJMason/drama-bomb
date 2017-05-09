@@ -4,7 +4,6 @@ const path = require('path')
 const chalk = require('chalk')
 
 const app = require('./appInstance')
-const CronTask = require('./cronTask')
 // const http = require('./httpServer')
 
 app.use(express.static(path.resolve(__dirname, '..', 'build')))
@@ -25,7 +24,7 @@ app.get('/blah', (req, res) => {
   res.writeHead(200, {
     'Content-Type': 'text/event-stream',
     'Cache-Control': 'no-cache',
-    'Connection': 'keep-alive',
+    Connection: 'keep-alive',
     'Access-Control-Allow-Origin': '*',
   })
   // res.status(200).send('BLAH')
@@ -37,11 +36,6 @@ app.get('*', (req, res) => {
 
 app.listen(process.env.PORT || 2020, () => {
   console.log(chalk.bgGreen.black('\nExpress server now running on port 2020'))
-  const myCron = new CronTask()
-  // myCron.resumeTask()
-  // myCron.emitter.on('updated_users', (data) => {
-  //   console.log('THE TRIGGER IS WORKING!: ', data)
-  // })
 })
 
 module.exports = app
