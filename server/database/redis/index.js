@@ -2,25 +2,19 @@ const Redis = require('ioredis')
 const chalk = require('chalk')
 
 const redis = new Redis()
-const sub = new Redis()
+// const sub = new Redis()
 
-// redis.config('set', 'notify-keyspace-events', 'Ex')
+// sub.psubscribe('__keyevent@0__:expired')
 
-// redis.on('message', (channel, message) => {
-//   console.log(`This is the channel: ${channel} and this is the message: ${message}`)
+// sub.on('pmessage', (pattern, channel) => {
+//   if (channel === '__keyevent@0__:expired') {
+//     redis.decr('usercount').then(numOfUsers => {
+//       if (!numOfUsers) {
+//         // stop crontask
+//       }
+//     })
+//   }
 // })
-
-sub.psubscribe('__keyevent@0__:expired')
-
-sub.on('pmessage', (pattern, channel, message) => {
-  if (channel === '__keyevent@0__:expired') {
-    redis.decr('usercount').then(numOfUsers => {
-      if (!numOfUsers) {
-        
-      }
-    })
-  }
-})
 
 redis.monitor((err, monitor) => {
   monitor.on('monitor', (time, args) => {

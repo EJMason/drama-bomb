@@ -1,8 +1,6 @@
 const redis = require('./')
 const Promise = require('bluebird')
 
-redis.on('del', val => console.log('KEY HAS EXPIRED: ', val))
-
 const throwErr = (statusCode, method, message, defaultError = null) => {
   message = message || 'Error message unspecified'
   return {
