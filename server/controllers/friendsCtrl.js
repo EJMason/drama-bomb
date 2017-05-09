@@ -1,6 +1,12 @@
 const redisUtil = require('../database/redis/redisUtil')
 const util = require('../utilities/friendsUtil')
 
+const ssEvents = (req, res) => {
+  const { user_id, screen_name } = req.profile
+
+  
+}
+
 /**
  * Controller for checking for new Haters and Friends
  * @param {Object} req - request object

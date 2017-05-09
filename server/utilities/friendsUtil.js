@@ -83,11 +83,6 @@ const getSortedUserIds = async ({ user_id, screen_name, token, token_secret }) =
   }
 }
 
-/**
- *
- * @param {*} param0
- * @param {*} newArrFromTwitter
- */
 const findNewHatersAndFriends = ({ friends_ids, haters }, sortedIdsFromTwitter) => {
   // Meat and potatoes to check if there are any new friends or enemies, returns arrays of ids
   const { newFriends, newHaters } = services.findAllNew(friends_ids, sortedIdsFromTwitter)
