@@ -22,6 +22,12 @@ class Dashboard extends Component {
     if (!this.props.profile) {
       this.checkLocalstorageForToken()
     }
+
+    // console.log('HERE WE ARE!!!!!')
+    // const source = new EventSource('http://localhost:2020/blah')
+    // source.addEventListener('something', val => {
+    //   console.log('THIS IS THE EVENT LISTENER: ', val.data)
+    // }, false)
   }
 
   cronCheck() {
