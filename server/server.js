@@ -12,24 +12,6 @@ require('./routes')(app)
 require('./database')
 require('./services/errorHandling')
 
-app.get('/blah', (req, res) => {
-  // req.socket.setTimeout(Infinity)
-
-  setInterval(() => {
-    res.write('id: BOOBZ \n')
-    res.write('event: something\n')
-    res.write('data: 12345\n\n')
-  }, 3000)
-
-  res.writeHead(200, {
-    'Content-Type': 'text/event-stream',
-    'Cache-Control': 'no-cache',
-    Connection: 'keep-alive',
-    'Access-Control-Allow-Origin': '*',
-  })
-  // res.status(200).send('BLAH')
-})
-
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'))
 })

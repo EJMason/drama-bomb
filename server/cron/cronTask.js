@@ -48,7 +48,6 @@ class CronTask {
     console.log(chalk.bgBlue.magenta('Cron Task: Checking logged in Users...'))
     util.cronCheck().then(data => {
       if (data.length) {
-        console.log(chalk.bgBlue.magenta('\nFOUND SOME NEW DATA!!!'))
         this.emitter.emit('updated_users', data)
       }
     }).catch(err => {
@@ -56,20 +55,5 @@ class CronTask {
     })
   }
 }
-
-// ------------ Triggers -------------- //
-
-// const cron = new CronTask()
-
-// sub.on('pmessage', (pattern, channel) => {
-//   console.log('THIS IS THE EVENT: ', channel)
-//   if (channel === '__keyevent@0__:expired') {
-//     redis.decr('usercount').then(numOfUsers => {
-//       if (!numOfUsers) {
-//         cron.stopTask()
-//       }
-//     })
-//   }
-// })
 
 module.exports = CronTask

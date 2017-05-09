@@ -1,5 +1,3 @@
-const Promise = require('bluebird')
-
 const twitter = require('./twitterUtil')
 const services = require('../services/friendsServices')
 const dbUtil = require('../database/dbUtil/UsersUtil')

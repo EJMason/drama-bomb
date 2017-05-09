@@ -5,10 +5,8 @@ const cron = require('../cron')
 const ssEvents = (req, res) => {
   console.log('User Subscribed!')
   cron.emitter.on('updated_users', data => {
-    console.log('THIS IS DATA: ', data)
-    data.forEach((user, idx) => {
+    data.forEach(user => {
       console.log('\nEMITTING..............................')
-      console.log('index: ', idx)
       const toSend = JSON.stringify(user)
       res.write(`id: ${cron.genId()} \n`)
       res.write(`event: ${user.user_id}\n`)
@@ -63,7 +61,7 @@ const userPingisLoggedIn = (req, res) => {
     redisUtil.updateExpiry(user_id)
     res.status(200).send('success')
   } catch (err) {
-    console.log(err)
+    console.error(err)
     const status = err.statusCode || 400
     res.status(status).send(err)
   }
