@@ -1,6 +1,8 @@
 const redis = require('./')
 const Promise = require('bluebird')
 
+redis.on('del', val => console.log('KEY HAS EXPIRED: ', val))
+
 const throwErr = (statusCode, method, message, defaultError = null) => {
   message = message || 'Error message unspecified'
   return {
@@ -11,33 +13,28 @@ const throwErr = (statusCode, method, message, defaultError = null) => {
   }
 }
 
-/**
- * Add to cache
- * @param {String} userId
- * @param {Object} tokens
- */
-const addUserIdpAndHatersRedis = (key, tokens, user) => {
+const getValues = (key, tokens, user) => JSON.stringify({
+  screen_name: user.screen_name,
+  user_id: key.substr(key.indexOf('|') + 1),
+  friends_ids: user.friends_ids,
+  followers_count: user.friends_ids.length,
+  haters: user.haters,
+  token: tokens.token,
+  token_secret: tokens.token_secret,
+  updated: Date.now(),
+})
+
+// -------------- For Export ------------------------ //
+
+const addUserOnLogin = async (key, tokens, user) => {
   try {
-    if (typeof tokens !== 'object') {
-      throw throwErr(400, 'addUserIdpAndHatersRedis', 'must be of type Object')
-    } else if (!tokens.token || !tokens.token_secret) {
-      throw throwErr(400, 'addUserIdpAndHatersRedis', 'Object must have properties token & token_secret')
-    } else {
-      let values = {
-        screen_name: user.screen_name,
-        user_id: key.substr(key.indexOf('|') + 1),
-        friends_ids: user.friends_ids,
-        followers_count: user.friends_ids.length,
-        haters: user.haters,
-        token: tokens.token,
-        token_secret: tokens.token_secret,
-        updated: Date.now(),
-      }
-      values = JSON.stringify(values)
-      redis.set(key, values, 'ex', 3600)  // 2 hour expiry without chron ping
+    const alreadyIn = await redis.exists(key)
+    if (!alreadyIn) {
+      redis.set(key, getValues(key, tokens, user), 'ex', 3600)
+      redis.incr('usercount')
     }
-  } catch (err) {
-    throw throwErr(400, 'addUserIdpAndHatersRedis', null, err)
+  } catch (error) {
+    throw throwErr(400, 'initOnLogin', null, err)
   }
 }
 
@@ -95,7 +92,7 @@ const updateChangedUser = async (key, updatedInfo, oldUser) => {
 }
 
 module.exports = {
-  addUserIdpAndHatersRedis,
+  addUserOnLogin,
   getUserInfoFromCache,
   updateExpiry,
   getAllActiveUserIds,

@@ -20,7 +20,7 @@ const loginInit = async (req, res) => {
     // Auth0 managment API, get their idp token
     const tokens = await authUtil.getUserIdp(user.user_id)
     // Once complete, add them to redis db
-    await redisUtil.addUserIdpAndHatersRedis(user.user_id, tokens, user)
+    await redisUtil.addUserOnLogin(user.user_id, tokens, user)
 
     res.status(200).send(user)
   } catch (err) {
