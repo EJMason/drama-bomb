@@ -8,7 +8,6 @@ sub.psubscribe('__keyevent@0__:expired')
 sub.psubscribe('__keyevent@0__:set')
 
 const cron = new CronTask()
-
 cron.initializer()
 
 sub.on('pmessage', (pattern, channel) => {

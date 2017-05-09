@@ -175,19 +175,6 @@ const updateFromTwitter = async user => {
   }
 }
 
-const emitToUsers = (res, userInfo, id, event) => {
-  return new Promise((resolve, reject) => {
-    if (userInfo) {
-      const stringData = JSON.stringify(userInfo)
-      res.write(`id: ${id}`)
-      res.write(`event: ${event}`)
-      res.write(`data: ${stringData}`)
-    } else {
-      reject(throwErr(400, null, 'emitToUser'))
-    }
-  })
-}
-
 const sseHead = () => ({
   'Content-Type': 'text/event-stream',
   'Cache-Control': 'no-cache',
@@ -202,6 +189,5 @@ module.exports = {
   getUpdateHatersAndSort,
   updateDatabaseWithNewInfo,
   updateFromTwitter,
-  emitToUsers,
   sseHead,
 }

@@ -29,4 +29,12 @@ const loginInit = async (req, res) => {
   }
 }
 
+// const logout = async (req, res) => {
+//   try {
+
+//   } catch (err) {
+
+//   }
+// }
+
 module.exports = { loginInit }

@@ -1,13 +1,19 @@
 const redisUtil = require('../database/redis/redisUtil')
 const util = require('../utilities/friendsUtil')
-const CronTask = require('../cron')
+const cron = require('../cron')
 
 const ssEvents = (req, res) => {
   console.log('User Subscribed!')
-  CronTask.emitter.on('updated_users', data => {
-    Promise.all(data.map(userInfo => {
-      return util.emitToUsers(res, userInfo, CronTask.genId, userInfo.user_id)
-    }))
+  cron.emitter.on('updated_users', data => {
+    console.log('THIS IS DATA: ', data)
+    data.forEach((user, idx) => {
+      console.log('\nEMITTING..............................')
+      console.log('index: ', idx)
+      const toSend = JSON.stringify(user)
+      res.write(`id: ${cron.genId()} \n`)
+      res.write(`event: ${user.user_id}\n`)
+      res.write(`data: ${toSend}\n\n`)
+    })
   })
 
   redisUtil.redis.exists(`twitter|${req.params.uid}`).then(userExists => {

@@ -21,7 +21,7 @@ class CronTask {
   }
 
   initializer() {
-    console.log(chalk.bgBlue.magenta('Cron Task Begin'))
+    console.log(chalk.bgBlue.magenta('Cron Task Begin...'))
     this.workerBee.start()
   }
 
@@ -35,7 +35,7 @@ class CronTask {
   }
 
   stopTask() {
-    console.log(chalk.bgBlue.magenta('Pausing Cron Task..., nobody logged in'))
+    console.log(chalk.bgBlue.magenta('Pausing Cron Task...'))
     this.workerBee.stop()
   }
 
@@ -47,7 +47,8 @@ class CronTask {
   ticker() {
     console.log(chalk.bgBlue.magenta('Cron Task: Checking logged in Users...'))
     util.cronCheck().then(data => {
-      if (data) {
+      if (data.length) {
+        console.log(chalk.bgBlue.magenta('\nFOUND SOME NEW DATA!!!'))
         this.emitter.emit('updated_users', data)
       }
     }).catch(err => {
