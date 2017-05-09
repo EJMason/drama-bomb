@@ -3,24 +3,28 @@ const util = require('../utilities/friendsUtil')
 const cron = require('../cron')
 
 const ssEvents = (req, res) => {
-  console.log('User Subscribed!')
-  cron.emitter.on('updated_users', data => {
-    data.forEach(user => {
-      console.log('\nEMITTING..............................')
-      const toSend = JSON.stringify(user)
-      res.write(`id: ${cron.genId()} \n`)
-      res.write(`event: ${user.user_id}\n`)
-      res.write(`data: ${toSend}\n\n`)
+  try {
+    console.log('User Subscribed!')
+    cron.emitter.on('updated_users', data => {
+      data.forEach(user => {
+        console.log('\nEMITTING..............................')
+        const toSend = JSON.stringify(user)
+        res.write(`id: ${cron.genId()} \n`)
+        res.write(`event: ${user.user_id}\n`)
+        res.write(`data: ${toSend}\n\n`)
+      })
     })
-  })
-
-  redisUtil.redis.exists(`twitter|${req.params.uid}`).then(userExists => {
-    if (userExists) {
-      res.writeHead(200, util.sseHead())
-    } else {
-      res.status(400).send('not in cache, logout')
-    }
-  })
+    console.log('IS IT HERE?')
+    redisUtil.redis.exists(`twitter|${req.params.uid}`).then(userExists => {
+      if (userExists) {
+        res.writeHead(200, util.sseHead())
+      } else {
+        res.status(400).send('not in cache, logout')
+      }
+    })
+  } catch (error) {
+    console.error('Error in ssEvents')
+  }
 }
 
 /**
