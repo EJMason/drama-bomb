@@ -1,10 +1,22 @@
 const redisUtil = require('../database/redis/redisUtil')
 const util = require('../utilities/friendsUtil')
+const CronTask = require('../cron')
 
 const ssEvents = (req, res) => {
-  const { user_id, screen_name } = req.profile
+  console.log('User Subscribed!')
+  CronTask.emitter.on('updated_users', data => {
+    Promise.all(data.map(userInfo => {
+      return util.emitToUsers(res, userInfo, CronTask.genId, userInfo.user_id)
+    }))
+  })
 
-  
+  redisUtil.redis.exists(`twitter|${req.params.uid}`).then(userExists => {
+    if (userExists) {
+      res.writeHead(200, util.sseHead())
+    } else {
+      res.status(400).send('not in cache, logout')
+    }
+  })
 }
 
 /**
@@ -55,4 +67,5 @@ const userPingisLoggedIn = (req, res) => {
 module.exports = {
   checkForNewFriendsAndHaters,
   userPingisLoggedIn,
+  ssEvents,
 }

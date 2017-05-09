@@ -9,6 +9,6 @@ router.get('/cron/haters', checkJWT, controller.checkForNewFriendsAndHaters)
 // periodic ping to update redis expiry indicating user is logged in
 router.patch('/ping', checkJWT, controller.userPingisLoggedIn)
 
-// router.get('/updater', checkJWT, controller.ssEvents)
+router.get('/cron/updater/:uid', controller.ssEvents)
 
 module.exports = router
