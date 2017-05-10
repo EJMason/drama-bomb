@@ -26,10 +26,11 @@ class Dashboard extends Component {
     // const numid = this.getUserId(this.props.profile)
     const numid = '821069943986790400'
     console.log('THIS IS THE NUMID: ', numid)
+
+
     const source = new EventSource(`${url}/friends/cron/updater/${numid}`)
-    source.addEventListener(`${numid}`, val => {
-      console.log('THE TRIGGER WORKED: ', val)
-    }, false)
+
+    source.addEventListener(`${numid}`, val => { console.log('THE TRIGGER WORKED: ', val) }, false)
   }
 
   getUserId(profile) {

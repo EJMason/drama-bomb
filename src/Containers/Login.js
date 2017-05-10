@@ -28,7 +28,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  dispBeginInit: idToken => dispatch(actions.beginInitSeq(idToken)),
+  dispatchBeginInit: idToken => dispatch(actions.beginInitSeq(idToken)),
   dispatchUpdateProfile: (profile, idToken) => dispatch(actions.setLoginInfo(profile, idToken)),
 })
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { actions as tempActions } from '../Redux/temp'
+// import { actions as tempActions } from '../Redux/temp'
 import { setDefaults } from '../Services/Api'
 // import HomeTopBar from './HomeTopBar'
 
@@ -16,25 +16,33 @@ class Homepage extends Component {
   }
 
   componentDidMount() {
-    this.props.auth.login()
+    console.log('MOUNTING!!!!!')
+    this.props.dispatch({ type: 'MOUNT' })
+  }
+
+  componentDidUpdate() {
+    console.log('I AM UPDATEINGGGGG')
+    if (this.props.mounted) {
+      this.props.dispatch({ type: 'AUTH/OPEN_LOCK' })
+    }
   }
 
   render() {
     return (
       <div>
-        This is the top of the homepage
+        {this.props.mounted ? 'I AM MOUNTED' : 'I AM NOT MOUNTED'}
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  loggedIn: state.temp.mounted,
-  auth: state.login.auth,
+  mounted: state.login.mounted,
 })
 
 const mapDispatchToProps = dispatch => ({
-  dispatchMount: () => dispatch(tempActions.dispatchMountAction()),
+  dispatch,
+  // dispatchMount: () => dispatch(tempActions.dispatchMountAction()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Homepage)
