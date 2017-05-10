@@ -5,6 +5,15 @@ import axios from 'axios'
 import { actions } from '../Redux/Login'
 import { actions as userActions } from '../Redux/User'
 
+
+// export function* lockOpen(lock) {
+//   try {
+//     yield call(lock.show)
+//   } catch (err) {
+
+//   }
+// }
+
 export function* sagaInitSeq({ payload }) {
   try {
     // add profile info to redux
