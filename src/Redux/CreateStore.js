@@ -8,7 +8,8 @@ export default (rootReducer, rootSaga, history) => {
   let plugins = []
 
   if (process.env.NODE_ENV !== 'production') {
-    plugins = [...plugins,
+    plugins = [
+      ...plugins,
       logger,
     ]
   }

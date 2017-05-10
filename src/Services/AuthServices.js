@@ -1,85 +1,133 @@
 import Auth0Lock from 'auth0-lock'
-import { EventEmitter } from 'events'
-import Promise from 'bluebird'
+// import Promise from 'bluebird'
+// import { EventEmitter } from 'events'
+import { eventChannel } from 'redux-saga'
 
 import { AUTH_CLIENT_ID, AUTH_DOMAIN } from '../../clientKeys'
 
-const emitter = new EventEmitter()
+// const emitter = new EventEmitter()
 
-export default class AuthService extends EventEmitter {
-  constructor() {
-    super()
-    this.lock = new Auth0Lock(AUTH_CLIENT_ID, AUTH_DOMAIN, {
-      auth: {
-        redirectUrl: 'http://localhost:3000/login',
-        responseType: 'token',
-        params: { scope: 'openid email user_id screen_name' },
-      },
-    })
-    this.lock.getProfile = Promise.promisify(this.lock.getProfile)
+export const authLock = new Auth0Lock(AUTH_CLIENT_ID, AUTH_DOMAIN, {
+  auth: {
+    redirectUrl: 'http://localhost:3000/login',
+    responseType: 'token',
+    params: { scope: 'openid email user_id screen_name' },
+  },
+})
 
-    this.login = this.login.bind(this)
-    this.setProfile = this.setProfile.bind(this)
-    this.getProfile = this.getProfile.bind(this)
-    this.lock.on('authenticated', this._doAuthentication.bind(this))
-    this.lock.on('authorization_error', this._authorizationError.bind(this))
-  }
+export const showLock = lock => {
+  lock.show()
+}
 
-  _authorizationError(err) {
-    console.error(err)
-  }
-
-  async _doAuthentication(authResult) {
-    this.setToken(authResult.idToken)
-    try {
-      const prfl = await this.lock.getProfile(authResult.idToken)
-      this.setProfile(prfl, authResult.idToken)
-    } catch (err) {
-      console.error(err)
+export const createLockChannel = lock => {
+  return eventChannel(emit => {
+    const authenticatedHandler = event => {
+      console.log('ITS THE HANDLLEERRRRRRRRRRRRRRR')
+      console.log(event)
+      emit('BLAH')
     }
-  }
 
-  login() {
-    this.lock.show()
-  }
+    const errorHandler = event => {
+      emit(event.payload)
+    }
 
-  loggedIn() {
-    return !!this.getToken()
-  }
+    lock.on('show', authenticatedHandler)
+    lock.on('authorization_error', errorHandler)
 
-  getProfile() {
-    const profile = localStorage.getItem('profile')
-    return profile ? JSON.parse(localStorage.profile) : {}
-  }
-
-  setProfile(profile, idToken) {
-    localStorage.setItem('profile', JSON.stringify(profile))
-    emitter.emit('profile_updated', { profile, idToken })
-  }
-
-  setToken(idToken) {
-    localStorage.setItem('id_token', idToken)
-  }
-
-  getToken() {
-    return localStorage.getItem('id_token')
-  }
-
-  logout() {
-    localStorage.removeItem('id_token')
-  }
+    const unsubscribe = () => {
+      localStorage.removeItem('id_token')
+      localStorage.removeItem('profile')
+    }
+    return unsubscribe
+  })
 }
 
-export const emtr = emitter
+// export const createLock = () => {
+//   return new Auth0Lock(AUTH_CLIENT_ID, AUTH_DOMAIN, {
+//     auth: {
+//       redirectUrl: 'http://localhost:3000/login',
+//       responseType: 'token',
+//       params: { scope: 'openid email user_id screen_name' },
+//     },
+//   })
+// }
 
-export const logoutStorage = () => {
-  localStorage.removeItem('id_token')
-  localStorage.removeItem('profile')
-}
+// ========================================================
+
+export const getIdToken = () => localStorage.getItem('id_token')
 
 export const getProfileInfo = () => {
   const profile = localStorage.getItem('profile')
   return profile ? JSON.parse(localStorage.profile) : {}
 }
 
-export const getIdToken = () => localStorage.getItem('id_token')
+// export default class AuthService extends EventEmitter {
+//   constructor() {
+//     super()
+//     this.lock = new Auth0Lock(AUTH_CLIENT_ID, AUTH_DOMAIN, {
+//       auth: {
+//         redirectUrl: 'http://localhost:3000/login',
+//         responseType: 'token',
+//         params: { scope: 'openid email user_id screen_name' },
+//       },
+//     })
+//     this.lock.getProfile = Promise.promisify(this.lock.getProfile)
+
+//     this.login = this.login.bind(this)
+//     this.setProfile = this.setProfile.bind(this)
+//     this.getProfile = this.getProfile.bind(this)
+//     this.lock.on('authenticated', this._doAuthentication.bind(this))
+//     this.lock.on('authorization_error', this._authorizationError.bind(this))
+//   }
+
+//   _authorizationError(err) {
+//     console.error(err)
+//   }
+
+//   async _doAuthentication(authResult) {
+//     this.setToken(authResult.idToken)
+//     try {
+//       const prfl = await this.lock.getProfile(authResult.idToken)
+//       this.setProfile(prfl, authResult.idToken)
+//     } catch (err) {
+//       console.error(err)
+//     }
+//   }
+
+//   login() {
+//     this.lock.show()
+//   }
+
+//   loggedIn() {
+//     return !!this.getToken()
+//   }
+
+//   getProfile() {
+//     const profile = localStorage.getItem('profile')
+//     return profile ? JSON.parse(localStorage.profile) : {}
+//   }
+
+//   setProfile(profile, idToken) {
+//     localStorage.setItem('profile', JSON.stringify(profile))
+//     emitter.emit('profile_updated', { profile, idToken })
+//   }
+
+//   setToken(idToken) {
+//     localStorage.setItem('id_token', idToken)
+//   }
+
+//   getToken() {
+//     return localStorage.getItem('id_token')
+//   }
+
+//   logout() {
+//     localStorage.removeItem('id_token')
+//   }
+// }
+
+// export const emtr = emitter
+
+// export const logoutStorage = () => {
+//   localStorage.removeItem('id_token')
+//   localStorage.removeItem('profile')
+// }

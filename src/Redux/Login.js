@@ -1,7 +1,9 @@
 import Immutable from 'seamless-immutable'
-import AuthService from '../Services/AuthServices'
+
 // ------------------ Action Names ----------------- //
 export const types = {
+  LOCK_BEGIN_LOGIN: 'AUTH/LOCK_BEGIN_LOGIN',
+
   SET_LOGGED_IN: 'SET_LOGGED_IN',
   SET_LOGIN_INFO: 'AUTH/SET_LOGIN_INFO',
   LOGOUT: 'LOGOUT',
@@ -12,8 +14,8 @@ export const types = {
 
 // ----------- Initialize Default State --------- //
 const INITIAL_STATE = Immutable({
-  auth: new AuthService(),
   loggedIn: false,
+  mounted: false,
   profile: null,
   idToken: null,
   fetching: false,
@@ -23,6 +25,14 @@ const INITIAL_STATE = Immutable({
 // ------------------- Reducers ------------------- //
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case 'MOUNT': {
+      return Immutable.merge(state, { mounted: true })
+    }
+    case types.BEGIN_INIT_SEQUENCE: {
+      return Immutable.merge(state, { profile: action.payload.profile, idToken: action.payload.idToken })
+    }
+
+
     case types.SET_LOGGED_IN: {
       return Immutable.merge(state, { loggedIn: true })
     }
@@ -46,10 +56,13 @@ export default (state = INITIAL_STATE, action) => {
 
 // -------------- Action Creators ------------ //
 export const actions = {
+  lockBeginLogin: () => ({ type: types.LOCK_BEGIN_LOGIN }),
+
+
   setLoggedIn: () => ({ type: types.SET_LOGGED_IN }),
   setLoginInfo: (profile, idToken) => ({ type: types.SET_LOGIN_INFO, payload: { profile, idToken } }),
   logout: () => ({ type: types.LOGOUT }),
-  beginInitSeq: idToken => ({ type: types.BEGIN_INIT_SEQUENCE, payload: idToken }),
+  beginInitSeq: ({ idToken, profile }) => ({ type: types.BEGIN_INIT_SEQUENCE, payload: { idToken, profile } }),
   finishedInitSeq: () => ({ type: types.INIT_SEQUENCE_COMPLETED }),
   initSeqErr: err => ({ type: types.INIT_SEQUENCE_ERR, payload: err }),
 }
