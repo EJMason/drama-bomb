@@ -1,5 +1,4 @@
 import { call, put } from 'redux-saga/effects'
-import { delay } from 'redux-saga'
 import axios from 'axios'
 
 import { actions } from '../Redux/Login'
@@ -10,8 +9,7 @@ import { setIdToken } from '../Services/AuthServices'
 export function* authAuthenticated({ idToken }) {
   try {
     yield call(setIdToken, idToken)
-
-    yield put({ type: 'AUTH/LOCK_LOGIN_COMPLETE', payload: { idToken, profile } })
+    yield put({ type: 'AUTH/LOCK_LOGIN_COMPLETE', payload: { idToken } })
   } catch (error) {
     console.error(error)
     yield put({ type: 'AUTH/ERROR', payload: error })
@@ -31,14 +29,5 @@ export function* sagaInitSeq({ payload }) {
   } catch (err) {
     yield put(actions.initSeqErr(err))
     console.error(err)
-  }
-}
-
-export function* sagaTest2() {
-  try {
-    yield call(delay, 300)
-    yield put(tempActions.doneWait())
-  } catch (err) {
-    console.error('sagaTest Error')
   }
 }

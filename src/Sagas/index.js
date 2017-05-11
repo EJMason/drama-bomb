@@ -11,10 +11,6 @@ import { showLock, authLock } from '../Services/AuthServices'
 import { authAuthenticated } from './authSaga'
 import { createLockChannel } from './eventsSaga'
 
-// const thrower = msg => ({
-//   error: msg,
-// })
-
 /* --------------- Watchers ----------------------- */
 
 function* watchLockEvents() {

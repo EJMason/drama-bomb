@@ -1,9 +1,8 @@
 import { applyMiddleware, createStore } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import logger from 'redux-logger'
-import { routerMiddleware } from 'react-router-redux'
 
-export default (rootReducer, rootSaga, history) => {
+export default (rootReducer, rootSaga) => {
    /* ------------- Redux Configuration ------------- */
   let plugins = []
 
@@ -17,8 +16,6 @@ export default (rootReducer, rootSaga, history) => {
   const sagaMiddleware = createSagaMiddleware()
   plugins.push(sagaMiddleware)
 
-  const reduxRouterMiddleware = routerMiddleware(history)
-  plugins.push(reduxRouterMiddleware)
     /* ------------- Assemble Middleware ------------- */
 
   const middleware = applyMiddleware(...plugins)

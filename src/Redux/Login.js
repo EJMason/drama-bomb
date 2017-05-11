@@ -15,6 +15,7 @@ export const types = {
 // ----------- Initialize Default State --------- //
 const INITIAL_STATE = Immutable({
   loggedIn: false,
+  test: 0,
   mounted: false,
   profile: null,
   idToken: null,
@@ -28,11 +29,13 @@ export default (state = INITIAL_STATE, action) => {
     case 'MOUNT': {
       return Immutable.merge(state, { mounted: true })
     }
+    case 'AUTH/LOCK_LOGIN_COMPLETE': {
+      return Immutable.merge(state, { idToken: action.payload.idToken })
+    }
+
     case types.BEGIN_INIT_SEQUENCE: {
       return Immutable.merge(state, { profile: action.payload.profile, idToken: action.payload.idToken })
     }
-
-
     case types.SET_LOGGED_IN: {
       return Immutable.merge(state, { loggedIn: true })
     }
@@ -42,13 +45,6 @@ export default (state = INITIAL_STATE, action) => {
     case types.LOGOUT: {
       return Immutable.merge(state, { loggedIn: false, profile: null, idToken: null })
     }
-    case types.INIT_SEQUENCE_COMPLETED: {
-      return Immutable.merge(state, { loggedIn: true })
-    }
-    case types.INIT_SEQUENCE_ERR: {
-      return Immutable.merge(state, { error: action.payload })
-    }
-
     default:
       return state
   }

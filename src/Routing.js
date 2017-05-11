@@ -1,15 +1,15 @@
 // import React from 'react'
 import React, { Component } from 'react'
-import { Route, Redirect } from 'react-router'
-import { ConnectedRouter } from 'react-router-redux'
-import createHistory from 'history/createBrowserHistory'
+import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
+// import createHistory from 'history/createBrowserHistory'
 
 import Dashboard from './Containers/Dashboard'
 import Login from './Containers/Login'
 import Homepage from './Containers/Homepage'
+import Auth from './Components/Auth'
 import './Styles/css/App.css'
 
-export const history = createHistory()
+// export const history = createHistory()
 
 class Routing extends Component {
   constructor(props) {
@@ -17,27 +17,28 @@ class Routing extends Component {
     this.state = {
       loggedIn: false,
     }
-    this.buildAppComponent = this.buildAppComponent.bind(this)
-    this.renderCorrectPage = this.renderCorrectPage.bind(this)
+    this.buildHomeComponent = this.buildHomeComponent.bind(this)
+    this.loginChecker = this.loginChecker.bind(this)
   }
 
-  buildAppComponent(props) {
+  buildHomeComponent(props) {
     return (<Homepage {...props} />)
   }
 
-  renderCorrectPage(props) {
+  loginChecker(props) {
     return (localStorage.getItem('id_token')) ? (<Dashboard {...props} />) : (<Redirect to="/" />)
   }
 
   render() {
     return (
-      <ConnectedRouter history={history}>
-        <div className="container">
-          <Route exact path="/" render={this.buildAppComponent} />
-          <Route path="/demon" render={this.renderCorrectPage} />
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" render={this.buildHomeComponent} />
+          <Route path="/dashboard" render={this.loginChecker} />
+          <Route path="/post" component={Auth} />
           <Route path="/login" component={Login} />
-        </div>
-      </ConnectedRouter>
+        </Switch>
+      </BrowserRouter>
     )
   }
 }
