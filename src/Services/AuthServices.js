@@ -1,7 +1,6 @@
 import Auth0Lock from 'auth0-lock'
 // import Promise from 'bluebird'
 // import { EventEmitter } from 'events'
-import { eventChannel } from 'redux-saga'
 
 import { AUTH_CLIENT_ID, AUTH_DOMAIN } from '../../clientKeys'
 
@@ -19,38 +18,13 @@ export const showLock = lock => {
   lock.show()
 }
 
-export const createLockChannel = lock => {
-  return eventChannel(emit => {
-    const authenticatedHandler = event => {
-      console.log('ITS THE HANDLLEERRRRRRRRRRRRRRR')
-      console.log(event)
-      emit('BLAH')
-    }
-
-    const errorHandler = event => {
-      emit(event.payload)
-    }
-
-    lock.on('show', authenticatedHandler)
-    lock.on('authorization_error', errorHandler)
-
-    const unsubscribe = () => {
-      localStorage.removeItem('id_token')
-      localStorage.removeItem('profile')
-    }
-    return unsubscribe
-  })
+export const setIdToken = idToken => {
+  localStorage.setItem('id_token', idToken)
 }
 
-// export const createLock = () => {
-//   return new Auth0Lock(AUTH_CLIENT_ID, AUTH_DOMAIN, {
-//     auth: {
-//       redirectUrl: 'http://localhost:3000/login',
-//       responseType: 'token',
-//       params: { scope: 'openid email user_id screen_name' },
-//     },
-//   })
-// }
+export const setProfile = profile => {
+  localStorage.setItem('profile', JSON.stringify(profile))
+}
 
 // ========================================================
 

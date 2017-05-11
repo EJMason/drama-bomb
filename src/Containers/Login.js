@@ -2,16 +2,16 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { actions } from '../Redux/Login'
-import { emtr } from '../Services/AuthServices'
-import { setDefaults } from '../Services/Api'
+// import { emtr } from '../Services/AuthServices'
+// import { setDefaults } from '../Services/Api'
 
 class Login extends Component {
   componentDidMount() {
-    emtr.on('profile_updated', val => {
-      setDefaults(val.idToken)
-      this.props.dispBeginInit(val)
-      this.props.history.push('/demon')
-    })
+    // emtr.on('profile_updated', val => {
+    //   setDefaults(val.idToken)
+    //   this.props.dispBeginInit(val)
+    //   this.props.history.push('/demon')
+    // })
   }
 
   render() {

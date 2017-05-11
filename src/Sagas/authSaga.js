@@ -1,18 +1,23 @@
-import { call, put } from 'redux-saga/effects'
+import { call, put, fork } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import axios from 'axios'
 
 import { actions } from '../Redux/Login'
 import { actions as userActions } from '../Redux/User'
 
+import { setIdToken, setProfile } from '../Services/AuthServices'
 
-// export function* lockOpen(lock) {
-//   try {
-//     yield call(lock.show)
-//   } catch (err) {
+export function* authAuthenticated({ idToken }) {
+  try {
+    yield call(setIdToken, idToken)
 
-//   }
-// }
+    yield put({ type: 'AUTH/LOCK_LOGIN_COMPLETE', payload: { idToken, profile } })
+  } catch (error) {
+    console.error(error)
+    yield put({ type: 'AUTH/ERROR', payload: error })
+  }
+}
+
 
 export function* sagaInitSeq({ payload }) {
   try {

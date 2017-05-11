@@ -16,14 +16,12 @@ class Homepage extends Component {
   }
 
   componentDidMount() {
-    console.log('MOUNTING!!!!!')
     this.props.dispatch({ type: 'MOUNT' })
   }
 
   componentDidUpdate() {
-    console.log('I AM UPDATEINGGGGG')
     if (this.props.mounted) {
-      this.props.dispatch({ type: 'AUTH/OPEN_LOCK' })
+      this.props.dispatch({ type: 'AUTH/INIT_OPEN_LOCK' })
     }
   }
 
