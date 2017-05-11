@@ -1,11 +1,11 @@
-import { call, put, fork } from 'redux-saga/effects'
+import { call, put } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import axios from 'axios'
 
 import { actions } from '../Redux/Login'
 import { actions as userActions } from '../Redux/User'
 
-import { setIdToken, setProfile } from '../Services/AuthServices'
+import { setIdToken } from '../Services/AuthServices'
 
 export function* authAuthenticated({ idToken }) {
   try {
