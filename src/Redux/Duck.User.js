@@ -3,6 +3,7 @@ import Immutable from 'seamless-immutable'
 export const types = {
   USER_SET_DATA: 'user/SET_DATA',
   INITIAL_USERS: 'user/INITIAL_USERS',
+  USER_ERROR: 'user/ERROR',
 }
 
 // ----------- Initialize Default State --------- //
@@ -39,8 +40,13 @@ export default (state = INITIAL_STATE, { type, payload }) => {
 export const actions = {
   userSetData: payload =>
     ({ type: types.USER_SET_DATA, payload }),
+
   initialUsers: ({ friends_ids, haters, simple_id }) =>
     ({ type: types.INITIAL_USERS, payload: { friends_ids, haters, simple_id } }),
+
+  userError: ({ err }) =>
+    ({ type: types.USER_ERROR, payload: { error: err } }),
+
 }
 
 // -------------- Selectors ------------ //

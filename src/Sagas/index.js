@@ -1,4 +1,5 @@
-import { fork, take, call, put } from 'redux-saga/effects'
+import { fork, take, call, put, cancel } from 'redux-saga/effects'
+
 import { showLock, lock } from '../Services/AuthServices'
 
 /* ------------- Types ------------- */
@@ -8,7 +9,7 @@ import { types } from '../Redux/Duck.Login'
 // import { actions as loginActions } from '../Redux/Duck.Login'
 
 /* ------------- Sagas ------------- */
-import { lockLoginSuccessSaga } from './authSaga'
+import { lockLoginSuccessSaga, serverSentEventsSaga } from './authSaga'
 import { createLockChannel } from './eventsSaga'
 
 /* --------------- Watchers ----------------------- */
@@ -35,12 +36,24 @@ function* watchLockAuthSuccess() {
   }
 }
 
+function* watchServerSentEvents() {
+  while (true) {
+    // dispatch from dashboard
+    const { simple_id } = yield take(types.EVENTSOURCE_CONNECT)
+    const serverEventsTask = yield fork(serverSentEventsSaga, simple_id)
+
+    yield take(types.EVENTSOURCE_DISCONNECT)
+    yield cancel(serverEventsTask)
+  }
+}
+
 /* ------------- Connect Types To Sagas ------------- */
 
 function* all() {
   yield fork(watchLockOpen)
   yield fork(watchLockEvents)
   yield fork(watchLockAuthSuccess)
+  yield fork(watchServerSentEvents)
 }
 
 export default function* root() {

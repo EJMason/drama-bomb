@@ -78,12 +78,9 @@ class Dashboard extends Component {
           <button
             onMouseDown={this.handleMouseDown}
             onTouchStart={this.handleTouchStart}
-          >Cron Check Tester
+          >This is the testing Button...
           </button>
-
-          {
-            this.props.loggedIn ? 'I AM LOGGED IN!!!' : 'ERROR!!'
-          }
+          This is my auth status: {this.props.authStatus}
         </div>
       </div>
     )
@@ -93,7 +90,7 @@ class Dashboard extends Component {
 // ------------------ REDUX -------------------- //
 
 const mapStateToProps = state => ({
-  loggedIn: state.login.loggedIn,
+  authStatus: state.login.authStatus,
   router: state.router,
   profile: state.user.profile,
   state,
