@@ -66,7 +66,6 @@ export const actions = {
   authSetData: payload => ({ type: types.AUTH_SET_DATA, payload }),
   authSuccess: () => ({ type: types.AUTH_SUCCESS }),
   authError: ({ err }) => ({ type: types.AUTH_ERROR, payload: err }),
-  // authPostLock: ({ history }) => ({ type: types.AUTH_POST_LOCK, payload: history }),
 
   lockOpenEvent: () => ({ type: types.LOCK_OPEN_EVENT }),
   lockCloseEvent: () => ({ type: types.LOCK_CLOSE_EVENT }),

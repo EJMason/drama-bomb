@@ -10,17 +10,12 @@ class Login extends Component {
 
 
   componentDidMount() {
-    console.log('LOGIN COMPONENT DID MOUNT!!!!')
-    console.log('Here are the props, ', this.props)
     if (this.props.error || !this.props.location.hash) {
       this.props.history.push('/')
     }
   }
 
   componentDidUpdate() {
-    const extraMessage = this.props.lockAuthenticated ? 'I AM AUTHENTICATED' : 'NOT AUTHENTICATED'
-    console.log(`\n\nLOGIN COMPONENT DID UPDATE => ${extraMessage}\n\n`)
-
     if (this.props.authStatus === 'complete') {
       this.props.history.push('/dashboard')
     }
@@ -62,10 +57,5 @@ const mapStateToProps = state => ({
   idToken: state.login.idToken,
   error: state.login.error,
 })
-
-// const mapDispatchToProps = dispatch => ({
-//   dispatchBeginInit: idToken => dispatch(actions.beginInitSeq(idToken)),
-//   dispatchUpdateProfile: (profile, idToken) => dispatch(actions.setLoginInfo(profile, idToken)),
-// })
 
 export default connect(mapStateToProps, dispatch => ({ dispatch }))(Login)

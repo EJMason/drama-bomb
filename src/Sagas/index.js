@@ -35,27 +35,18 @@ function* watchLockAuthSuccess() {
   }
 }
 
-// function* watchPostLock() {
-//   while (true) {
-//     const { history } = yield take(types.AUTH_POST_LOCK)
-//     yield call(authPostLockSaga, history, lock)
-//   }
-// }
-
 /* ------------- Connect Types To Sagas ------------- */
 
 function* all() {
   yield fork(watchLockOpen)
   yield fork(watchLockEvents)
   yield fork(watchLockAuthSuccess)
-  // yield fork(watchPostLock)
 }
 
 export default function* root() {
   try {
     yield call(all)
   } catch (error) {
-    console.error('Error in Sagas')
     console.error(error)
     yield put({ type: 'SAGAS/ERROR', payload: error })
   }
