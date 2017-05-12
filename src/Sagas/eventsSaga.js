@@ -1,4 +1,7 @@
 import { eventChannel } from 'redux-saga'
+import { actions } from '../Redux/Duck.Login'
+
+import { getProfile } from '../Services/AuthServices'
 
 export const createLockChannel = lock => {
   return eventChannel(emit => {
@@ -6,17 +9,24 @@ export const createLockChannel = lock => {
       emit({ type, payload })
     }
 
-    lock.on('show', payload => {
-      handler({ type: 'AUTH/OPEN_LOCK', payload })
+    lock.on('show', () => {
+      handler(actions.lockOpenEvent())
     })
-    lock.on('hide', payload => {
-      handler({ type: 'AUTH/CLOSE_LOCK', payload })
+
+    lock.on('hide', () => {
+      handler(actions.lockCloseEvent())
     })
+
     lock.on('authenticated', payload => {
-      handler({ type: 'AUTH/AUTHENTICATED', payload })
+      getProfile(lock, payload.accessToken)
+        .then(profile => {
+          payload.profile = profile
+          handler(actions.lockAuthenticated(payload))
+        })
     })
+
     lock.on('authorization_error', payload => {
-      handler({ type: 'AUTH/AUTH_ERROR', payload })
+      handler(actions.authError(payload))
     })
 
     const unsubscribe = () => {

@@ -4,7 +4,7 @@ import rootSaga from '../Sagas'
 import configureStore from './CreateStore'
 
 import temp from './temp'
-import login from './Login'
+import login from './Duck.Login'
 
 export default history => {
   const rootReducer = combineReducers({

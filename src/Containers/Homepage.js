@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-// import { actions as tempActions } from '../Redux/temp'
+import { actions } from '../Redux/Duck.Login'
 import { setDefaults } from '../Services/Api'
 // import HomeTopBar from './HomeTopBar'
 
@@ -16,12 +16,14 @@ class Homepage extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch({ type: 'MOUNT' })
+    if (!this.props.mounted) {
+      this.props.dispatch({ type: 'MOUNT' })
+    }
   }
 
   componentDidUpdate() {
-    if (this.props.mounted) {
-      this.props.dispatch({ type: 'AUTH/INIT_OPEN_LOCK' })
+    if (this.props.mounted && !this.props.lockOpen) {
+      this.props.dispatch(actions.lockOpen())
     }
   }
 
@@ -36,11 +38,11 @@ class Homepage extends Component {
 
 const mapStateToProps = state => ({
   mounted: state.login.mounted,
+  lockOpen: state.login.lockOpen,
 })
 
 const mapDispatchToProps = dispatch => ({
   dispatch,
-  // dispatchMount: () => dispatch(tempActions.dispatchMountAction()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Homepage)

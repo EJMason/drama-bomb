@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { actions } from '../Redux/Login'
+import { actions } from '../Redux/Duck.Login'
 import { logoutStorage } from '../Services/AuthServices'
 import { setDefaults, get } from '../Services/Api'
 import Topbar from '../Components/Topbar'

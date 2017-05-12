@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-
-import { actions } from '../Redux/Login'
-// import { emtr } from '../Services/AuthServices'
-// import { setDefaults } from '../Services/Api'
+import PropTypes from 'prop-types'
 
 class Login extends Component {
   constructor(props) {
@@ -11,19 +8,20 @@ class Login extends Component {
     this.state = {}
   }
 
+
   componentDidMount() {
-    console.log('COMPONENT DID MOUNT!!!!')
+    console.log('LOGIN COMPONENT DID MOUNT!!!!')
     console.log('Here are the props, ', this.props)
-    // this.props.dispatch({ type: 'AUTH/POST_LOGIN_SUCCESS', payload: this.props.history })
-    // emtr.on('profile_updated', val => {
-    //   setDefaults(val.idToken)
-    //   this.props.dispBeginInit(val)
-    //   this.props.history.push('/demon')
-    // })
+    if (this.props.error || !this.props.location.hash) {
+      this.props.history.push('/')
+    }
   }
 
   componentDidUpdate() {
-    if (this.props.loggedIn) {
+    const extraMessage = this.props.lockAuthenticated ? 'I AM AUTHENTICATED' : 'NOT AUTHENTICATED'
+    console.log(`\n\nLOGIN COMPONENT DID UPDATE => ${extraMessage}\n\n`)
+
+    if (this.props.authStatus === 'complete') {
       this.props.history.push('/dashboard')
     }
   }
@@ -31,19 +29,43 @@ class Login extends Component {
   render() {
     return (
       <div>
-        { this.props.loggedIn ? 'I am finished Logging in' : 'Not Yet finished' }
+        { this.props.lockAuthenticated ? '---I am authenticated---' : 'Not Yet Authenticated' }
       </div>
     )
   }
 }
 
+Login.defaultProps = {
+  error: null,
+}
+
+Login.propTypes = {
+  lockAuthenticated: PropTypes.bool.isRequired,
+  error: PropTypes.string,
+  history: PropTypes.shape({
+    action: PropTypes.string,
+    block: PropTypes.func,
+    go: PropTypes.func,
+    goBack: PropTypes.func,
+    goForward: PropTypes.func,
+    length: PropTypes.number,
+    location: PropTypes.object,
+    push: PropTypes.func,
+    replace: PropTypes.func,
+  }).isRequired,
+}
+
+// ----------------- REDUX ----------------- //
 const mapStateToProps = state => ({
-  loggedIn: state.login.loggedIn,
+  lockAuthenticated: state.login.lockAuthenticated,
+  authStatus: state.login.authStatus,
+  idToken: state.login.idToken,
+  error: state.login.error,
 })
 
-const mapDispatchToProps = dispatch => ({
-  dispatchBeginInit: idToken => dispatch(actions.beginInitSeq(idToken)),
-  dispatchUpdateProfile: (profile, idToken) => dispatch(actions.setLoginInfo(profile, idToken)),
-})
+// const mapDispatchToProps = dispatch => ({
+//   dispatchBeginInit: idToken => dispatch(actions.beginInitSeq(idToken)),
+//   dispatchUpdateProfile: (profile, idToken) => dispatch(actions.setLoginInfo(profile, idToken)),
+// })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, dispatch => ({ dispatch }))(Login)
