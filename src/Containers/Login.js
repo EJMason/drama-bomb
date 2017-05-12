@@ -24,7 +24,7 @@ class Login extends Component {
   render() {
     return (
       <div>
-        { this.props.lockAuthenticated ? '---I am authenticated---' : 'Not Yet Authenticated' }
+        { this.props.profile ? '---I am authenticated---' : 'Not Yet Authenticated' }
       </div>
     )
   }
@@ -35,7 +35,6 @@ Login.defaultProps = {
 }
 
 Login.propTypes = {
-  lockAuthenticated: PropTypes.bool.isRequired,
   error: PropTypes.string,
   history: PropTypes.shape({
     action: PropTypes.string,
@@ -52,7 +51,8 @@ Login.propTypes = {
 
 // ----------------- REDUX ----------------- //
 const mapStateToProps = state => ({
-  lockAuthenticated: state.login.lockAuthenticated,
+  // lockAuthenticated: state.login.lockAuthenticated,
+  profile: state.user.profile,
   authStatus: state.login.authStatus,
   idToken: state.login.idToken,
   error: state.login.error,

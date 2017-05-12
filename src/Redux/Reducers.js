@@ -3,13 +3,13 @@ import { combineReducers } from 'redux'
 import rootSaga from '../Sagas'
 import configureStore from './CreateStore'
 
-import temp from './temp'
 import login from './Duck.Login'
+import user from './Duck.User'
 
 export default history => {
   const rootReducer = combineReducers({
-    temp,
     login,
+    user,
   })
   return configureStore(rootReducer, rootSaga, history)
 }

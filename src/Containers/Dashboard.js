@@ -3,34 +3,33 @@ import { connect } from 'react-redux'
 
 import { actions } from '../Redux/Duck.Login'
 import { logoutStorage } from '../Services/AuthServices'
-import { setDefaults, get } from '../Services/Api'
+// import { setDefaults /* get */ } from '../Services/Api'
 import Topbar from '../Components/Topbar'
 import Sidebar from '../Components/Sidebar'
 import './Styles/css/Dashboard.css'
 
-const url = 'http://localhost:2020'
+// const url = 'http://localhost:2020'
 
 class Dashboard extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      temp: null,
-    }
+    this.state = {}
+
     this.logout = this.logout.bind(this)
   }
 
   componentDidMount() {
     if (!this.props.profile) {
-      this.checkLocalstorageForToken()
+      this.props.history.push('/')
     }
     // const numid = this.getUserId(this.props.profile)
-    const numid = '821069943986790400'
-    console.log('THIS IS THE NUMID: ', numid)
+    // const numid = '821069943986790400'
+    // console.log('THIS IS THE NUMID: ', numid)
 
 
-    const source = new EventSource(`${url}/friends/cron/updater/${numid}`)
+    // const source = new EventSource(`${url}/friends/cron/updater/${numid}`)
 
-    source.addEventListener(`${numid}`, val => { console.log('THE TRIGGER WORKED: ', val) }, false)
+    // source.addEventListener(`${numid}`, val => { console.log('THE TRIGGER WORKED: ', val) }, false)
   }
 
   getUserId(profile) {
@@ -40,36 +39,19 @@ class Dashboard extends Component {
     }, null)
   }
 
-  cronCheck() {
-    get.friendsCronHaters()
-      .then(data => {
-        console.log(data)
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
-
-  checkLocalstorageForToken() {
-    let profile = localStorage.getItem('profile')
-    const idToken = localStorage.getItem('id_token')
-    setDefaults(idToken)
-    if (profile && idToken) {
-      profile = JSON.parse(profile)
-      this.props.dispBeginInit({ profile, idToken })
-    } else {
-      this.logout()
-    }
-  }
-
   logout() {
     this.props.history.push('/')
     this.props.logoutRdx()
     logoutStorage()
   }
 
+  testButton() {
+    console.log('This is a button')
+  }
+
+
   handleMouseDown = () => {
-    this.cronCheck()
+    this.testButton()
   }
 
   handleTouchStart = e => {
@@ -113,7 +95,7 @@ class Dashboard extends Component {
 const mapStateToProps = state => ({
   loggedIn: state.login.loggedIn,
   router: state.router,
-  profile: state.login.profile,
+  profile: state.user.profile,
   state,
 })
 
