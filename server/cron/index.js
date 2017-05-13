@@ -10,15 +10,16 @@ sub.psubscribe('__keyevent@0__:set')
 
 const cron = new CronTask()
 
-redis.get('usercount')
+redis
+  .get('usercount')
   .then(count => {
     if (count) cron.initializer()
   })
 
 sub.on('pmessage', (pattern, channel) => {
-  console.log('----------- pmessage recieved ----------------')
   if (channel === '__keyevent@0__:expired') {
-    redis.decr('usercount')
+    redis
+      .decr('usercount')
       .then(numOfUsers => {
         if (!numOfUsers) {
           cron.stopTask()
@@ -26,9 +27,9 @@ sub.on('pmessage', (pattern, channel) => {
       })
       .catch(err => { throw err })
   } else if (channel === '__keyevent@0__:set') {
-    redis.get('usercount')
+    redis
+      .get('usercount')
       .then(count => {
-        console.log(`---------- Count: ${count} users in redis cache ---------------`)
         if (count) {
           cron.resumeTask()
         }

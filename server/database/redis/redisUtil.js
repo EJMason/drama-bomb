@@ -54,14 +54,21 @@ const updateExpiry = async key => {
   }
 }
 
+const streamUsers = cb => {
+  let all
+  const userStream = redis.scanStream({ match: 'twitter|*' })
+  userStream.on('data', users => {
+    all = users
+  })
+  userStream.on('end', () => {
+    cb(all)
+  })
+}
+
 const getAllActiveUserIds = () => {
-  const params = { match: 'twitter|*' }
-  let pipeQueries
   return new Promise((resolve, reject) => {
-    const stream = redis.scanStream(params)
-    stream.on('data', value => { pipeQueries = value })
-    stream.on('end', () => {
-      redis.pipeline(pipeQueries.map(val => ['get', val])).exec((err, results) => {
+    streamUsers(users => {
+      redis.pipeline(users.map(val => ['get', val])).exec((err, results) => {
         if (!results.length) {
           resolve([])
         } else if (results[0][0]) {
@@ -88,6 +95,9 @@ const updateChangedUser = async (key, updatedInfo, oldUser) => {
     throw throwErr(400, 'updateChangeduser', null, err)
   }
 }
+
+// ---- on server startup ---- //
+(() => { streamUsers(users => { redis.set('usercount', users.length) }) })()
 
 module.exports = {
   addUserOnLogin,
