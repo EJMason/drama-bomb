@@ -16,6 +16,17 @@ const ssEvents = (req, res) => {
           res.write(`data: ${toSend}\n\n`)
         })
       })
+    cron.emitter
+      .on('heartbeat', users => {
+        users.forEach(user => {
+          user = user.substr(user.indexOf('|') + 1)
+          console.log(`\nSending data to: ${user}\n`)
+
+          res.write(`id: ${cron.genId()} \n`)
+          res.write(`event: ${user.user_id}\n`)
+          res.write('data: heartbeat\n\n')
+        })
+      })
 
     redisUtil.redis.exists(`twitter|${req.params.uid}`)
       .then(userExists => {

@@ -105,5 +105,6 @@ module.exports = {
   updateExpiry,
   getAllActiveUserIds,
   updateChangedUser,
+  streamUsers,
   redis,
 }

@@ -3,6 +3,7 @@ const chalk = require('chalk')
 const EventEmitter = require('events')
 
 const util = require('../utilities/cronUtil')
+const redisUtil = require('../database/redis/redisUtil')
 
 class CronTask {
   constructor() {
@@ -11,6 +12,7 @@ class CronTask {
 
     this.ticker = this.ticker.bind(this)
     this.initializer = this.initializer.bind(this)
+    this.heartBeater = this.heartBeater.bind(this)
 
     this.workerBee = new CronJob({
       cronTime: '*/5 * * * * *',
@@ -18,30 +20,53 @@ class CronTask {
       onComplete: () => {},
       start: false,
     })
+
+    this.heartbeat = new CronJob({
+      cronTime: '0 */1 * * * *',
+      onTick: this.heartBeater,
+      onComplete: () => {},
+      start: false,
+    })
   }
 
   initializer() {
-    console.log(chalk.bgBlue.magenta('Cron Task Begin...'))
+    console.log(chalk.bgBlue.magenta('------------- Cron Task Begin -------------'))
     this.workerBee.start()
+    this.heartbeat.start()
   }
 
   resumeTask() {
     if (!this.workerBee.running) {
-      console.log(chalk.bgBlue.magenta('Resuming Cron Task...'))
+      console.log(chalk.bgBlue.magenta('------------- Starting Cron Task -------------'))
       this.workerBee.start()
+      this.heartbeat.start()
     } else {
       console.log(chalk.bgBlue.magenta('Cron Task Already running'))
     }
   }
 
   stopTask() {
-    console.log(chalk.bgBlue.magenta('Pausing Cron Task...'))
+    console.log(chalk.bgBlue.magenta('------------- Pausing Cron Task -------------'))
     this.workerBee.stop()
+    this.heartbeat.stop()
   }
 
   genId() {
     this.updateId++
     return this.updateId
+  }
+
+  /**
+   * Ensures connection stays open to client
+   * @memberof CronTask
+   */
+  heartBeater() {
+    console.log(chalk.bgMagenta.blue('------------- Heartbeat -------------'))
+    redisUtil.streamUsers(users => {
+      if (users.length) {
+        this.emitter.emit('heartbeat', users)
+      }
+    })
   }
 
   ticker() {

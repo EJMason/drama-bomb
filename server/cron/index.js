@@ -13,10 +13,14 @@ const cron = new CronTask()
 redis
   .get('usercount')
   .then(count => {
-    if (count) cron.initializer()
+    if (count) {
+      cron.resumeTask()
+    } else {
+      cron.stopTask()
+    }
   })
 
-sub.on('pmessage', (pattern, channel) => {
+sub.on('pmessage', (pattern, channel, key) => {
   if (channel === '__keyevent@0__:expired') {
     redis
       .decr('usercount')
@@ -27,14 +31,16 @@ sub.on('pmessage', (pattern, channel) => {
       })
       .catch(err => { throw err })
   } else if (channel === '__keyevent@0__:set') {
-    redis
-      .get('usercount')
-      .then(count => {
-        if (count) {
-          cron.resumeTask()
-        }
-      })
-      .catch(err => { throw err })
+    if (key.includes('twitter')) {
+      redis
+        .get('usercount')
+        .then(count => {
+          if (count) {
+            cron.resumeTask()
+          }
+        })
+        .catch(err => { throw err })
+    }
   }
 })
 
