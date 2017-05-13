@@ -4,24 +4,27 @@ const cron = require('../cron')
 
 const ssEvents = (req, res) => {
   try {
-    console.log('User Subscribed!')
-    cron.emitter.on('updated_users', data => {
-      data.forEach(user => {
-        console.log('\nEMITTING..............................')
-        const toSend = JSON.stringify(user)
-        res.write(`id: ${cron.genId()} \n`)
-        res.write(`event: ${user.user_id}\n`)
-        res.write(`data: ${toSend}\n\n`)
+    console.log(`\nUser ${req.params.uid} has Subscribed to listener!\n`)
+
+    cron.emitter
+      .on('updated_users', data => {
+        data.forEach(user => {
+          console.log(`\nSending data to: ${user.screen_name}\n`)
+          const toSend = JSON.stringify(user)
+          res.write(`id: ${cron.genId()} \n`)
+          res.write(`event: ${user.user_id}\n`)
+          res.write(`data: ${toSend}\n\n`)
+        })
       })
-    })
-    console.log('IS IT HERE?')
-    redisUtil.redis.exists(`twitter|${req.params.uid}`).then(userExists => {
-      if (userExists) {
-        res.writeHead(200, util.sseHead())
-      } else {
-        res.status(400).send('not in cache, logout')
-      }
-    })
+
+    redisUtil.redis.exists(`twitter|${req.params.uid}`)
+      .then(userExists => {
+        if (userExists) {
+          res.writeHead(200, util.sseHead())
+        } else {
+          res.status(400).send('not in cache, logout')
+        }
+      })
   } catch (error) {
     console.error('Error in ssEvents')
   }
@@ -53,7 +56,7 @@ const checkForNewFriendsAndHaters = async (req, res) => {
     // complete
     res.status(200).send(followersHaters)
   } catch (err) { // ----------- Error Handling -------- //
-    console.log(err)
+    console.error(err)
     const status = err.statusCode || 400
     res.status(status).send(err)
   }
@@ -61,8 +64,7 @@ const checkForNewFriendsAndHaters = async (req, res) => {
 
 const userPingisLoggedIn = (req, res) => {
   try {
-    const { user_id } = req.profile
-    redisUtil.updateExpiry(user_id)
+    redisUtil.updateExpiry(req.profile.user_id)
     res.status(200).send('success')
   } catch (err) {
     console.error(err)

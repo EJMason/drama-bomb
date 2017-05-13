@@ -4,13 +4,19 @@ const Redis = require('ioredis')
 const redis = require('../database/redis')
 
 const sub = new Redis()
+// sub.config('SET', 'notify-keyspace-events', 'KEA')
 sub.psubscribe('__keyevent@0__:expired')
 sub.psubscribe('__keyevent@0__:set')
 
 const cron = new CronTask()
-cron.initializer()
+
+redis.get('usercount')
+  .then(count => {
+    if (count) cron.initializer()
+  })
 
 sub.on('pmessage', (pattern, channel) => {
+  console.log('----------- pmessage recieved ----------------')
   if (channel === '__keyevent@0__:expired') {
     redis.decr('usercount')
       .then(numOfUsers => {
@@ -22,6 +28,7 @@ sub.on('pmessage', (pattern, channel) => {
   } else if (channel === '__keyevent@0__:set') {
     redis.get('usercount')
       .then(count => {
+        console.log(`---------- Count: ${count} users in redis cache ---------------`)
         if (count) {
           cron.resumeTask()
         }
