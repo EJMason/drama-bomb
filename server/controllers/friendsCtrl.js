@@ -9,7 +9,7 @@ const ssEvents = (req, res) => {
     cron.emitter
       .on('updated_users', data => {
         data.forEach(user => {
-          console.log(`\nSending data to: ${user.screen_name}\n`)
+          console.log(`\nSending updates to: ${user.screen_name}\n`)
           const toSend = JSON.stringify(user)
           res.write(`id: ${cron.genId()} \n`)
           res.write(`event: ${user.user_id}\n`)
@@ -20,7 +20,7 @@ const ssEvents = (req, res) => {
       .on('heartbeat', users => {
         users.forEach(user => {
           user = user.substr(user.indexOf('|') + 1)
-          console.log(`\nSending data to: ${user}\n`)
+          console.log(`\nSending heartbeat <3 ${user}\n`)
 
           res.write(`id: ${cron.genId()} \n`)
           res.write(`event: ${user.user_id}\n`)

@@ -51,6 +51,10 @@ class CronTask {
     this.heartbeat.stop()
   }
 
+  isRunning() {
+    return (this.workerBee.running && this.heartBeater.running)
+  }
+
   genId() {
     this.updateId++
     return this.updateId

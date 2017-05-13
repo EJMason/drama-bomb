@@ -31,7 +31,8 @@ sub.on('pmessage', (pattern, channel, key) => {
       })
       .catch(err => { throw err })
   } else if (channel === '__keyevent@0__:set') {
-    if (key.includes('twitter')) {
+    if (key.includes('twitter') && !cron.isRunning()) {
+      console.log('----- CHECKING CRON -----')
       redis
         .get('usercount')
         .then(count => {
