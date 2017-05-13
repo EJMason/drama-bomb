@@ -49,15 +49,29 @@ export default (state = INITIAL_STATE, action) => {
 
 // -------------- Action Creators ------------ //
 export const actions = {
-  lockOpen: () => ({ type: types.LOCK_OPEN }),
-  lockClose: () => ({ type: types.LOCK_CLOSE }),
-  lockAuthenticated: payload => ({ type: types.LOCK_AUTHENTICATED, payload }),
-  authSuccess: () => ({ type: types.AUTH_SUCCESS }),
-  authError: ({ err }) => ({ type: types.AUTH_ERROR, payload: err }),
+  lockOpen: () =>
+    ({ type: types.LOCK_OPEN }),
 
-  lockOpenEvent: () => ({ type: types.LOCK_OPEN_EVENT }),
-  lockCloseEvent: () => ({ type: types.LOCK_CLOSE_EVENT }),
+  lockClose: () =>
+    ({ type: types.LOCK_CLOSE }),
 
+  lockAuthenticated: payload =>
+    ({ type: types.LOCK_AUTHENTICATED, payload }),
+
+  authSuccess: () =>
+    ({ type: types.AUTH_SUCCESS }),
+
+  authError: ({ err }) =>
+    ({ type: types.AUTH_ERROR, payload: err }),
+
+  lockOpenEvent: () =>
+    ({ type: types.LOCK_OPEN_EVENT }),
+
+  lockCloseEvent: () =>
+    ({ type: types.LOCK_CLOSE_EVENT }),
+
+  eventSourceConnect: simpleId =>
+    ({ type: types.EVENTSOURCE_CONNECT, payload: { simpleId } }),
 }
 
 // -------------- Selectors ------------ //

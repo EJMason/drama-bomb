@@ -21,22 +21,10 @@ class Dashboard extends Component {
   componentDidMount() {
     if (!this.props.profile) {
       this.props.history.push('/')
+    } else {
+      console.log('DO I HAVE THE ID: ', this.props.simple_id)
+      this.props.dispatch(actions.eventSourceConnect(this.props.simple_id))
     }
-    // const numid = this.getUserId(this.props.profile)
-    // const numid = '821069943986790400'
-    // console.log('THIS IS THE NUMID: ', numid)
-
-
-    // const source = new EventSource(`${url}/friends/cron/updater/${numid}`)
-
-    // source.addEventListener(`${numid}`, val => { console.log('THE TRIGGER WORKED: ', val) }, false)
-  }
-
-  getUserId(profile) {
-    console.log('HERE IS PROFILE: ', profile)
-    return profile.identities.reduce((acc, ident) => {
-      return (ident.proveider === 'twitter') ? ident.user_id : acc
-    }, null)
   }
 
   logout() {
@@ -91,12 +79,14 @@ class Dashboard extends Component {
 
 const mapStateToProps = state => ({
   authStatus: state.login.authStatus,
-  router: state.router,
   profile: state.user.profile,
-  state,
+  simple_id: state.user.simple_id,
+  router: state.router,
+
 })
 
 const mapDispatchToProps = dispatch => ({
+  dispatch,
   logoutRdx: () => dispatch(actions.logout()),
   dispBeginInit: idToken => dispatch(actions.beginInitSeq(idToken)),
   updateProfile: (profile, idToken) => dispatch(actions.setLoginInfo(profile, idToken)),

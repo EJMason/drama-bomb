@@ -39,8 +39,8 @@ function* watchLockAuthSuccess() {
 function* watchServerSentEvents() {
   while (true) {
     // dispatch from dashboard
-    const { simple_id } = yield take(types.EVENTSOURCE_CONNECT)
-    const serverEventsTask = yield fork(serverSentEventsSaga, simple_id)
+    const { payload } = yield take(types.EVENTSOURCE_CONNECT)
+    const serverEventsTask = yield fork(serverSentEventsSaga, payload.simpleId)
 
     yield take(types.EVENTSOURCE_DISCONNECT)
     yield cancel(serverEventsTask)

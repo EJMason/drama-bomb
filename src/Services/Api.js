@@ -4,7 +4,7 @@ import Promise from 'bluebird'
 const BASE_URL = 'http://localhost:2020'
 
 export const setDefaults = idToken => {
-  axios.defaults.baseURL = 'http://localhost:2020'
+  axios.defaults.baseURL = BASE_URL
   axios.defaults.headers.common['Authorization'] = idToken
 }
 
@@ -32,6 +32,7 @@ export const post = {
 // ------------------ SERVER SENT EVENTS UTILITY ------------------ //
 
 export const connectToServerEvents = simpleId => {
+  console.log('THIS IS THE ID IN THE UTILITY: ', simpleId)
   return new Promise((resolve, reject) => {
     try {
       const se = new EventSource(`${BASE_URL}/friends/cron/updater/${simpleId}`)

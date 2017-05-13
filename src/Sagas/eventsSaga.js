@@ -37,7 +37,23 @@ export const createLockChannel = lock => {
   })
 }
 
-export const createListenerChannel = () => {
-  console.log('This is the channel for server listener')
-}
 
+export const createServerEventChannel = (source, id) => {
+  return eventChannel(emit => {
+    // This is what executes after event is recieved
+    const handler = data => { emit(JSON.parse(data)) }
+
+    source.addEventListener(`${id}`, event => {
+      console.log('AN EVENT HAS BEEN FIRED: ', event)
+      handler(event.data)
+    }, false)
+
+    source.addEventListener('error', err => { console.log('IS THIS IT? ', err) })
+
+    console.log('\nAM I GETTING HERE?\n\n')
+    const unsubscribe = () => {
+      source.close()
+    }
+    return unsubscribe
+  })
+}

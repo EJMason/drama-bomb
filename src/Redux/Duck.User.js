@@ -13,7 +13,7 @@ const INITIAL_STATE = Immutable({
   profile: null,
   idToken: null,
   userId: null,
-  simpleId: null,
+  simple_id: null,
 })
 
 // ------------------- Reducers ------------------- //
@@ -28,7 +28,11 @@ export default (state = INITIAL_STATE, { type, payload }) => {
       })
     }
     case types.INITIAL_USERS: {
-      return Immutable.merge(state, { friends_ids: payload.friends_ids, haters: payload.haters })
+      return Immutable.merge(state, {
+        friends_ids: payload.friends_ids,
+        haters: payload.haters,
+        simple_id: payload.simple_id,
+      })
     }
 
     default:

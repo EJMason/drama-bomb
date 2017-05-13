@@ -1,6 +1,8 @@
-import { call, put, fork, cancelled } from 'redux-saga/effects'
+// import { call, put, fork, take } from 'redux-saga/effects'
+import { call, put, fork, take, cancelled } from 'redux-saga/effects'
 import axios from 'axios'
 
+import { createServerEventChannel } from './eventsSaga'
 import { actions } from '../Redux/Duck.Login'
 import { actions as userActions } from '../Redux/Duck.User'
 
@@ -28,17 +30,26 @@ export function* lockLoginSuccessSaga({ idToken, profile, accessToken }) {
   }
 }
 
-export function* serverSentEventsSaga({ simple_id }) {
+/**
+ * This is the listener for Server Sent Events
+ *
+ * @export
+ * @param {string} { simple_id } twitter id of user for connection string
+ */
+export function* serverSentEventsSaga(simpleId) {
   try {
-    const serverEventsListener = yield call(connectToServerEvents, simple_id)
-    const serverEventsChannel = yield call(serverEventsListener)
+    const serverEventsListener = yield call(connectToServerEvents, simpleId)
+    const serverEventsChannel = yield call(createServerEventChannel, serverEventsListener, simpleId)
 
     while (true) {
       const payload = yield take(serverEventsChannel)
-      console.log(payload)
+      console.log('THERE IS AN EVENT: ', payload)
     }
   } catch (err) {
-    yield put(userActions.userError(err))
+    console.error(err)
+    if (err) {
+      yield put(userActions.userError(err))
+    }
   } finally {
     if (yield cancelled()) {
       yield call(serverEventsChannel.close)
@@ -46,4 +57,3 @@ export function* serverSentEventsSaga({ simple_id }) {
   }
 }
 
-export const holder = 'placeholder'
