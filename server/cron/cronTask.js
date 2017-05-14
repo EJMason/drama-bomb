@@ -2,7 +2,7 @@ const CronJob = require('cron').CronJob
 const chalk = require('chalk')
 const EventEmitter = require('events')
 
-const util = require('../utilities/cronUtil')
+const util = require('./cronUtil')
 const redisUtil = require('../database/redis/redisUtil')
 
 class CronTask {

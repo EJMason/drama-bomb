@@ -4,6 +4,7 @@ export const types = {
   USER_SET_DATA: 'user/SET_DATA',
   INITIAL_USERS: 'user/INITIAL_USERS',
   USER_ERROR: 'user/ERROR',
+  USER_REMOVE: 'user/REMOVE',
 }
 
 // ----------- Initialize Default State --------- //
@@ -27,6 +28,9 @@ export default (state = INITIAL_STATE, { type, payload }) => {
         profile,
       })
     }
+    case types.USER_REMOVE: {
+      return INITIAL_STATE
+    }
     case types.INITIAL_USERS: {
       return Immutable.merge(state, {
         friends_ids: payload.friends_ids,
@@ -42,14 +46,11 @@ export default (state = INITIAL_STATE, { type, payload }) => {
 
 // -------------- Action Creators ------------ //
 export const actions = {
-  userSetData: payload =>
-    ({ type: types.USER_SET_DATA, payload }),
-
+  userSetData: payload => ({ type: types.USER_SET_DATA, payload }),
   initialUsers: ({ friends_ids, haters, simple_id }) =>
     ({ type: types.INITIAL_USERS, payload: { friends_ids, haters, simple_id } }),
-
-  userError: ({ err }) =>
-    ({ type: types.USER_ERROR, payload: { error: err } }),
+  userError: ({ err }) => ({ type: types.USER_ERROR, payload: { error: err } }),
+  userRemove: () => ({ type: types.USER_REMOVE }),
 
 }
 

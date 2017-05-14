@@ -45,14 +45,20 @@ export const createServerEventChannel = (source, id) => {
     const handler = data => { emit(JSON.parse(data)) }
 
     source.addEventListener(`${id}`, event => {
-      console.log('AN EVENT HAS BEEN FIRED: ', event)
       handler(event.data)
     }, false)
 
-    source.addEventListener('error', err => { console.log('IS THIS IT? ', err) })
+    source.addEventListener('error', err => {
+      console.error('SSE ERROR ', err)
+      /*
+        Here we want to do something if there is an error
+        Probably want to relog them in using the token saved
+        in localstorage. If that doesn't work log them out
+      */
+    }, false)
 
-    console.log('\nAM I GETTING HERE?\n\n')
     const unsubscribe = () => {
+      // just this needs to be done on logout
       source.close()
     }
     return unsubscribe

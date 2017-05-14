@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { actions } from '../Redux/Duck.Login'
-import { logoutStorage } from '../Services/AuthServices'
-// import { setDefaults /* get */ } from '../Services/Api'
+import { actions as loginActions } from '../Redux/Duck.Login'
+import { actions as userActions } from '../Redux/Duck.User'
+import { removeTokens } from '../Services/AuthServices'
+import { del } from '../Services/Api'
 import Topbar from '../Components/Topbar'
 import Sidebar from '../Components/Sidebar'
 import './Styles/css/Dashboard.css'
@@ -23,14 +24,18 @@ class Dashboard extends Component {
       this.props.history.push('/')
     } else {
       console.log('DO I HAVE THE ID: ', this.props.simple_id)
-      this.props.dispatch(actions.eventSourceConnect(this.props.simple_id))
+      this.props.dispatch(loginActions.eventSourceConnect(this.props.simple_id))
     }
   }
 
   logout() {
+    del
+      .logout()
+      .catch(console.error)
     this.props.history.push('/')
-    this.props.logoutRdx()
-    logoutStorage()
+    this.props.dispatch(loginActions.authLogout())
+    this.props.dispatch(userActions.userRemove())
+    removeTokens()
   }
 
   testButton() {
@@ -85,11 +90,6 @@ const mapStateToProps = state => ({
 
 })
 
-const mapDispatchToProps = dispatch => ({
-  dispatch,
-  logoutRdx: () => dispatch(actions.logout()),
-  dispBeginInit: idToken => dispatch(actions.beginInitSeq(idToken)),
-  updateProfile: (profile, idToken) => dispatch(actions.setLoginInfo(profile, idToken)),
-})
+// const mapDispatchToProps = dispatch => ({ dispatch })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
+export default connect(mapStateToProps, dispatch => ({ dispatch }))(Dashboard)

@@ -96,6 +96,10 @@ const updateChangedUser = async (key, updatedInfo, oldUser) => {
   }
 }
 
+const onLogout = uid => {
+  redis.expire(uid, 4)
+}
+
 // ---- on server startup ---- //
 (() => { streamUsers(users => { redis.set('usercount', users.length) }) })()
 
@@ -106,5 +110,6 @@ module.exports = {
   getAllActiveUserIds,
   updateChangedUser,
   streamUsers,
+  onLogout,
   redis,
 }

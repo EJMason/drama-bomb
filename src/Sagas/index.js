@@ -1,4 +1,5 @@
-import { fork, take, call, put, cancel } from 'redux-saga/effects'
+// import { fork, take, call, put, cancel } from 'redux-saga/effects'
+import { fork, take, call, put } from 'redux-saga/effects'
 
 import { showLock, lock } from '../Services/AuthServices'
 
@@ -40,10 +41,14 @@ function* watchServerSentEvents() {
   while (true) {
     // dispatch from dashboard
     const { payload } = yield take(types.EVENTSOURCE_CONNECT)
-    const serverEventsTask = yield fork(serverSentEventsSaga, payload.simpleId)
+    // const serverEventsTask = yield fork(serverSentEventsSaga, payload.simpleId)
+    yield fork(serverSentEventsSaga, payload.simpleId)
 
-    yield take(types.EVENTSOURCE_DISCONNECT)
-    yield cancel(serverEventsTask)
+    const load = yield take('CHANNEL_CREATED')
+    console.log('THIS IS THE PAYLOAD: ', load)
+    yield take(types.AUTH_LOGOUT)
+    yield call(load.payload.close)
+    // yield cancel(serverEventsTask)
   }
 }
 

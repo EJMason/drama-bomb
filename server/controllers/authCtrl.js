@@ -29,12 +29,13 @@ const loginInit = async (req, res) => {
   }
 }
 
-// const logout = async (req, res) => {
-//   try {
+const logout = (req, res) => {
+  try {
+    redisUtil.onLogout(req.profile.user_id)
+    res.status(200).send('logout_complete')
+  } catch (err) {
+    res.status(400).send('logout error: ', err)
+  }
+}
 
-//   } catch (err) {
-
-//   }
-// }
-
-module.exports = { loginInit }
+module.exports = { loginInit, logout }

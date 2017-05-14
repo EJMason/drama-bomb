@@ -10,6 +10,7 @@ export const types = {
   AUTH_POST_LOCK: 'auth/POST_LOCK',
   AUTH_SUCCESS: 'auth/SUCCESS',
   AUTH_ERROR: 'auth/ERROR',
+  AUTH_LOGOUT: 'auth/LOGOUT',
   EVENTSOURCE_CONNECT: 'event_source/CONNECT',
   EVENTSOURCE_DISCONNECT: 'event_source/DISCONNECT',
 }
@@ -38,6 +39,9 @@ export default (state = INITIAL_STATE, action) => {
     case types.AUTH_SUCCESS: {
       return Immutable.merge(state, { authStatus: 'complete' })
     }
+    case types.AUTH_LOGOUT: {
+      return INITIAL_STATE
+    }
     case types.AUTH_ERROR: {
       return Immutable.merge(state, { error: action.payload.error })
     }
@@ -49,29 +53,17 @@ export default (state = INITIAL_STATE, action) => {
 
 // -------------- Action Creators ------------ //
 export const actions = {
-  lockOpen: () =>
-    ({ type: types.LOCK_OPEN }),
-
-  lockClose: () =>
-    ({ type: types.LOCK_CLOSE }),
-
-  lockAuthenticated: payload =>
-    ({ type: types.LOCK_AUTHENTICATED, payload }),
-
-  authSuccess: () =>
-    ({ type: types.AUTH_SUCCESS }),
-
-  authError: ({ err }) =>
-    ({ type: types.AUTH_ERROR, payload: err }),
-
-  lockOpenEvent: () =>
-    ({ type: types.LOCK_OPEN_EVENT }),
-
-  lockCloseEvent: () =>
-    ({ type: types.LOCK_CLOSE_EVENT }),
-
-  eventSourceConnect: simpleId =>
-    ({ type: types.EVENTSOURCE_CONNECT, payload: { simpleId } }),
+  lockOpen: () => ({ type: types.LOCK_OPEN }),
+  lockClose: () => ({ type: types.LOCK_CLOSE }),
+  lockAuthenticated: payload => ({ type: types.LOCK_AUTHENTICATED, payload }),
+  authSuccess: () => ({ type: types.AUTH_SUCCESS }),
+  authError: ({ err }) => ({ type: types.AUTH_ERROR, payload: err }),
+  authLogout: () => ({ type: types.AUTH_LOGOUT }),
+  eventSourceConnect: simpleId => ({ type: types.EVENTSOURCE_CONNECT, payload: { simpleId } }),
+  eventSourceDisconnect: () => ({ type: types.EVENTSOURCE_DISCONNECT }),
+    // Not really any use for these below here yet....
+  lockOpenEvent: () => ({ type: types.LOCK_OPEN_EVENT }),
+  lockCloseEvent: () => ({ type: types.LOCK_CLOSE_EVENT }),
 }
 
 // -------------- Selectors ------------ //

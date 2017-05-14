@@ -34,6 +34,12 @@ export const setTokens = ({ idToken, profile, accessToken }) => {
   localStorage.setItem('profile', JSON.stringify(profile))
 }
 
+export const removeTokens = () => {
+  localStorage.removeItem('id_token')
+  localStorage.removeItem('profile')
+  localStorage.removeItem('access_token')
+}
+
 export const getIdToken = () => localStorage.getItem('id_token')
 
 export const getProfileInfo = () => {

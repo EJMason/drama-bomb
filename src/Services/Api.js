@@ -20,6 +20,10 @@ const friendsCronHaters = () => {
   return axios.get('/friends/cron/haters')
 }
 
+const logout = () => {
+  return axios.delete('/auth/logout')
+}
+
 export const get = {
   test,
   friendsCronHaters,
@@ -29,10 +33,13 @@ export const post = {
   init,
 }
 
+export const del = {
+  logout,
+}
+
 // ------------------ SERVER SENT EVENTS UTILITY ------------------ //
 
 export const connectToServerEvents = simpleId => {
-  console.log('THIS IS THE ID IN THE UTILITY: ', simpleId)
   return new Promise((resolve, reject) => {
     try {
       const se = new EventSource(`${BASE_URL}/friends/cron/updater/${simpleId}`)
