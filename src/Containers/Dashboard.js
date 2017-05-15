@@ -53,6 +53,7 @@ class Dashboard extends Component {
   }
 
   render() {
+    console.log('This is the followers count: ', this.props.followers_count)
     if (!this.props.profile) return null
     return (
       <div className="dashboard-container">
@@ -64,7 +65,7 @@ class Dashboard extends Component {
           />
         </div>
         <div className="sidebar-container-grd">
-          <Sidebar />
+          <Sidebar haters={this.props.haters} />
         </div>
         <div className="content-container-grd">
 
@@ -86,10 +87,10 @@ const mapStateToProps = state => ({
   authStatus: state.login.authStatus,
   profile: state.user.profile,
   simple_id: state.user.simple_id,
+  haters: state.user.haters,
+  followers_count: state.user.followers_count,
   router: state.router,
 
 })
-
-// const mapDispatchToProps = dispatch => ({ dispatch })
 
 export default connect(mapStateToProps, dispatch => ({ dispatch }))(Dashboard)

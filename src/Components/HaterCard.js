@@ -6,7 +6,9 @@ import './Styles/css/HaterCard.css'
 class HaterCard extends Component {
   constructor(props) {
     super(props)
-    this.state = { open: false }
+    this.state = {
+      open: false,
+    }
   }
 
   handleMouseDown = () => {
@@ -19,6 +21,7 @@ class HaterCard extends Component {
   }
 
   render() {
+    console.log('This props ', this.props)
     return (
       <div>
         <button
@@ -74,15 +77,15 @@ class HaterCard extends Component {
               >
                 <img
                   className="profile-image"
-                  src="http://staging1.dima.co.nz/wp-content/uploads/2016/07/4.jpg"
+                  src={this.props.hater.image}
                   alt="hater"
                   style={{
                     height: `${x}px`,
                   }}
                 />
                 <div className="textArea">
-                  <div className="cardText card-name">Bob Jones</div>
-                  <div className="cardText card-handle">@bobIsTheCoolest</div>
+                  <div className="cardText card-name">{this.props.hater.first_name}</div>
+                  <div className="cardText card-handle">@{this.props.hater.screen_name}</div>
                 </div>
               </div>
             </div>

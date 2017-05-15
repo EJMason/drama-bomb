@@ -78,11 +78,10 @@ export function* serverSentEventsSaga(simpleId) {
     yield put({ type: 'CHANNEL_CREATED', payload: serverEventsChannel })
 
     while (true) {
-      if (!serverEventsChannel) {
-        break
-      }
+      if (!serverEventsChannel) { break }
+
       const payload = yield take(serverEventsChannel)
-      console.log('THERE IS AN EVENT: ', payload)
+      yield put(userActions.userUpdate(payload))
     }
   } catch (err) {
     console.error(err)
