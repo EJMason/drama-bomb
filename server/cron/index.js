@@ -13,7 +13,7 @@ const cron = new CronTask()
 redis
   .get('usercount')
   .then(count => {
-    if (count) {
+    if (count > 0) {
       cron.resumeTask()
     } else {
       cron.stopTask()

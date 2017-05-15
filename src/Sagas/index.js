@@ -41,14 +41,12 @@ function* watchServerSentEvents() {
   while (true) {
     // dispatch from dashboard
     const { payload } = yield take(types.EVENTSOURCE_CONNECT)
-    // const serverEventsTask = yield fork(serverSentEventsSaga, payload.simpleId)
     yield fork(serverSentEventsSaga, payload.simpleId)
 
     const load = yield take('CHANNEL_CREATED')
     console.log('THIS IS THE PAYLOAD: ', load)
     yield take(types.AUTH_LOGOUT)
     yield call(load.payload.close)
-    // yield cancel(serverEventsTask)
   }
 }
 

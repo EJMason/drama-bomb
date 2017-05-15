@@ -1,5 +1,6 @@
 const redisUtil = require('../database/redis/redisUtil')
 const util = require('../utilities/friendsUtil')
+const { buildSafeData } = require('../services/friendsServices')
 const cron = require('../cron')
 
 const ssEvents = (req, res) => {
@@ -10,7 +11,9 @@ const ssEvents = (req, res) => {
       .on('updated_users', data => {
         data.forEach(user => {
           console.log(`\nSending updates to: ${user.screen_name}\n`)
-          const toSend = JSON.stringify(user)
+          // This is info to be sent
+          const toSend = buildSafeData(user)
+          // sending
           res.write(`id: ${cron.genId()} \n`)
           res.write(`event: ${user.user_id}\n`)
           res.write(`data: ${toSend}\n\n`)

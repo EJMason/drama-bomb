@@ -35,7 +35,18 @@ const checkIfHatersHaveAddedYou = (haters, changes) => {
   return haters
 }
 
+const buildSafeData = user => {
+  return JSON.stringify({
+    screen_name: user.screen_name,
+    user_id: user.user_id,
+    followers_count: user.followers_count,
+    friends_ids: user.friends_ids,
+    haters: user.haters,
+  })
+}
+
 module.exports = {
   findAllNew,
   checkIfHatersHaveAddedYou,
+  buildSafeData,
 }
