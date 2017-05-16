@@ -28,7 +28,6 @@ module.exports.cronCheck = async () => {
   try {
     // get all of the users from redis, that means they are logged in, groups of 100
     const groupsOfUsers = cronService.groupsUsers(await redis.getAllActiveUserIds())
-
     // generate the twitter queries for each group, request twitter api
     const arrOfResponses = await Promise.all(cronService.genTwitterQueries(groupsOfUsers))
 
@@ -40,7 +39,6 @@ module.exports.cronCheck = async () => {
     }
     return []
   } catch (err) {
-    console.error('ERROR IN CRONUTIL: ', err)
     throw throwErr(null, 'Error in chron job', 'cronCheck', err)
   }
 }

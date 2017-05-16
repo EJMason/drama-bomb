@@ -21,7 +21,6 @@ class HaterCard extends Component {
   }
 
   render() {
-    console.log('This props ', this.props)
     return (
       <div>
         <button
@@ -97,3 +96,4 @@ class HaterCard extends Component {
 }
 
 export default HaterCard
+

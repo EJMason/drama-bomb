@@ -80,7 +80,7 @@ class CronTask {
         this.emitter.emit('updated_users', data)
       }
     }).catch(err => {
-      console.error('THERE WAS AN ERROR: ', err)
+      throw err
     })
   }
 }

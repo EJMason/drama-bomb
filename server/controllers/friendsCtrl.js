@@ -70,7 +70,7 @@ const checkForNewFriendsAndHaters = async (req, res) => {
     // complete
     res.status(200).send(followersHaters)
   } catch (err) { // ----------- Error Handling -------- //
-    console.error(err)
+    // console.error(err)
     const status = err.statusCode || 400
     res.status(status).send(err)
   }
@@ -81,7 +81,7 @@ const userPingisLoggedIn = (req, res) => {
     redisUtil.updateExpiry(req.profile.user_id)
     res.status(200).send('success')
   } catch (err) {
-    console.error(err)
+    // console.error(err)
     const status = err.statusCode || 400
     res.status(status).send(err)
   }

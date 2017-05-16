@@ -22,9 +22,15 @@ const throwErr = (statusCode, message, method, defaultError = null) => {
 const getFollowersIds = async ({ user_id, screen_name, token, token_secret }) => {
   try {
     const uri = `${baseUrl}/followers/ids.json`
-    const qs = { user_id, screen_name }
-    const headers = await services.genTwitterAuthHeader('GET', uri, user_id, { user_id, screen_name }, { token, token_secret })
-    return rp({ uri, qs, headers, json: true })
+    // Query string parameters
+    const qs = {
+      user_id,
+      screen_name,
+      stringify_ids: true,
+    }
+    // Oauth nonsense
+    const headers = await services.genTwitterAuthHeader('GET', uri, user_id, qs, { token, token_secret })
+    return rp({ uri, qs, headers })
   } catch (err) {
     const errParams = [
       400,

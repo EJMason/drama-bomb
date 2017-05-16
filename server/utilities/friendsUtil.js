@@ -69,7 +69,7 @@ const getSortedUserIds = async ({ user_id, screen_name, token, token_secret }) =
   try {
     // gets the current array of user ids from twitter api
     let arrayOfUserIds = await twitter.getFollowersIds({ user_id, screen_name, token, token_secret })
-    // return arrayOfUserIds.ids.sort((a, b) => a - b)
+    console.log('This is the array here: ', arrayOfUserIds)
     arrayOfUserIds = arrayOfUserIds.ids.sort((a, b) => a - b)
     return arrayOfUserIds
   } catch (err) {
@@ -107,6 +107,11 @@ const findNewHatersAndFriends = ({ friends_ids, haters }, sortedIdsFromTwitter) 
  */
 const getUpdateHatersAndSort = async (followersHaters, userId, keys) => {
   try {
+    Object.keys(followersHaters).forEach(key => {
+      console.log('Key: ', key)
+      console.log(followersHaters[key])
+    })
+    console.log(`\n\nTHESE ARE THE HATER IDS: ${followersHaters} \n\n`)
     // take haters ids and get their data objects from twitter
     const arrOfHatersObjects = await getNewHatersFromTwitter(followersHaters.newHaters, userId, keys)
     // sort the results and merge them into the new haters
@@ -160,7 +165,6 @@ const updateFromTwitter = async user => {
     const sortedIdsFromTwitter = await getSortedUserIds(user)
     let followersHaters = findNewHatersAndFriends(user, sortedIdsFromTwitter)
     const keys = { token: user.token, token_secret: user.token_secret }
-
     if (followersHaters.newHaters.length) {
       followersHaters = await getUpdateHatersAndSort(followersHaters, user.user_id, keys)
     }
