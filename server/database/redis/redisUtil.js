@@ -100,17 +100,6 @@ const updateChangedUser = async (key, updatedInfo, oldUser) => {
   }
 }
 
-
-// const updateChangedUser = async (key, updatedInfo, oldUser) => {
-//   try {
-
-//     await redis.set(key, JSON.stringify(newUser), 'ex', 3600)
-//     return newUser
-//   } catch (err) {
-//     throw throwErr(400, 'updateChangeduser', null, err)
-//   }
-// }
-
 const onLogout = uid => {
   redis.expire(uid, 4)
 }

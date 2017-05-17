@@ -16,17 +16,12 @@ const test = () => {
   return axios.get('/auth/test')
 }
 
-const friendsCronHaters = () => {
-  return axios.get('/friends/cron/haters')
-}
-
 const logout = () => {
   return axios.delete('/auth/logout')
 }
 
 export const get = {
   test,
-  friendsCronHaters,
 }
 
 export const post = {

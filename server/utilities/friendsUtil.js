@@ -16,18 +16,6 @@ const throwErr = (statusCode, message, method, defaultError = null) => {
 }
 
 /**
- * Merges haters with new Haters, then sorts them
- * @param {Array} Haters
- * @param {Array} newHaters
- * @return {Array}
- */
-const sortHaters = ({ haters, newHaters }) => {
-  const allHaters = haters.concat(newHaters)
-  allHaters.sort((a, b) => a.user_id - b.user_id)
-  return allHaters
-}
-
-/**
  * Gets the new hater objects from twitter
  * @param {Array} haterIds
  * @param {String} userId
@@ -35,113 +23,13 @@ const sortHaters = ({ haters, newHaters }) => {
  */
 const getNewHatersFromTwitter = async (haterIds, userId, keys) => {
   try {
-    // let names
-    const stringOfUserIds = haterIds.join()
     // user_id is the parameter name twitter needs, it isn't the user id'
-    const haters = await twitter.getUsersLookup({ user_id: stringOfUserIds }, userId, keys)
-    return haters
-    // Builds out an array of the new hater objects
-    // return haters.map(hater => {
-    //   names = hater.name.split(' ')
-    //   if (!names[1]) { names.push('') }
-    //   return {
-    //     user_id: hater.id,
-    //     screen_name: hater.screen_name,
-    //     image: hater.profile_image_url,
-    //     first_name: names[0],
-    //     last_name: names[1],
-    //   }
-    // })
+    return await twitter.getUsersLookup({ user_id: haterIds.join() }, userId, keys)
   } catch (err) {
     const errParams = [
       400,
       'There was an error in friendsUtil : getNewHatersFromTwitter',
       'friendsUtil : getNewHatersFromTwitter',
-      err,
-    ]
-    throw throwErr(...errParams)
-  }
-}
-
-// --------------------------- For Export --------------------------- //
-
-const getSortedUserIds = async ({ user_id, screen_name, token, token_secret }) => {
-  try {
-    // gets the current array of user ids from twitter api
-    let arrayOfUserIds = await twitter.getFollowersIds({ user_id, screen_name, token, token_secret })
-    console.log('This is the array here: ', arrayOfUserIds)
-    arrayOfUserIds = arrayOfUserIds.ids.sort((a, b) => a - b)
-    return arrayOfUserIds
-  } catch (err) {
-    const errParams = [
-      400,
-      'There was an error in friendsUtil : getSortedUserIds',
-      'friendsUtil : getSortedIds',
-      err,
-    ]
-    throw throwErr(...errParams)
-  }
-}
-
-const findNewHatersAndFriends = ({ friends_ids, haters }, sortedIdsFromTwitter) => {
-  // Meat and potatoes to check if there are any new friends or enemies, returns arrays of ids
-  const { newFriends, newHaters } = services.findAllNew(friends_ids, sortedIdsFromTwitter)
-
-  // check if any of the haters from the past have readded you, returns array of ids
-  haters = services.checkIfHatersHaveAddedYou(haters, { newFriends, newHaters })
-
-  return {
-    newFriends,
-    newHaters,
-    friends_ids: sortedIdsFromTwitter,
-    changed: Boolean(newFriends.length || newHaters.length),
-    haters,
-  }
-}
-
-/**
- *
- * @param {Object}
- * @param {Array} newHaters
- * @param {String} user_id
- */
-const getUpdateHatersAndSort = async (followersHaters, userId, keys) => {
-  try {
-    Object.keys(followersHaters).forEach(key => {
-      console.log('Key: ', key)
-      console.log(followersHaters[key])
-    })
-    console.log(`\n\nTHESE ARE THE HATER IDS: ${followersHaters} \n\n`)
-    // take haters ids and get their data objects from twitter
-    const arrOfHatersObjects = await getNewHatersFromTwitter(followersHaters.newHaters, userId, keys)
-    // sort the results and merge them into the new haters
-    const allHaters = sortHaters({ haters: followersHaters.haters, newHaters: arrOfHatersObjects })
-    followersHaters.haters = allHaters
-
-    return Object.assign({}, followersHaters)
-  } catch (err) {
-    const errParams = [
-      400,
-      'There was an error in friendsUtil : getUpdateHatersAndSort',
-      'friendsUtil : getUpdateHatersAndSort',
-      err,
-    ]
-    throw throwErr(...errParams)
-  }
-}
-
-/**
- *
- * @param {String} userId
- */
-const updateDatabaseWithNewInfo = async (userId, { haters, friends_ids }) => {
-  try {
-    await dbUtil.updateUserFriendsAndHaters(userId, haters, friends_ids)
-  } catch (err) {
-    const errParams = [
-      400,
-      'There was an error in friendsUtil : updateDatabaseWithNewInfo',
-      'friendsUtil : updateDatabaseWithNewInfo',
       err,
     ]
     throw throwErr(...errParams)
@@ -156,7 +44,6 @@ const updateDatabaseWithNewInfo = async (userId, { haters, friends_ids }) => {
  */
 const findUpdatedInfo = (twitterIds, friendsIds, haters) => {
   try {
-    console.log('========>========>=======>')
     friendsIds = friendsIds ? friendsIds : {}
     haters = haters ? haters : {}
 
@@ -169,7 +56,6 @@ const findUpdatedInfo = (twitterIds, friendsIds, haters) => {
       friends[key] = key
       userCount++
     })
-    console.log('THIS IS FRIENDS IDS NOW: ', friendsIds)
 
     return {
       friends,
@@ -182,52 +68,12 @@ const findUpdatedInfo = (twitterIds, friendsIds, haters) => {
   }
 }
 
-/**
- * If user count is different, this will do the logic for finding
- * user changes - for cron task!
- * @param {Object} user - various data for changed user
- * @param {Array} user.friends_ids
- * @param {Array} user.haters
- * @param {Number} user.followers_count
- * @param {String} user.screen_name
- * @param {String} user.user_id
- * @param {String} user.token
- * @param {String} user.token_secret
- */
-// const updateFromTwitter = async user => {
-//   try {
-//     const sortedIdsFromTwitter = await getSortedUserIds(user)
-//     let followersHaters = findNewHatersAndFriends(user, sortedIdsFromTwitter)
-//     const keys = { token: user.token, token_secret: user.token_secret }
-//     if (followersHaters.newHaters.length) {
-//       followersHaters = await getUpdateHatersAndSort(followersHaters, user.user_id, keys)
-//     }
-
-//     updateDatabaseWithNewInfo(`twitter|${user.user_id}`, followersHaters)
-
-//     return await redisUtil.updateChangedUser(`twitter|${user.user_id}`, followersHaters, user)
-//   } catch (err) {
-//     throw throwErr(400, '', 'updateFromTwitter', err)
-//   }
-// }
-
-// ================================================================================================
-// ================================================================================================
-// ================================================================================================
-// ================================================================================================
-
 const buildNewUserData = (user, friends, haters, newHaters, count) => {
   try {
     // clean up the huge objects from twitter
-    console.log('\n\n========================= 4.1 ==========================')
-    console.log('This is the new haters: ', newHaters)
-    const builtHaters = services.fixHaters(newHaters)
-    console.log('This is the built haters: ', builtHaters)
+    // const builtHaters = services.fixHaters(newHaters)
     // Merge the object of the previous haters with the new ones
-    console.log('\n\n========================= 4.2 ==========================')
-    const mergedHaters = Object.assign({}, haters, builtHaters)
-
-    console.log('\n\n========================= 4.3 ==========================')
+    const mergedHaters = Object.assign({}, haters, services.fixHaters(newHaters))
     return {
       screen_name: user.screen_name,
       user_id: user.user_id,
@@ -256,31 +102,18 @@ const updateFromTwitter = async user => {
     // friends - A hash table of friends ids fresh from twitter
     // haters - method took the old haters and checked if any of them have re-added
     // newHaterIds - users recently unfollowed user
-    console.log('\n\n========================= 1 ==========================')
     const { friends, haters, newHaterIds, userCount } = findUpdatedInfo(twitterIds.ids, user.friends_ids, user.haters)
-    console.log('\n\n========================= 2 ==========================')
-    console.log('FRIENDS: ', friends)
-    console.log('haters: ', haters)
-    console.log('newHatersIds: ', newHaterIds)
-    // raw objects from twitter, need to clean them
+    
     let newHaters = {}
     const keys = Object.keys(newHaterIds)
     if (keys.length) {
-      console.log('\n\n========================= 3 ==========================')
-      const params = [
-        keys,
-        user.user_id,
-        { token: user.token, token_secret: user.token_secret },
-      ]
-      newHaters = await getNewHatersFromTwitter(...params)
+      const tokens = { token: user.token, token_secret: user.token_secret }
+      newHaters = await getNewHatersFromTwitter(keys, user.user_id, tokens)
     }
-    console.log('\n\n========================= 4 ==========================')
     // create the new object to put into redis and the database
     const updatedData = buildNewUserData(user, friends, haters, newHaters, userCount)
-    console.log('\n\n========================= 5 ==========================')
     // Add the new info to the database
     dbUtil.updateUserFriendsAndHaters(`twitter|${updatedData.user_id}`, updatedData.haters, updatedData.friends_ids)
-    console.log('\n\n========================= 6 ==========================')
     redisUtil.redis.set(`twitter|${updatedData.user_id}`, JSON.stringify(updatedData))
     return updatedData
   } catch (err) {
@@ -297,13 +130,9 @@ const sseHead = () => ({
 
 module.exports = {
   throwErr,
-  getSortedUserIds,
   getNewHatersFromTwitter,
-  findNewHatersAndFriends,
-  getUpdateHatersAndSort,
-  updateDatabaseWithNewInfo,
-  updateFromTwitter,
   findUpdatedInfo,
   buildNewUserData,
+  updateFromTwitter,
   sseHead,
 }
