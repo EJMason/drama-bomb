@@ -16,11 +16,14 @@ const loginInit = async (req, res) => {
     // Upon logging in,
     // check if user is in the database,
     // do not add if they are, get info
+    // --------------- REFACTORED ---------------------- //
     const user = await userUtil.findOrCreate(userInfo)
     // Auth0 managment API, get their idp token
-    const tokens = await authUtil.getUserIdp(user.user_id)
+    // --------------- REFACTORED ---------------------- //
+    const tokens = await authUtil.getUserIdp(userInfo.user_id)
     // Once complete, add them to redis db
-    await redisUtil.addUserOnLogin(user.user_id, tokens, user)
+    // --------------- REFACTORED ---------------------- //
+    await redisUtil.addUserOnLogin(userInfo.user_id, tokens, user)
 
     res.status(200).send(user)
   } catch (err) {
@@ -29,6 +32,7 @@ const loginInit = async (req, res) => {
   }
 }
 
+// --------------- REFACTORED ---------------------- //
 const logout = (req, res) => {
   try {
     redisUtil.onLogout(req.profile.user_id)

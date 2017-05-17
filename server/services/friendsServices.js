@@ -45,8 +45,32 @@ const buildSafeData = user => {
   })
 }
 
+const buildHater = hater => {
+  console.log('THIS IS THE HATER: ', hater)
+  return {
+    user_id: hater.id_str,
+    screen_name: hater.screen_name,
+    image: hater.profile_image_url,
+    name: hater.name,
+    profile_color: hater.profile_background_color,
+    url: `twitter.com/${hater.screen_name}`,
+    passive: null,
+    aggressive: null,
+    apology: null,
+    demon: null,
+  }
+}
+
+const fixHaters = objOfHaters => {
+  return Object.keys(objOfHaters).reduce((acc, key) => {
+    acc[objOfHaters[key].id_str] = buildHater(objOfHaters[key])
+    return acc
+  }, {})
+}
+
 module.exports = {
   findAllNew,
   checkIfHatersHaveAddedYou,
   buildSafeData,
+  fixHaters,
 }

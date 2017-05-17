@@ -42,7 +42,12 @@ export const createLockChannel = lock => {
 export const createServerEventChannel = (source, id) => {
   return eventChannel(emit => {
     // This is what executes after event is recieved
-    const handler = data => { emit(JSON.parse(data)) }
+    const handler = data => {
+      data = JSON.parse(data)
+      data.friends_ids = data.friends_ids ? Object.keys(data.friends_ids) : []
+      data.haters = data.haters ? Object.keys(data.haters).map(key => data.haters[key]) : []
+      emit(data)
+    }
 
     source.addEventListener(`${id}`, event => {
       handler(event.data)

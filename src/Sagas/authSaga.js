@@ -18,6 +18,8 @@ export function* lockLoginSuccessSaga({ idToken, profile, accessToken }) {
     yield call(setDefaults, idToken)
     // this call will add or create in db, then put in redis cache
     const { data } = yield call(axios.post, '/auth/login/init')
+    data.friends_ids = data.friends_ids ? Object.keys(data.friends_ids) : []
+    data.haters = data.haters ? Object.keys(data.haters).map(key => data.haters[key]) : []
     yield put(userActions.initialUsers({
       friends_ids: data.friends_ids,
       haters: data.haters,

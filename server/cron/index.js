@@ -4,7 +4,7 @@ const Redis = require('ioredis')
 const redis = require('../database/redis')
 
 const sub = new Redis()
-// sub.config('SET', 'notify-keyspace-events', 'KEA')
+sub.config('SET', 'notify-keyspace-events', 'KEA')
 sub.psubscribe('__keyevent@0__:expired')
 sub.psubscribe('__keyevent@0__:set')
 

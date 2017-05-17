@@ -1,5 +1,6 @@
 const redisUtil = require('../database/redis/redisUtil')
 const util = require('../utilities/friendsUtil')
+// const twitter = require('../utilities/twitterUtil')
 const { buildSafeData } = require('../services/friendsServices')
 const cron = require('../cron')
 
@@ -75,6 +76,49 @@ const checkForNewFriendsAndHaters = async (req, res) => {
     res.status(status).send(err)
   }
 }
+
+// const checkForNewFriendsAndHaters = async (req, res) => {
+//   try {
+//     const { user_id, screen_name } = req.profile
+
+//     // get user Info from Redis, if not in Redis, log out the user from client
+//     // const { friends_ids, haters, token, token_secret } = await redisUtil.getUserInfoFromCache(user_id)
+
+//     // { screen_name, user_id, friends_ids, followers_count, haters, token, token_secret, updated }
+//     const redisUser = await redisUtil.getUserInfoFromCache(user_id)
+//     // get current followers from twitter Api -> ['123', '456']
+//     const twitterIds = await twitter.getFollowersIds({
+//       user_id,
+//       screen_name,
+//       token: redisUser.token,
+//       token_secret: redisUser.token_secret,
+//     })
+//     // Hash table for haters
+//       // for each hater, see if
+//     const { updatedFriends, updatedHaters, newHaters, userCount } = util.FindUpdatedInfo(twitterIds, friends_ids, haters)
+//     // Hash table for prev friends
+//     let newHaterData = {}
+//     if (newHaters.length > 0) {
+//       newHaterData = await util.getNewHatersFromTwitter(Object.keys(newHaters), user_id, { token, token_secret })
+//     }
+
+//     // Merge the hater objects
+//     // { screen_name, user_id, friends_ids, followers_count, haters, token, token_secret, updated }
+//     const newUserData = util.buildNewUserData(redisUser, updatedFriends, updatedHaters, newHaterData, userCount)
+//     // If the object has any changes, update properties in the database
+//     if (followersHaters.changed) {
+//       util.updateDatabaseWithNewInfo(user_id, followersHaters)
+//       redisUtil.addUserIdpAndHatersRedis(user_id, { token, token_secret }, followersHaters)
+//     }
+//     // complete
+//     res.status(200).send(followersHaters)
+//   } catch (err) { // ----------- Error Handling -------- //
+//     // console.error(err)
+//     const status = err.statusCode || 400
+//     res.status(status).send(err)
+//   }
+// }
+
 
 const userPingisLoggedIn = (req, res) => {
   try {

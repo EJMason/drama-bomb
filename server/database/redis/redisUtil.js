@@ -11,16 +11,20 @@ const throwErr = (statusCode, method, message, defaultError = null) => {
   }
 }
 
-const getValues = (key, tokens, user) => JSON.stringify({
-  screen_name: user.screen_name,
-  user_id: key.substr(key.indexOf('|') + 1),
-  friends_ids: user.friends_ids,
-  followers_count: user.friends_ids.length,
-  haters: user.haters,
-  token: tokens.token,
-  token_secret: tokens.token_secret,
-  updated: Date.now(),
-})
+const getValues = (key, tokens, user) => {
+  const count = user.friends_ids ? Object.keys(user.friends_ids).length : 0
+  return JSON.stringify({
+    screen_name: user.screen_name,
+    user_id: key.substr(key.indexOf('|') + 1),
+    friends_ids: user.friends_ids,
+    followers_count: count,
+    haters: user.haters,
+    token: tokens.token,
+    token_secret: tokens.token_secret,
+    updated: Date.now(),
+  })
+}
+
 
 // -------------- For Export ------------------------ //
 
@@ -31,7 +35,7 @@ const addUserOnLogin = async (key, tokens, user) => {
       redis.set(key, getValues(key, tokens, user), 'ex', 3600)
       redis.incr('usercount')
     }
-  } catch (error) {
+  } catch (err) {
     throw throwErr(400, 'initOnLogin', null, err)
   }
 }
@@ -95,6 +99,17 @@ const updateChangedUser = async (key, updatedInfo, oldUser) => {
     throw throwErr(400, 'updateChangeduser', null, err)
   }
 }
+
+
+// const updateChangedUser = async (key, updatedInfo, oldUser) => {
+//   try {
+
+//     await redis.set(key, JSON.stringify(newUser), 'ex', 3600)
+//     return newUser
+//   } catch (err) {
+//     throw throwErr(400, 'updateChangeduser', null, err)
+//   }
+// }
 
 const onLogout = uid => {
   redis.expire(uid, 4)
