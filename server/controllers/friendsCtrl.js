@@ -3,7 +3,7 @@ const util = require('../utilities/friendsUtil')
 const { buildSafeData } = require('../services/friendsServices')
 const cron = require('../cron')
 
-const ssEvents = (req, res) => {
+module.exports.ssEvents = (req, res) => {
   try {
     if (!req.params.uid) {
       throw new Error('uid not defined')
@@ -49,7 +49,7 @@ const ssEvents = (req, res) => {
   }
 }
 
-const userPingisLoggedIn = (req, res) => {
+module.exports.userPingisLoggedIn = (req, res) => {
   try {
     redisUtil.updateExpiry(req.profile.user_id)
     res.status(200).send('success')
@@ -58,10 +58,4 @@ const userPingisLoggedIn = (req, res) => {
     const status = err.statusCode || 400
     res.status(status).send(err)
   }
-}
-
-
-module.exports = {
-  userPingisLoggedIn,
-  ssEvents,
 }

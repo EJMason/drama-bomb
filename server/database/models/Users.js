@@ -1,5 +1,4 @@
-
-const genUserSchema = Schema => {
+module.exports = Schema => {
   return new Schema({
     user_id: String,
     simple_id: String,
@@ -8,5 +7,3 @@ const genUserSchema = Schema => {
     haters: Schema.Types.Mixed,
   }, { autoIndex: false })
 }
-
-module.exports = genUserSchema

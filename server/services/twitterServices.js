@@ -36,9 +36,9 @@ const genOAuthSignature = (authParams, tokenSecret, url, httpMethod) => {
  * @param {string} url - Twitter endpoint url
  * @param {string} userId - user id hash key
  * @param {object} query - parameters
- * @return {object} headers for twitter api
+ * @return {object} headers - for twitter api
  */
-const genTwitterAuthHeader = async (httpMethod, url, userId, query, { token, token_secret }) => {
+module.exports.genTwitterAuthHeader = async (httpMethod, url, userId, query, { token, token_secret }) => {
   try {
     const authParams = genDefaultAuthParams(token, query)
     const signature = genOAuthSignature(authParams, token_secret, url, httpMethod)
@@ -59,12 +59,4 @@ const genTwitterAuthHeader = async (httpMethod, url, userId, query, { token, tok
     }
     throw error
   }
-}
-
-module.exports = {
-  genNonce,
-  genTimestamp,
-  genDefaultAuthParams,
-  genOAuthSignature,
-  genTwitterAuthHeader,
 }

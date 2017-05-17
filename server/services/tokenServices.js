@@ -10,7 +10,7 @@ const getTokenExpirationDate = token => {
   return date
 }
 
-const checkIfWebTokenIsExpired = token => {
+process.env.checkIfWebTokenIsExpired = token => {
   if (token === undefined) return true
   const date = getTokenExpirationDate(token)
   const offsetSeconds = 0
@@ -19,5 +19,3 @@ const checkIfWebTokenIsExpired = token => {
   }
   return !(date.valueOf() > (new Date().valueOf() + (offsetSeconds * 1000)))
 }
-
-module.exports = { checkIfWebTokenIsExpired }

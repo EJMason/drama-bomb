@@ -90,7 +90,8 @@ const buildNewUserData = (user, friends, haters, newHaters, count) => {
   }
 }
 
-const updateFromTwitter = async user => {
+// ---------------------- Exported ---------------------- //
+module.exports.updateFromTwitter = async user => {
   try {
     let twitterIds = await twitter.getFollowersIds({
       user_id: user.user_id,
@@ -103,9 +104,11 @@ const updateFromTwitter = async user => {
     // haters - method took the old haters and checked if any of them have re-added
     // newHaterIds - users recently unfollowed user
     const { friends, haters, newHaterIds, userCount } = findUpdatedInfo(twitterIds.ids, user.friends_ids, user.haters)
-    
+
     let newHaters = {}
     const keys = Object.keys(newHaterIds)
+
+    // This is only exectued if there are new haters
     if (keys.length) {
       const tokens = { token: user.token, token_secret: user.token_secret }
       newHaters = await getNewHatersFromTwitter(keys, user.user_id, tokens)
@@ -115,24 +118,14 @@ const updateFromTwitter = async user => {
     // Add the new info to the database
     dbUtil.updateUserFriendsAndHaters(`twitter|${updatedData.user_id}`, updatedData.haters, updatedData.friends_ids)
     redisUtil.redis.set(`twitter|${updatedData.user_id}`, JSON.stringify(updatedData))
+
     return updatedData
-  } catch (err) {
-    throw throwErr(400, '', 'updateFromTwitter', err)
-  }
+  } catch (err) { throw throwErr(400, '', 'updateFromTwitter', err) }
 }
 
-const sseHead = () => ({
+module.exports.sseHead = () => ({
   'Content-Type': 'text/event-stream',
   'Cache-Control': 'no-cache',
   Connection: 'keep-alive',
   'Access-Control-Allow-Origin': '*',
 })
-
-module.exports = {
-  throwErr,
-  getNewHatersFromTwitter,
-  findUpdatedInfo,
-  buildNewUserData,
-  updateFromTwitter,
-  sseHead,
-}

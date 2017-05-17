@@ -4,7 +4,7 @@ const shhh = (process.env.NODE_ENV === 'testing')
 ? process.env.TEST_AUTH0_SECRET
 : process.env.AUTH0_CLIENT_SECRET
 
-const validateBody = (req, res, next) => {
+module.exports.validateBody = (req, res, next) => {
   if (!req.body || !req.body.user_id || !req.body.simple_id || !req.body.screen_name) {
     res
     .status(412)
@@ -14,7 +14,7 @@ const validateBody = (req, res, next) => {
   }
 }
 
-const checkJWT = (req, res, next) => {
+module.exports.checkJWT = (req, res, next) => {
   try {
     const profile = jsonwt.verify(req.headers.authorization, scrt = shhh)
     req.profile = profile
@@ -26,5 +26,3 @@ const checkJWT = (req, res, next) => {
       .send('Invalid Token')
   }
 }
-
-module.exports = { validateBody, checkJWT }

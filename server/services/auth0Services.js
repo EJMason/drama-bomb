@@ -1,6 +1,16 @@
 const jwtDecode = require('jwt-decode')
 
-const generateManagmentOptions = () => {
+const getTokenExpirationDate = token => {
+  if (!token) return null
+  const dcd = jwtDecode(token)
+  if (!dcd.exp) return null
+
+  const date = new Date(0) // The 0 here is the key, which sets the date to the epoch
+  date.setUTCSeconds(dcd.exp)
+  return date
+}
+
+module.exports.generateManagmentOptions = () => {
   const url = `${process.env.AUTH0_DOMAIN}/oauth/token`
   const headers = { 'content-type': 'application/json' }
 
@@ -13,17 +23,7 @@ const generateManagmentOptions = () => {
   return { method: 'POST', url, headers, body }
 }
 
-const getTokenExpirationDate = token => {
-  if (!token) return null
-  const dcd = jwtDecode(token)
-  if (!dcd.exp) return null
-
-  const date = new Date(0) // The 0 here is the key, which sets the date to the epoch
-  date.setUTCSeconds(dcd.exp)
-  return date
-}
-
-const checkIfWebTokenIsExpired = token => {
+module.exports.checkIfWebTokenIsExpired = token => {
   if (token === undefined) return true
   const date = getTokenExpirationDate(token)
   const offsetSeconds = 0
@@ -33,4 +33,3 @@ const checkIfWebTokenIsExpired = token => {
   return !(date.valueOf() > (new Date().valueOf() + (offsetSeconds * 1000)))
 }
 
-module.exports = { generateManagmentOptions, checkIfWebTokenIsExpired }

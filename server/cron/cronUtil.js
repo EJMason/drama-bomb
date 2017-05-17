@@ -1,7 +1,7 @@
 const Promise = require('bluebird')
 
 const redis = require('../database/redis/redisUtil')
-const cronService = require('../services/cronService')
+const cronService = require('./cronService')
 const friendsUtil = require('../utilities/friendsUtil')
 
 const throwErr = (statusCode, message, method, defaultError = null) => {

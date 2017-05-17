@@ -8,7 +8,7 @@ redis.monitor((err, monitor) => {
     const one = chalk.red('REDIS')
     const two = chalk.magenta('Action:')
     const three = chalk.magenta('Key:')
-    console.log(`[${one}] ${two} ${args[0]} ${three} ${args[1]}`)
+    console.log(`---> [${one}] ${two} ${args[0]} ${three} ${args[1]}`)
   })
 })
 

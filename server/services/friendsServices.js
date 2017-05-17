@@ -13,7 +13,7 @@ const buildHater = hater => {
   }
 }
 
-const buildSafeData = user => {
+module.exports.buildSafeData = user => {
   return JSON.stringify({
     screen_name: user.screen_name,
     user_id: user.user_id,
@@ -23,14 +23,10 @@ const buildSafeData = user => {
   })
 }
 
-const fixHaters = objOfHaters => {
+module.exports.fixHaters = objOfHaters => {
   return Object.keys(objOfHaters).reduce((acc, key) => {
     acc[objOfHaters[key].id_str] = buildHater(objOfHaters[key])
     return acc
   }, {})
 }
 
-module.exports = {
-  buildSafeData,
-  fixHaters,
-}

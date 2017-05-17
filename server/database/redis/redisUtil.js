@@ -11,6 +11,12 @@ const throwErr = (statusCode, method, message, defaultError = null) => {
   }
 }
 
+/**
+ * Helper Function, builds out a redis JSON
+ * @param {String} key
+ * @param {Object} tokens
+ * @param {Object} user
+ */
 const getValues = (key, tokens, user) => {
   const count = user.friends_ids ? Object.keys(user.friends_ids).length : 0
   return JSON.stringify({
@@ -28,11 +34,11 @@ const getValues = (key, tokens, user) => {
 
 // -------------- For Export ------------------------ //
 
-const addUserOnLogin = async (key, tokens, user) => {
+module.exports.addUserOnLogin = async (key, tokens, user) => {
   try {
     const alreadyIn = await redis.exists(key)
     if (!alreadyIn) {
-      redis.set(key, getValues(key, tokens, user), 'ex', 3600)
+      redis.set(key, getValues(key, tokens, user), 'ex', 3600) // one hour
       redis.incr('usercount')
     }
   } catch (err) {
@@ -40,24 +46,16 @@ const addUserOnLogin = async (key, tokens, user) => {
   }
 }
 
-const getUserInfoFromCache = async userId => {
+// This is update how long the user in logged in, minutes
+module.exports.updateExpiry = async key => {
   try {
-    const user = await redis.get(userId)
-    if (!user) { throw throwErr(400, 'getUserInfoFromCache', 'User not in cache.') }
-    return JSON.parse(user)
-  } catch (err) {
-    throw throwErr(400, 'getUserInfoFromCache', null, err)
-  }
-}
-
-const updateExpiry = async key => {
-  try {
-    await redis.expire(key, 300)
+    await redis.expire(key, 3600)
   } catch (err) {
     throw throwErr(400, 'updateExpiry', null, err)
   }
 }
 
+// creates a way to search for all the users given a key parameter
 const streamUsers = cb => {
   let all
   const userStream = redis.scanStream({ match: 'twitter|*' })
@@ -69,9 +67,12 @@ const streamUsers = cb => {
   })
 }
 
-const getAllActiveUserIds = () => {
+/**
+ * This bulk queries the redis cache increasing get speed by 200%
+ */
+module.exports.getAllActiveUserIds = () => {
   return new Promise((resolve, reject) => {
-    streamUsers(users => {
+    this.streamUsers(users => {
       redis.pipeline(users.map(val => ['get', val])).exec((err, results) => {
         if (!results.length) {
           resolve([])
@@ -85,7 +86,10 @@ const getAllActiveUserIds = () => {
   })
 }
 
-const updateChangedUser = async (key, updatedInfo, oldUser) => {
+/**
+ * After change in followers, this will update the user JSON
+ */
+module.exports.updateChangedUser = async (key, updatedInfo, oldUser) => {
   try {
     const newUser = Object.assign({}, oldUser)
     newUser.friends_ids = updatedInfo.friends_ids
@@ -100,20 +104,15 @@ const updateChangedUser = async (key, updatedInfo, oldUser) => {
   }
 }
 
-const onLogout = uid => {
+/**
+ * Expiring a user in Redis is essentially a cleanup action
+ */
+module.exports.onLogout = uid => {
   redis.expire(uid, 4)
 }
 
 // ---- on server startup ---- //
 (() => { streamUsers(users => { redis.set('usercount', users.length) }) })()
 
-module.exports = {
-  addUserOnLogin,
-  getUserInfoFromCache,
-  updateExpiry,
-  getAllActiveUserIds,
-  updateChangedUser,
-  streamUsers,
-  onLogout,
-  redis,
-}
+module.exports.redis = redis
+module.exports.streamUsers = streamUsers

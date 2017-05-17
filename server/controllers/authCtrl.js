@@ -6,7 +6,7 @@ const redisUtil = require('../database/redis/redisUtil')
  * Initial sequence for user login at auth/login/init
  * req.body - {user_id, simple_id, screen_name}
  */
-const loginInit = async (req, res) => {
+module.exports.loginInit = async (req, res) => {
   try {
     const userInfo = {
       user_id: req.profile.user_id,
@@ -25,7 +25,7 @@ const loginInit = async (req, res) => {
   }
 }
 
-const logout = (req, res) => {
+module.exports.logout = (req, res) => {
   try {
     redisUtil.onLogout(req.profile.user_id)
     res.status(200).send('logout_complete')
@@ -33,5 +33,3 @@ const logout = (req, res) => {
     res.status(400).send('logout error: ', err)
   }
 }
-
-module.exports = { loginInit, logout }

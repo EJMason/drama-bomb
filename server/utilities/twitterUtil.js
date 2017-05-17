@@ -19,7 +19,7 @@ const throwErr = (statusCode, message, method, defaultError = null) => {
  * @param {string} qs.screen_name - Twitter handle
  * @returns {Promise}
  */
-const getFollowersIds = async ({ user_id, screen_name, token, token_secret }) => {
+module.exports.getFollowersIds = async ({ user_id, screen_name, token, token_secret }) => {
   try {
     const uri = `${baseUrl}/followers/ids.json`
     // Query string parameters
@@ -51,7 +51,7 @@ const getFollowersIds = async ({ user_id, screen_name, token, token_secret }) =>
  * @param {string} keys.token_secret
  * @returns {Promise}
  */
-const getUsersLookup = async (qs, userId, keys) => {
+module.exports.getUsersLookup = async (qs, userId, keys) => {
   try {
     const uri = `${baseUrl}/users/lookup.json`
     const headers = await services.genTwitterAuthHeader('GET', uri, userId, qs, keys)
@@ -65,9 +65,4 @@ const getUsersLookup = async (qs, userId, keys) => {
     ]
     throw throwErr(...errParams)
   }
-}
-
-module.exports = {
-  getFollowersIds,
-  getUsersLookup,
 }

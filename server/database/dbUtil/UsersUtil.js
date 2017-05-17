@@ -1,6 +1,6 @@
 const Users = require('../').Users
 
-const findOrCreate = async ({ user_id, simple_id, screen_name }) => {
+module.exports.findOrCreate = async ({ user_id, simple_id, screen_name }) => {
   try {
     if (await Users.count({ user_id })) {
       return await Users.findOne({ user_id })
@@ -26,7 +26,7 @@ const findOrCreate = async ({ user_id, simple_id, screen_name }) => {
   }
 }
 
-const updateUserFriendsAndHaters = async (userId, haters, friends) => {
+module.exports.updateUserFriendsAndHaters = async (userId, haters, friends) => {
   try {
     const user = await Users.findOne({ user_id: userId })
 
@@ -40,5 +40,3 @@ const updateUserFriendsAndHaters = async (userId, haters, friends) => {
     throw err
   }
 }
-
-module.exports = { findOrCreate, updateUserFriendsAndHaters }

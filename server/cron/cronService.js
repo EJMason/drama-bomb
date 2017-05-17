@@ -26,6 +26,11 @@ const binarySearch = (val, arr, key) => {
   return -1
 }
 
+// ------------------- For Export ------------------- //
+
+/**
+ * Clusters groups into useable format
+ */
 module.exports.groupsUsers = arr => {
   const grouped = []
   while (arr.length) {
@@ -38,6 +43,9 @@ module.exports.groupsUsers = arr => {
   }, { users: [], ids: [] }))
 }
 
+/**
+ * Generates Twitter Queries
+ */
 module.exports.genTwitterQueries = groups => {
   return groups.map(group => {
     queryStr = group.ids.join()
@@ -46,6 +54,9 @@ module.exports.genTwitterQueries = groups => {
   })
 }
 
+/**
+ * Checks against usercount to check for changes in followers
+ */
 module.exports.compareItems = (groupsOfUsers, responses) => {
   const changed = []
   let idx

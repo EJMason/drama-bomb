@@ -27,7 +27,7 @@ const getManagmentToken = async () => {
  * Auth0 endpoint /api/v2/users/USER_ID
  * @param {String} userId - id of user from Auth0 token
  */
-const getUserIdp = async userId => {
+module.exports.getUserIdp = async userId => {
   try {
     const mtoken = await getManagmentToken()
     const response = await rp({
@@ -42,5 +42,3 @@ const getUserIdp = async userId => {
     throw err
   }
 }
-
-module.exports = { getManagmentToken, getUserIdp }
