@@ -22,6 +22,7 @@ redis
 
 sub.on('pmessage', (pattern, channel, key) => {
   if (channel === '__keyevent@0__:expired') {
+    // do a quick check of user count to see if server should stop
     redis
       .decr('usercount')
       .then(numOfUsers => {
@@ -30,6 +31,10 @@ sub.on('pmessage', (pattern, channel, key) => {
         }
       })
       .catch(err => { throw err })
+
+      // Also, try to consolidate the User information
+
+      // Also, set in the database
   } else if (channel === '__keyevent@0__:set') {
     if (key.includes('twitter') && !cron.isRunning()) {
       console.log('----- CHECKING CRON -----')

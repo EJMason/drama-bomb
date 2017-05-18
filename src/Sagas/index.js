@@ -32,7 +32,7 @@ function* watchLockOpen() {
 
 function* watchLockAuthSuccess() {
   while (true) {
-    const { payload } = yield take(types.LOCK_AUTHENTICATED)
+    const { payload } = yield take([types.LOCK_AUTHENTICATED, types.AUTH_RETRY])
     yield call(lockLoginSuccessSaga, payload)
   }
 }
@@ -44,7 +44,7 @@ function* watchServerSentEvents() {
     yield fork(serverSentEventsSaga, payload.simpleId)
 
     const load = yield take('CHANNEL_CREATED')
-    console.log('THIS IS THE PAYLOAD: ', load)
+
     yield take(types.AUTH_LOGOUT)
     yield call(load.payload.close)
   }

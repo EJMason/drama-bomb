@@ -35,8 +35,8 @@ export default (state = INITIAL_STATE, { type, payload }) => {
     }
     case types.INITIAL_USERS: {
       return Immutable.merge(state, {
-        friends_ids: Object.keys(payload.friends_ids),
-        followers_count: Object.keys(payload.friends_ids).length,
+        friends_ids: payload.friends_ids,
+        followers_count: payload.friends_ids.length,
         haters: payload.haters,
         simple_id: payload.simple_id,
       })

@@ -7,6 +7,7 @@ import { getProfile } from '../Services/AuthServices'
 export const createLockChannel = lock => {
   return eventChannel(emit => {
     const handler = ({ type, payload }) => {
+      console.log('DATA RECIEVED: ', payload)
       emit({ type, payload })
     }
 

@@ -32,12 +32,22 @@ module.exports.cronCheck = async () => {
     const arrOfResponses = await Promise.all(cronService.genTwitterQueries(groupsOfUsers))
     // changedUsers is ust an array of users that have a different followers count
     const changedUsers = cronService.compareItems(groupsOfUsers, arrOfResponses)
-
+    console.log('WHO HAS CHANGED? ', changedUsers)
     if (changedUsers.length) {
       return await Promise.all(changedUsers.map(user => friendsUtil.updateFromTwitter(user)))
     }
     return []
   } catch (err) {
     throw throwErr(null, 'Error in chron job', 'cronCheck', err)
+  }
+}
+
+module.exports.consolidateUser = async () => {
+  try {
+    // get user info from twitter
+    // do the check
+    // edit the user if there are any issues
+  } catch (error) {
+    // error
   }
 }

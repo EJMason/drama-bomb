@@ -33,45 +33,6 @@ export function* lockLoginSuccessSaga({ idToken, profile, accessToken }) {
   }
 }
 
-/**
- * This is the listener for Server Sent Events
- *
- * @export
- * @param {string} { simple_id } twitter id of user for connection string
- */
-// export function* serverSentEventsSaga(simpleId) {
-//   try {
-//     try {
-//       const serverEventsListener = yield call(connectToServerEvents, simpleId)
-//       const serverEventsChannel = yield call(createServerEventChannel, serverEventsListener, simpleId)
-
-//       yield put({ type: 'CHANNEL_CREATED', payload: serverEventsChannel })
-
-//       while (true) {
-//         if (!serverEventsChannel) {
-//           break
-//         }
-//         const payload = yield take(serverEventsChannel)
-//         console.log('THERE IS AN EVENT: ', payload)
-//       }
-//     } catch (err) {
-//       console.error(err)
-//       if (err) {
-//         yield put(userActions.userError(err))
-//       }
-//     } finally {
-//       if (yield cancelled()) {
-//         yield call(serverEventsChannel.close)
-//       }
-//     }
-//   } catch (err) {
-//     console.error(err)
-//     if (err) {
-//       yield put(userActions.userError(err))
-//     }
-//   }
-// }
-
 export function* serverSentEventsSaga(simpleId) {
   try {
     const serverEventsListener = yield call(connectToServerEvents, simpleId)
@@ -92,4 +53,3 @@ export function* serverSentEventsSaga(simpleId) {
     }
   }
 }
-

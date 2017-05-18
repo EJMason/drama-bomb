@@ -29,21 +29,40 @@ export const showLock = lockInstance => {
 }
 
 export const setTokens = ({ idToken, profile, accessToken }) => {
-  localStorage.setItem('id_token', idToken)
-  localStorage.setItem('access_token', accessToken)
-  localStorage.setItem('profile', JSON.stringify(profile))
+  try {
+    localStorage.setItem('id_token', idToken)
+    localStorage.setItem('access_token', accessToken)
+    localStorage.setItem('profile', JSON.stringify(profile))
+  } catch (error) {
+    throw error
+  }
 }
 
 export const removeTokens = () => {
-  localStorage.removeItem('id_token')
-  localStorage.removeItem('profile')
-  localStorage.removeItem('access_token')
+  try {
+    localStorage.removeItem('id_token')
+    localStorage.removeItem('profile')
+    localStorage.removeItem('access_token')
+  } catch (error) {
+    throw error
+  }
 }
-
-export const getIdToken = () => localStorage.getItem('id_token')
 
 export const getProfileInfo = () => {
   const profile = localStorage.getItem('profile')
   return profile ? JSON.parse(localStorage.profile) : {}
 }
 
+export const getAllTokens = () => {
+  const idToken = localStorage.getItem('id_token')
+  const profile = getProfileInfo()
+  const accessToken = localStorage.getItem('access_token')
+  if (idToken && profile && accessToken) {
+    return { idToken, profile, accessToken }
+  }
+  return null
+}
+
+export const getIdToken = () => {
+  localStorage.getItem('id_token')
+}

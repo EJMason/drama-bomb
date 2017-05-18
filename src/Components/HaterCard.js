@@ -76,14 +76,14 @@ class HaterCard extends Component {
               >
                 <img
                   className="profile-image"
-                  src={this.props.hater.image}
+                  src={this.props.hater.image.replace('_normal', '')}
                   alt="hater"
                   style={{
                     height: `${x}px`,
                   }}
                 />
                 <div className="textArea">
-                  <div className="cardText card-name">{this.props.hater.first_name}</div>
+                  <div className="cardText card-name">{this.props.hater.name}</div>
                   <div className="cardText card-handle">@{this.props.hater.screen_name}</div>
                 </div>
               </div>

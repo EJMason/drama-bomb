@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 
 import { actions as loginActions } from '../Redux/Duck.Login'
 import { actions as userActions } from '../Redux/Duck.User'
-import { removeTokens } from '../Services/AuthServices'
-import { del } from '../Services/Api'
+import { removeTokens, getAllTokens } from '../Services/AuthServices'
+import { del, get } from '../Services/Api'
 import Topbar from '../Components/Topbar'
 import Sidebar from '../Components/Sidebar'
 import './Styles/css/Dashboard.css'
@@ -21,9 +21,20 @@ class Dashboard extends Component {
 
   componentDidMount() {
     if (!this.props.profile) {
-      this.props.history.push('/')
+      const tokens = getAllTokens()
+      if (tokens) {
+        this.props.dispatch(loginActions.authRetry(tokens))
+      } else {
+        this.logout()
+      }
     } else {
-      console.log('DO I HAVE THE ID: ', this.props.simple_id)
+      console.log('\n\n\n ===========>>>========>>>')
+      this.props.dispatch(loginActions.eventSourceConnect(this.props.simple_id))
+    }
+  }
+
+  componentDidUpdate() {
+    if (!this.props.sourceConnected && this.props.simple_id) {
       this.props.dispatch(loginActions.eventSourceConnect(this.props.simple_id))
     }
   }
@@ -38,8 +49,10 @@ class Dashboard extends Component {
     removeTokens()
   }
 
-  testButton() {
+  async testButton() {
     console.log('This is a button')
+    const resp = get.test()
+    console.log('THis is the response: ', resp)
   }
 
 
@@ -53,8 +66,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    console.log('This is the followers count: ', this.props.followers_count)
-    if (!this.props.profile) return null
+    if (this.props.authStatus !== 'complete') return null
     return (
       <div className="dashboard-container">
         <div className="topbar-container-grd">
@@ -89,8 +101,7 @@ const mapStateToProps = state => ({
   simple_id: state.user.simple_id,
   haters: state.user.haters,
   followers_count: state.user.followers_count,
-  router: state.router,
-
+  sourceConnected: state.login.sourceConnected,
 })
 
 export default connect(mapStateToProps, dispatch => ({ dispatch }))(Dashboard)
