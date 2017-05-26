@@ -1,0 +1,14 @@
+@import url("https://fonts.googleapis.com/css?family=Raleway|Lato");
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Raleway", sans-serif;
+  font-weight: 300;
+  /*background-color: #312C32*/ }
+
+html {
+  height: 100%; }
+
+#root {
+  height: 100%; }
