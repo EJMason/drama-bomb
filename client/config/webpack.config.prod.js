@@ -23,9 +23,7 @@ var shouldUseRelativeAssetPaths = publicPath === './';
 var publicUrl = publicPath.slice(0, -1);
 // Get environment variables to inject into our app.
 var env = getClientEnvironment(publicUrl);
-console.log(process.env)
-console.log('==========')
-console.log(env)
+console.log(process.env.AUTH0_DOMAIN)
 // Assert this just to be safe.
 // Development builds of React are slow and not intended for production.
 if (env.stringified['process.env'].NODE_ENV !== '"production"') {
@@ -237,6 +235,13 @@ module.exports = {
       fileName: 'asset-manifest.json'
     })
   ],
+
+  externals: {
+    globalConfig: `{
+      AUTH0_CLIENT_ID: '${process.env.AUTH0_CLIENT_ID}',
+      AUTH0_DOMAIN: '${process.env.AUTH0_DOMAIN}',
+    }`,
+  },
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
   node: {

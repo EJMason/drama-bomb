@@ -1,10 +1,21 @@
 import Auth0Lock from 'auth0-lock'
 import Promise from 'bluebird'
 
-import { AUTH_CLIENT_ID, AUTH_DOMAIN } from '../../clientKeys'
+console.log(process.env)
+let clientId
+let domain
 
+if (process.env.NODE_ENV !== 'production') {
+  clientId = process.env.AUTH0_CLIENT_ID
+  domain = process.env.AUTH0_DOMAIN
+} else {
+  clientId = globalConfig.AUTH_CLIENT_ID
+  domain = globalConfig.AUTH_DOMAIN
+}
 
-export const lock = new Auth0Lock(AUTH_CLIENT_ID, AUTH_DOMAIN, {
+console.log('ENV: ', process.env.NODE_ENV)
+
+export const lock = new Auth0Lock(clientId, domain, {
   auth: {
     redirectUrl: 'http://localhost:3000/login',
     responseType: 'token',
