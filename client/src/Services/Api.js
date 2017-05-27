@@ -1,7 +1,9 @@
 import axios from 'axios'
 import Promise from 'bluebird'
 
-const BASE_URL = 'http://localhost:2020'
+const BASE_URL = process.env.NODE_ENV === 'production'
+  ? 'http://localhost:2020'
+  : `${window.location.origin}`
 
 export const setDefaults = idToken => {
   axios.defaults.baseURL = BASE_URL

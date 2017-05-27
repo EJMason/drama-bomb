@@ -9,6 +9,7 @@ class App extends Component {
     this.state = {
       temp: null,
     }
+    console.log(window.location.href)
   }
 
   render() {

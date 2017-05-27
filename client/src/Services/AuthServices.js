@@ -2,22 +2,23 @@ import Auth0Lock from 'auth0-lock'
 import Promise from 'bluebird'
 
 console.log(process.env)
-let clientId
-let domain
 
-if (process.env.NODE_ENV !== 'production') {
-  clientId = process.env.AUTH0_CLIENT_ID
-  domain = process.env.AUTH0_DOMAIN
-} else {
-  clientId = globalConfig.AUTH_CLIENT_ID
-  domain = globalConfig.AUTH_DOMAIN
-}
+const clientId = process.env.AUTH0_CLIENT_ID
+const domain = process.env.AUTH0_DOMAIN
+
+// if (process.env.NODE_ENV !== 'production') {
+//   clientId = process.env.AUTH0_CLIENT_ID
+//   domain = process.env.AUTH0_DOMAIN
+// } else {
+//   clientId = globalConfig.AUTH_CLIENT_ID
+//   domain = globalConfig.AUTH_DOMAIN
+// }
 
 console.log('ENV: ', process.env.NODE_ENV)
 
 export const lock = new Auth0Lock(clientId, domain, {
   auth: {
-    redirectUrl: 'http://localhost:3000/login',
+    redirectUrl: `${window.location.origin}/login`,
     responseType: 'token',
     params: { scope: 'openid email user_id screen_name' },
   },
