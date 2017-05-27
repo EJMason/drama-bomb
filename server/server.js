@@ -5,7 +5,8 @@ const chalk = require('chalk')
 
 const app = require('./appInstance')
 // const http = require('./httpServer')
-
+console.log('THIS IS THE PATH: ')
+console.log(path.resolve(__dirname, '..', 'build'))
 app.use(express.static(path.resolve(__dirname, '..', 'build')))
 require('./middleware')(app)
 require('./routes')(app)

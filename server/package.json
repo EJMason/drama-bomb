@@ -7,6 +7,7 @@
   "author": "@EJMason",
   "license": "MIT",
   "devDependencies": {
+    "babel-eslint": "^7.2.3",
     "chai": "^3.5.0",
     "chai-sorted": "^0.1.0",
     "eslint": "^3.19.0",
