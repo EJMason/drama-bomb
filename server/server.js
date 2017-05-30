@@ -31,7 +31,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'))
 })
 
-const port = process.env.NODE_ENV !== 'production' ? 3000 : process.env.PORT
+const port = process.env.NODE_ENV !== 'production' ? 1337 : process.env.PORT
 app.listen(port, () => {
   log.info(`Server now listening on port ${port}`)
   log.info(`NODE_ENV: ${process.env.NODE_ENV}`)
