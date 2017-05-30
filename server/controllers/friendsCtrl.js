@@ -1,11 +1,13 @@
 const redisUtil = require('../database/redis/redisUtil')
 const util = require('../utilities/friendsUtil')
-const { buildSafeData } = require('../services/friendsServices')
 const cron = require('../cron')
+const log = require('../middleware/winstonLogger')
+const { buildSafeData } = require('../services/friendsServices')
 
 module.exports.ssEvents = (req, res) => {
   try {
     if (!req.params.uid) {
+      log.error('friendsCtrl:ssEvents uid not defined')
       throw new Error('uid not defined')
     }
 
@@ -14,6 +16,7 @@ module.exports.ssEvents = (req, res) => {
         data.forEach(user => {
           // This is info to be sent
           const toSend = buildSafeData(user)
+          log.verbose('Server Sent Event Dispatched', toSend)
           // sending
           res.write(`id: ${cron.genId()} \n`)
           res.write(`event: ${user.user_id}\n`)
@@ -41,8 +44,9 @@ module.exports.ssEvents = (req, res) => {
           res.status(400).send('not in cache, logout')
         }
       })
-  } catch (error) {
-    console.error('Error in ssEvents')
+  } catch (err) {
+    log.error(err)
+    res.status(400).send('Error in SSE')
   }
 }
 
@@ -51,7 +55,7 @@ module.exports.userPingisLoggedIn = (req, res) => {
     redisUtil.updateExpiry(req.profile.user_id)
     res.status(200).send('success')
   } catch (err) {
-    // console.error(err)
+    log.error(err)
     const status = err.statusCode || 400
     res.status(status).send(err)
   }

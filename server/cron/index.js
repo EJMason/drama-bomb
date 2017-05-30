@@ -1,15 +1,22 @@
 const CronTask = require('./cronTask')
 const Redis = require('ioredis')
 
+const log = require('../middleware/winstonLogger')
 const redis = require('../database/redis')
 
-const sub = new Redis()
+const prod = (process.env.NODE_ENV === 'production') ? true : false
+const port = prod ? process.env.REDIS_PORT : 6379
+const url = prod ? process.env.REDIS_URL : '127.0.0.1'
+
+log.verbose(`Connecting to Redis keyspace ${url}:${port}`)
+const sub = new Redis(port, url)
 sub.config('SET', 'notify-keyspace-events', 'KEA')
 sub.psubscribe('__keyevent@0__:expired')
 sub.psubscribe('__keyevent@0__:set')
 
 const cron = new CronTask()
 
+log.verbose('Initializing the usercount')
 redis
   .get('usercount')
   .then(count => {
@@ -30,14 +37,15 @@ sub.on('pmessage', (pattern, channel, key) => {
           cron.stopTask()
         }
       })
-      .catch(err => { throw err })
-
-      // Also, try to consolidate the User information
+      .catch(err => {
+        log.error(err)
+        throw err
+      })
 
       // Also, set in the database
   } else if (channel === '__keyevent@0__:set') {
     if (key.includes('twitter') && !cron.isRunning()) {
-      console.log('----- CHECKING CRON -----')
+      log.verbose('----- CHECKING CRON -----')
       redis
         .get('usercount')
         .then(count => {
@@ -45,7 +53,10 @@ sub.on('pmessage', (pattern, channel, key) => {
             cron.resumeTask()
           }
         })
-        .catch(err => { throw err })
+        .catch(err => {
+          log.error(err)
+          throw err
+        })
     }
   }
 })

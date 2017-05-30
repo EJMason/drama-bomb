@@ -1,14 +1,16 @@
 const Redis = require('ioredis')
-const chalk = require('chalk')
+const log = require('../../middleware/winstonLogger')
 
-const redis = new Redis()
+const prod = (process.env.NODE_ENV === 'production') ? true : false
+const port = prod ? process.env.REDIS_PORT : 6379
+const url = prod ? process.env.REDIS_URL : '127.0.0.1'
+
+log.verbose(`Connecting to Redis ${url}:${port}`)
+const redis = new Redis(port, url)
 
 redis.monitor((err, monitor) => {
   monitor.on('monitor', (time, args) => {
-    const one = chalk.red('REDIS')
-    const two = chalk.magenta('Action:')
-    const three = chalk.magenta('Key:')
-    console.log(`---> [${one}] ${two} ${args[0]} ${three} ${args[1]}`)
+    log.debug(`REDIS ---|--- ACTION: ${args[0]} KEY: ${args[1]}`)
   })
 })
 

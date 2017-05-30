@@ -2,18 +2,9 @@ const twitter = require('./twitterUtil')
 const services = require('../services/friendsServices')
 const dbUtil = require('../database/dbUtil/UsersUtil')
 const redisUtil = require('../database/redis/redisUtil')
+const log = require('../middleware/winstonLogger')
 
 // -------------------- HELPER FUNCTIONS ------------------------ //
-
-const throwErr = (statusCode, message, method, defaultError = null) => {
-  message = message || 'Unkown error'
-  return {
-    statusCode,
-    message,
-    method: `error in cronService in ${method} method`,
-    defaultError,
-  }
-}
 
 /**
  * Gets the new hater objects from twitter
@@ -26,13 +17,8 @@ const getNewHatersFromTwitter = async (haterIds, userId, keys) => {
     // user_id is the parameter name twitter needs, it isn't the user id'
     return await twitter.getUsersLookup({ user_id: haterIds.join() }, userId, keys)
   } catch (err) {
-    const errParams = [
-      400,
-      'There was an error in friendsUtil : getNewHatersFromTwitter',
-      'friendsUtil : getNewHatersFromTwitter',
-      err,
-    ]
-    throw throwErr(...errParams)
+    log.error(err)
+    throw err
   }
 }
 
@@ -64,7 +50,8 @@ const findUpdatedInfo = (twitterIds, friendsIds, haters) => {
       userCount,
     }
   } catch (error) {
-    return error
+    log.error(err)
+    throw err
   }
 }
 
@@ -85,8 +72,8 @@ const buildNewUserData = (user, friends, haters, newHaters, count) => {
       updated: Date.now(),
     }
   } catch (error) {
-    console.error(error)
-    return error
+    log.error(err)
+    throw err
   }
 }
 
@@ -120,7 +107,10 @@ module.exports.updateFromTwitter = async user => {
     redisUtil.redis.set(`twitter|${updatedData.user_id}`, JSON.stringify(updatedData))
 
     return updatedData
-  } catch (err) { throw throwErr(400, '', 'updateFromTwitter', err) }
+  } catch (err) {
+    log.error(err)
+    throw err
+  }
 }
 
 module.exports.sseHead = () => ({

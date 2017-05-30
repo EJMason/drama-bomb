@@ -1,4 +1,5 @@
 const oauthSignature = require('oauth-signature')
+const log = require('../middleware/winstonLogger')
 
 // ----------------- Helper Methods ----------------- //
 const genNonce = length => {
@@ -52,11 +53,7 @@ module.exports.genTwitterAuthHeader = async (httpMethod, url, userId, query, { t
       `oauth_signature=${signature}`]
     return { Authorization: str.join('') }
   } catch (err) {
-    const error = {
-      defaultError: err,
-      message: 'error generating headers',
-      method: 'twitterServices/genTwitterAuthHeader',
-    }
+    log.error(error)
     throw error
   }
 }

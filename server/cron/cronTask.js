@@ -4,6 +4,7 @@ const EventEmitter = require('events')
 
 const util = require('./cronUtil')
 const redisUtil = require('../database/redis/redisUtil')
+const log = require('../middleware/winstonLogger')
 
 class CronTask {
   constructor() {
@@ -30,23 +31,23 @@ class CronTask {
   }
 
   initializer() {
-    console.log(chalk.bgBlue.magenta('------------- Cron Task Begin -------------'))
+    log.verbose(chalk.bgBlue.magenta('------------- Cron Task Begin -------------'))
     this.workerBee.start()
     this.heartbeat.start()
   }
 
   resumeTask() {
     if (!this.workerBee.running) {
-      console.log(chalk.bgBlue.magenta('------------- Starting Cron Task -------------'))
+      log.verbose(chalk.bgBlue.magenta('------------- Starting Cron Task -------------'))
       this.workerBee.start()
       this.heartbeat.start()
     } else {
-      console.log(chalk.bgBlue.magenta('Cron Task Already running'))
+      log.verbose(chalk.bgBlue.magenta('Cron Task Already running'))
     }
   }
 
   stopTask() {
-    console.log(chalk.bgBlue.magenta('------------- Pausing Cron Task -------------'))
+    log.verbose(chalk.bgBlue.magenta('------------- Pausing Cron Task -------------'))
     this.workerBee.stop()
     this.heartbeat.stop()
   }
@@ -65,7 +66,7 @@ class CronTask {
    * @memberof CronTask
    */
   heartBeater() {
-    console.log(chalk.bgMagenta.blue('------------- Heartbeat -------------'))
+    log.verbose(chalk.bgMagenta.blue('------------- Heartbeat -------------'))
     redisUtil.streamUsers(users => {
       if (users.length) {
         this.emitter.emit('heartbeat', users)
@@ -74,7 +75,7 @@ class CronTask {
   }
 
   ticker() {
-    console.log(chalk.bgBlue.magenta('Cron Task: Checking logged in Users...'))
+    log.verbose(chalk.bgBlue.magenta('Cron Task: Checking logged in Users...'))
     util.cronCheck().then(data => {
       if (data.length) {
         this.emitter.emit('updated_users', data)

@@ -1,4 +1,5 @@
 const jwtDecode = require('jwt-decode')
+// const log = require('../middleware/winstonLogger')
 
 const getTokenExpirationDate = token => {
   if (!token) return null

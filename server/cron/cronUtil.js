@@ -3,24 +3,17 @@ const Promise = require('bluebird')
 const redis = require('../database/redis/redisUtil')
 const cronService = require('./cronService')
 const friendsUtil = require('../utilities/friendsUtil')
-
-const throwErr = (statusCode, message, method, defaultError = null) => {
-  return {
-    statusCode,
-    message,
-    method: `error in cronUtil in ${method} method`,
-    defaultError,
-  }
-}
+const log = require('../middleware/winstonLogger')
 
 module.exports.checkUsersLoggedIn = () => {
   return new Promise((resolve, reject) => {
-    redis.getAllActiveUserIds()
-      .then(users => {
-        const groups = cronService.groupsUsers(users)
-        resolve(groups.length ? true : false)
-      })
-      .catch(reject)
+    redis
+      .getAllActiveUserIds()
+        .then(users => {
+          const groups = cronService.groupsUsers(users)
+          resolve(groups.length ? true : false)
+        })
+        .catch(reject)
   })
 }
 
@@ -34,20 +27,12 @@ module.exports.cronCheck = async () => {
     const changedUsers = cronService.compareItems(groupsOfUsers, arrOfResponses)
 
     if (changedUsers.length) {
+      log.debug(`${changedUsers.length} users need to get updates, getting info from twitter`)
       return await Promise.all(changedUsers.map(user => friendsUtil.updateFromTwitter(user)))
     }
     return []
   } catch (err) {
-    throw throwErr(null, 'Error in chron job', 'cronCheck', err)
-  }
-}
-
-module.exports.consolidateUser = async () => {
-  try {
-    // get user info from twitter
-    // do the check
-    // edit the user if there are any issues
-  } catch (error) {
-    // error
+    log.error(err)
+    throw err
   }
 }

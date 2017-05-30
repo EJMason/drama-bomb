@@ -1,4 +1,5 @@
 const Users = require('../').Users
+const log = require('../../middleware/winstonLogger')
 
 module.exports.findOrCreate = async ({ user_id, simple_id, screen_name }) => {
   try {
@@ -17,11 +18,12 @@ module.exports.findOrCreate = async ({ user_id, simple_id, screen_name }) => {
     newUser.markModified('friends_ids')
     const user = await newUser.save()
 
-    console.log('-----New User Created in Database-----')
-    console.log(user)
+    log.verbose('-----New User Created in Database-----')
+    log.verbose(user)
 
     return user
   } catch (err) {
+    log.error(err)
     throw err
   }
 }
@@ -37,6 +39,7 @@ module.exports.updateUserFriendsAndHaters = async (userId, haters, friends) => {
 
     await user.save()
   } catch (err) {
+    log.error(err)
     throw err
   }
 }

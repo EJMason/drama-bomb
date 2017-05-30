@@ -1,3 +1,5 @@
+// const log = require('../middleware/winstonLogger')
+
 const buildHater = hater => {
   return {
     user_id: hater.id_str,

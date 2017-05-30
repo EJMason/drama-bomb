@@ -1,15 +1,7 @@
 const redis = require('./')
 const Promise = require('bluebird')
 
-const throwErr = (statusCode, method, message, defaultError = null) => {
-  message = message || 'Error message unspecified'
-  return {
-    statusCode,
-    message,
-    method: `redisUtil.js : ${method}`,
-    defaultError,
-  }
-}
+const log = require('../../middleware/winstonLogger')
 
 /**
  * Helper Function, builds out a redis JSON
@@ -42,7 +34,8 @@ module.exports.addUserOnLogin = async (key, tokens, user) => {
       redis.incr('usercount')
     }
   } catch (err) {
-    throw throwErr(400, 'initOnLogin', null, err)
+    log.error(err)
+    throw err
   }
 }
 
@@ -51,7 +44,8 @@ module.exports.updateExpiry = async key => {
   try {
     await redis.expire(key, 3600)
   } catch (err) {
-    throw throwErr(400, 'updateExpiry', null, err)
+    log.error(err)
+    throw err
   }
 }
 
@@ -77,7 +71,8 @@ module.exports.getAllActiveUserIds = () => {
         if (!results.length) {
           resolve([])
         } else if (results[0][0]) {
-          reject(throwErr(400, 'getAllActiveUsers', null, results[0][0]))
+          log.error(results[0][0])
+          reject(results[0][0])
         } else {
           resolve(results.map(val => JSON.parse(val[1])))
         }
@@ -100,7 +95,8 @@ module.exports.updateChangedUser = async (key, updatedInfo, oldUser) => {
     await redis.set(key, JSON.stringify(newUser), 'ex', 3600)
     return newUser
   } catch (err) {
-    throw throwErr(400, 'updateChangeduser', null, err)
+    log.error(err)
+    throw err
   }
 }
 
@@ -108,6 +104,7 @@ module.exports.updateChangedUser = async (key, updatedInfo, oldUser) => {
  * Expiring a user in Redis is essentially a cleanup action
  */
 module.exports.onLogout = uid => {
+  log.verbose(`${uid} removing from redis`)
   redis.expire(uid, 4)
 }
 
