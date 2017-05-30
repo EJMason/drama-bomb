@@ -1,0 +1,3 @@
+{"something":"This is data!","level":"info","message":"Hello distributed log files!","timestamp":"2017-05-30T09:32:49.860Z"}
+{"level":"info","message":"Hello again distributed logs","timestamp":"2017-05-30T09:32:49.862Z"}
+{"level":"info","message":"Express server now running on port 3000","timestamp":"2017-05-30T09:32:50.261Z"}

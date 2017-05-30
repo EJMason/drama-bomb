@@ -32,7 +32,7 @@ module.exports.cronCheck = async () => {
     const arrOfResponses = await Promise.all(cronService.genTwitterQueries(groupsOfUsers))
     // changedUsers is ust an array of users that have a different followers count
     const changedUsers = cronService.compareItems(groupsOfUsers, arrOfResponses)
-    console.log('WHO HAS CHANGED? ', changedUsers)
+
     if (changedUsers.length) {
       return await Promise.all(changedUsers.map(user => friendsUtil.updateFromTwitter(user)))
     }

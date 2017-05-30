@@ -8,12 +8,10 @@ module.exports.ssEvents = (req, res) => {
     if (!req.params.uid) {
       throw new Error('uid not defined')
     }
-    console.log(`\nUser ${req.params.uid} has Subscribed to listener!\n`)
 
     cron.emitter
       .on('updated_users', data => {
         data.forEach(user => {
-          console.log(`\nSending updates to: ${user.screen_name}\n`)
           // This is info to be sent
           const toSend = buildSafeData(user)
           // sending
@@ -28,7 +26,6 @@ module.exports.ssEvents = (req, res) => {
       .on('heartbeat', users => {
         users.forEach(user => {
           user = user.substr(user.indexOf('|') + 1)
-          console.log(`\nSending heartbeat <3 ${user}\n`)
 
           res.write(`id: ${cron.genId()} \n`)
           res.write(`event: ${user.user_id}\n`)

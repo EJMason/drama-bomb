@@ -7,7 +7,7 @@ router.post('/login/init', mw.checkJWT, ctrl.loginInit)
 router.delete('/logout', mw.checkJWT, ctrl.logout)
 
 router.get('/test', (req, res) => {
-  res.status(400).send('error')
+  res.status(200).send('yay')
 })
 
 module.exports = router

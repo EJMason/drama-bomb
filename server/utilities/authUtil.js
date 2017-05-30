@@ -2,12 +2,14 @@ const rp = require('request-promise')
 
 const services = require('../services/auth0Services')
 const redis = require('../database/redis')
+const log = require('../middleware/winstonLogger')
 
 /**
  * Auth0 endpoint /oauth/token
  * @returns {object} access_token and token_type
  */
 const getManagmentToken = async () => {
+  log.verbose('Invoking getManagmentToken')
   try {
     let mtoken = await redis.get('mtoken')
     if (!mtoken || services.checkIfWebTokenIsExpired(mtoken)) {
@@ -18,8 +20,8 @@ const getManagmentToken = async () => {
     }
     return mtoken
   } catch (err) {
-    console.log('ERROR IN getManagmentToken')
-    return err
+    log.error(err)
+    throw err
   }
 }
 
@@ -28,6 +30,7 @@ const getManagmentToken = async () => {
  * @param {String} userId - id of user from Auth0 token
  */
 module.exports.getUserIdp = async userId => {
+  log.verbose('authUtil.getUserIdp')
   try {
     const mtoken = await getManagmentToken()
     const response = await rp({
@@ -38,7 +41,7 @@ module.exports.getUserIdp = async userId => {
     const keys = JSON.parse(response).identities[0]
     return { token: keys.access_token, token_secret: keys.access_token_secret }
   } catch (err) {
-    console.log('ERROR IN getUserIdp')
+    log.error(err)
     throw err
   }
 }
