@@ -1,5 +1,5 @@
 const winston = require('winston')
-const stackdriverTransport = require('@google-cloud/logging-winston')
+// const stackdriverTransport = require('@google-cloud/logging-winston')
 // const slackWinston = require('slack-winston').Slack
 
 
@@ -35,14 +35,14 @@ if (process.env.NODE_ENV !== 'production') {
 } else {
   logger = new winston.Logger({
     exitOnError: false,
-    level: 'info',
+    level: 'debug',
+    transports: [
+      new (winston.transports.Console)({
+        handleExceptions: true,
+        colorize: true,
+      }),
+    ],
   })
-
-  logger
-    .add(stackdriverTransport, {
-      handleExceptions: true,
-      humanReadableUnhandledException: true,
-    })
 }
 
 module.exports = logger
