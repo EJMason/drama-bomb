@@ -21,6 +21,8 @@ var FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 var measureFileSizesBeforeBuild = FileSizeReporter.measureFileSizesBeforeBuild;
 var printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
 
+const emtr = require('events')
+
 var useYarn = fs.existsSync(paths.yarnLockFile);
 
 // Warn and crash if required files are missing
@@ -146,6 +148,8 @@ function build(previousFileSizes) {
       }
       console.log(`  ${chalk.cyan('serve')} -s build`);
       console.log();
+
+      emtr.EventEmitter('complete')
     }
   });
 }
@@ -156,3 +160,5 @@ function copyPublicFolder() {
     filter: file => file !== paths.appHtml
   });
 }
+
+module.exports = emtr

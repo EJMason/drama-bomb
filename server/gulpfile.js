@@ -10,6 +10,8 @@ const gutil = require('gulp-util')
 const git = require('gulp-git')
 const runSequence = require('run-sequence')
 
+// const emitter = require('../client/scripts/build')
+
 let version
 const releaseTypes = ['patch', 'minor', 'major']
 const ANSIBLE_DIR = path.resolve(__dirname, '..', 'ansible')
@@ -53,6 +55,7 @@ gulp.task('clean-build', () => {
     .then(() => {
       return run('yarn run build', { cwd: CLIENT_DIR })
         .exec()
+        .pipe()
     })
 })
 
