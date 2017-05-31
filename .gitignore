@@ -10,6 +10,7 @@ client/node_modules
 
 # production
 client/build
+build/
 ansible/*
 
 # misc
