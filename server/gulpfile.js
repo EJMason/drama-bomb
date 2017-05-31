@@ -10,25 +10,20 @@ const gutil = require('gulp-util')
 const git = require('gulp-git')
 const runSequence = require('run-sequence')
 
-const releaseTypes = ['patch', 'minor', 'major']
-const BUILD_DIR = path.resolve(__dirname, '..', 'client', 'build')
-
 let version
-
+const releaseTypes = ['patch', 'minor', 'major']
+const ANSIBLE_DIR = path.resolve(__dirname, '..', 'ansible')
+const BUILD_DIR = path.resolve(__dirname, '..', 'client', 'build')
+const CLIENT_DIR = path.resolve(__dirname, '..', 'client')
 
 const getPackageJsonVersion = () =>
   JSON
     .parse(fs.readFileSync('./package.json', 'utf8'))
     .version
 
-
-
-/*
-bump-version
-clean-build
-
-*/
-
+// --------------------------------------------------------
+//                    Gulp Tasks (in-order)
+// --------------------------------------------------------
 gulp.task('bump-version', done => {
   gutil.log(gutil.colors.bgBlue.black('GO Bump Version!'))
   inquirer
@@ -56,7 +51,7 @@ gulp.task('clean-build', () => {
   gutil.log(`${BUILD_DIR}/**/*`)
   del([`${BUILD_DIR}/**/*`], { force: true })
     .then(() => {
-      return run('yarn run build', { cwd: '/Users/ejm/Desktop/drama-bomb/client' })
+      return run('yarn run build', { cwd: CLIENT_DIR })
         .exec()
     })
 })
@@ -72,6 +67,16 @@ gulp.task('push-changes', done => {
   gutil.log(gutil.colors.bgBlue.black('GO Push Changes!'))
   git.push('origin', 'master:deploy', done)
 })
+
+gulp.task('ansible', () => {
+  return run('ansible-playbook playbook.yml', { cwd: ANSIBLE_DIR })
+    .exec()
+})
+
+
+// --------------------------------------------------------
+//                    Gulp Executer
+// --------------------------------------------------------
 
 gulp.task('execute', done => {
   gutil.log(gutil.colors.bgBlue.black('GO Execute!'))
