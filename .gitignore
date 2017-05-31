@@ -12,6 +12,7 @@ client/node_modules
 client/build
 build/
 ansible/*
+nginx.conf
 
 # misc
 .DS_Store
