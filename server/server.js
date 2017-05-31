@@ -15,7 +15,7 @@ app.use(expressWinston.logger({
 }))
 
 
-app.use(express.static(path.resolve(__dirname, '..', 'build')))
+// app.use(express.static(path.resolve(__dirname, '..', 'build')))
 require('./middleware')(app)
 require('./routes')(app)
 require('./database')
@@ -27,9 +27,9 @@ app.use(expressWinston.errorLogger({
   colorize: true,
 }))
 
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'))
-})
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'))
+// })
 
 const port = process.env.NODE_ENV !== 'production' ? 1337 : process.env.PORT
 app.listen(port, () => {
