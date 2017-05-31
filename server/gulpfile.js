@@ -10,7 +10,7 @@ const gutil = require('gulp-util')
 const git = require('gulp-git')
 const runSequence = require('run-sequence')
 
-// const emitter = require('../client/scripts/build')
+const emitter = require('../client/config/emitter')
 
 let version
 const releaseTypes = ['patch', 'minor', 'major']
@@ -48,13 +48,15 @@ gulp.task('bump-version', done => {
 })
 
 // Remove the build folder, then rebuild
-gulp.task('clean-build', () => {
+gulp.task('clean-build', done => {
   gutil.log(gutil.colors.bgBlue.black('GO Build!'))
   gutil.log(`${BUILD_DIR}/**/*`)
   del([`${BUILD_DIR}/**/*`], { force: true })
     .then(() => {
-      return run('yarn run build', { cwd: CLIENT_DIR })
-        .exec()
+      run('yarn run build', { cwd: CLIENT_DIR })
+        .exec(() => {
+          done()
+        })
     })
 })
 

@@ -21,7 +21,7 @@ var FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 var measureFileSizesBeforeBuild = FileSizeReporter.measureFileSizesBeforeBuild;
 var printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
 
-const emtr = require('events')
+const emtr = require('../config/emitter')
 
 var useYarn = fs.existsSync(paths.yarnLockFile);
 
@@ -161,4 +161,3 @@ function copyPublicFolder() {
   });
 }
 
-module.exports = emtr
