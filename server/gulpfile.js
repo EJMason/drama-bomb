@@ -55,7 +55,6 @@ gulp.task('clean-build', () => {
     .then(() => {
       return run('yarn run build', { cwd: CLIENT_DIR })
         .exec()
-        .pipe()
     })
 })
 
