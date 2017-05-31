@@ -73,6 +73,7 @@ gulp.task('push-changes', done => {
 })
 
 gulp.task('ansible', () => {
+  gutil.log(gutil.colors.bgMagenta.black('Ready, Go Ansible!'))
   return run('ansible-playbook playbook.yml', { cwd: ANSIBLE_DIR })
     .exec()
 })
@@ -88,9 +89,8 @@ gulp.task('execute', done => {
     'clean-build',
     'commit-changes',
     'push-changes',
+    'ansible',
     done)
 })
-
-// run ansible next
 
 gulp.task('default', ['execute'])
