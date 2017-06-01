@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { actions as loginActions } from '../Redux/Duck.Login'
 import { actions as userActions } from '../Redux/Duck.User'
 import { removeTokens, getAllTokens } from '../Services/AuthServices'
-import { del, get } from '../Services/Api'
+import api from '../Services/Api'
 import Topbar from '../Components/Topbar'
 import Sidebar from '../Components/Sidebar'
 import './Styles/css/Dashboard.css'
@@ -40,9 +40,10 @@ class Dashboard extends Component {
   }
 
   logout() {
-    del
+    api.auth.del
       .logout()
       .catch(console.error)
+
     this.props.history.push('/')
     this.props.dispatch(loginActions.authLogout())
     this.props.dispatch(userActions.userRemove())
@@ -51,7 +52,7 @@ class Dashboard extends Component {
 
   async testButton() {
     console.log('This is a button')
-    const resp = get.test()
+    const resp = await api.auth.get.test()
     console.log('THis is the response: ', resp)
   }
 

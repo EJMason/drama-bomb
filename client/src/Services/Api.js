@@ -11,25 +11,23 @@ export const setDefaults = idToken => {
   axios.defaults.headers.common['Authorization'] = idToken
 }
 
-const build = rts => rts.reduce((acc, route) => Object.create(acc, { [route]: {} }), {})
+export default {
 
-const routes = ['auth', 'demon', 'friends', 'messages']
+  auth: {
 
-const get = build(routes)
-const post = build(routes)
-const del = build(routes)
+    get: {
+      test: () => axios.get('/api/auth/test'),
+    },
 
+    post: {
+      loginInit: () => axios.post('/api/auth/login/init'),
+    },
 
-// ---------- GET ------------ //
-get.auth.test = () => axios.get('/api/auth/test')
-
-// ---------- POST ------------ //
-post.auth.loginInit = () => axios.post('/api/auth/login/init')
-
-// ---------- DEL ------------ //
-del.auth.logout = () => axios.delete('/api/auth/logout')
-
-export default { get, post, del }
+    del: {
+      logout: () => axios.delete('/api/auth/logout'),
+    },
+  },
+}
 
 // ------------------ SERVER SENT EVENTS UTILITY ------------------ //
 
