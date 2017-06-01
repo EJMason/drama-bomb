@@ -23,6 +23,8 @@ const getPackageJsonVersion = () =>
     .parse(fs.readFileSync('./package.json', 'utf8'))
     .version
 
+gulp.src("./src/test.ext")
+  .pipe(notify("Hello Gulp!"))
 // --------------------------------------------------------
 //                    Gulp Tasks (in-order)
 // --------------------------------------------------------
@@ -98,4 +100,4 @@ gulp.task('execute', done => {
     done)
 })
 
-gulp.task('default', ['execute', 'notification'])
+gulp.task('default', ['execute'])

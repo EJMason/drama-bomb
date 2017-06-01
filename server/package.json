@@ -1,6 +1,6 @@
 {
   "name": "drama-bomb-server",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Server logic for dramabomb app",
   "main": "server.js",
   "repository": "https://github.com/EJMason/drama-bomb",
