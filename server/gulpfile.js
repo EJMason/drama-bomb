@@ -8,6 +8,7 @@ const run = require('gulp-run')
 const bump = require('gulp-bump')
 const gutil = require('gulp-util')
 const git = require('gulp-git')
+const notify = require('gulp-notify')
 
 const runSequence = require('run-sequence')
 
@@ -77,13 +78,9 @@ gulp.task('ansible', () => {
     .exec()
 })
 
-gulp.task('unicorn', done => {
-  exec('./node_modules/.bin/unicornleap', err => {
-    if (err) {
-      gutil.log(err)
-    }
-    done()
-  })
+gulp.task('notification', () => {
+  gulp.src('./src/test.ext')
+    .pipe(notify('Hello Gulp!'))
 })
 
 
@@ -101,4 +98,4 @@ gulp.task('execute', done => {
     done)
 })
 
-gulp.task('default', ['execute'])
+gulp.task('default', ['execute', 'notification'])
