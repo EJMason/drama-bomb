@@ -1,13 +1,14 @@
 const path = require('path')
 const fs = require('fs')
+const del = require('del')
+const inquirer = require('inquirer')
 
 const gulp = require('gulp')
 const run = require('gulp-run')
-const del = require('del')
 const bump = require('gulp-bump')
-const inquirer = require('inquirer')
 const gutil = require('gulp-util')
 const git = require('gulp-git')
+
 const runSequence = require('run-sequence')
 
 let version
@@ -74,6 +75,15 @@ gulp.task('ansible', () => {
   gutil.log(gutil.colors.bgMagenta.black('Ready, Go Ansible!'))
   return run('ansible-playbook playbook.yml', { cwd: ANSIBLE_DIR })
     .exec()
+})
+
+gulp.task('unicorn', done => {
+  exec('./node_modules/.bin/unicornleap', err => {
+    if (err) {
+      gutil.log(err)
+    }
+    done()
+  })
 })
 
 
