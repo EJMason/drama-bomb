@@ -3,7 +3,7 @@ import Promise from 'bluebird'
 
 const BASE_URL = process.env.NODE_ENV !== 'production'
   ? 'http://localhost:1337'
-  : `${window.location.origin}`
+  : `${window.location.origin}/api`
 
 export const setDefaults = idToken => {
   axios.defaults.baseURL = BASE_URL
