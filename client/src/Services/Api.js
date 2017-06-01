@@ -3,7 +3,7 @@ import Promise from 'bluebird'
 
 const isProd = Boolean(process.env.NODE_ENV !== 'production')
 const devUri = 'http://localhost:1337'
-const prodUri = 'http://www.dramabomb.io'
+const prodUri = 'http://dramabomb.io'
 const BASE_URL = isProd ? devUri : prodUri
 
 export const setDefaults = idToken => {
