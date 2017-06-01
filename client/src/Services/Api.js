@@ -1,38 +1,31 @@
 import axios from 'axios'
 import Promise from 'bluebird'
 
-const BASE_URL = process.env.NODE_ENV !== 'production'
-  ? 'http://localhost:1337'
-  : `${window.location.origin}/api`
+const isProd = Boolean(process.env.NODE_ENV !== 'production')
+const devUri = 'http://localhost:1337'
+const prodUri = `${window.location.origin}`
+const BASE_URL = isProd ? devUri : prodUri
 
 export const setDefaults = idToken => {
   axios.defaults.baseURL = BASE_URL
   axios.defaults.headers.common['Authorization'] = idToken
 }
 
-const init = data => {
-  console.log(data)
-}
+const build = rts => rts.reduce((acc, route) => Object.create(acc, { [route]: {} }), {})
 
-const test = () => {
-  return axios.get('/auth/test')
-}
+const get = build(routes)
+const post = build(routes)
+const del = build(routes)
 
-const logout = () => {
-  return axios.delete('/auth/logout')
-}
 
-export const get = {
-  test,
-}
+// ---------- GET ------------ //
+get.auth.test = () => axios.get('/api/auth/test')
 
-export const post = {
-  init,
-}
+// ---------- POST ------------ //
+post.auth.loginInit = () => axios.post('/api/auth/login/init')
 
-export const del = {
-  logout,
-}
+// ---------- DEL ------------ //
+del.auth.logout = () => axios.delete('/api/auth/logout')
 
 // ------------------ SERVER SENT EVENTS UTILITY ------------------ //
 
@@ -47,3 +40,4 @@ export const connectToServerEvents = simpleId => {
   })
 }
 
+export default { get, post, del }
