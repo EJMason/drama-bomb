@@ -29,7 +29,7 @@ post.auth.loginInit = () => axios.post('/api/auth/login/init')
 // ---------- DEL ------------ //
 del.auth.logout = () => axios.delete('/api/auth/logout')
 
-
+export default { get, post, del }
 
 // ------------------ SERVER SENT EVENTS UTILITY ------------------ //
 
