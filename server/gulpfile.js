@@ -102,4 +102,14 @@ gulp.task('execute', done => {
     done)
 })
 
+gulp.task('nobuild', done => {
+  gutil.log(gutil.colors.bgBlue.black('GO Execute!'))
+  runSequence('bump-version',
+    'commit-changes',
+    'push-changes',
+    'ansible',
+    'notification',
+    done)
+})
+
 gulp.task('default', ['execute'])
