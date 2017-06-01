@@ -81,8 +81,9 @@ gulp.task('ansible', () => {
 })
 
 gulp.task('notification', () => {
-  gulp.src('./src/test.ext')
-    .pipe(notify('Hello Gulp!'))
+  return gulp
+    .src('./')
+    .pipe(notify({ message: '(つ°ヮ°)つ  └⋃┘ .....done' }))
 })
 
 
@@ -97,6 +98,7 @@ gulp.task('execute', done => {
     'commit-changes',
     'push-changes',
     'ansible',
+    'notification',
     done)
 })
 
