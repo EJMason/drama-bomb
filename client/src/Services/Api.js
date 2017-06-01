@@ -13,6 +13,8 @@ export const setDefaults = idToken => {
 
 const build = rts => rts.reduce((acc, route) => Object.create(acc, { [route]: {} }), {})
 
+const routes = ['auth', 'demon', 'friends', 'messages']
+
 const get = build(routes)
 const post = build(routes)
 const del = build(routes)
@@ -27,6 +29,8 @@ post.auth.loginInit = () => axios.post('/api/auth/login/init')
 // ---------- DEL ------------ //
 del.auth.logout = () => axios.delete('/api/auth/logout')
 
+
+
 // ------------------ SERVER SENT EVENTS UTILITY ------------------ //
 
 export const connectToServerEvents = simpleId => {
@@ -40,4 +44,3 @@ export const connectToServerEvents = simpleId => {
   })
 }
 
-export default { get, post, del }
