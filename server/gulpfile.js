@@ -23,8 +23,8 @@ const getPackageJsonVersion = () =>
     .parse(fs.readFileSync('./package.json', 'utf8'))
     .version
 
-gulp.src("./src/test.ext")
-  .pipe(notify("Hello Gulp!"))
+gulp.src('./src/test.ext')
+  .pipe(notify('Hello Gulp!'))
 // --------------------------------------------------------
 //                    Gulp Tasks (in-order)
 // --------------------------------------------------------
@@ -110,6 +110,11 @@ gulp.task('nobuild', done => {
     'ansible',
     'notification',
     done)
+})
+
+gulp.task('unicorn', done => {
+  require('child_process').exec('./unicornleap')
+  done()
 })
 
 gulp.task('default', ['execute'])
