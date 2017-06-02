@@ -16,7 +16,7 @@ sub.psubscribe('__keyevent@0__:set')
 
 const cron = new CronTask()
 
-log.verbose('Initializing the usercount')
+log.debug('Initializing the usercount')
 redis
   .get('usercount')
   .then(count => {
@@ -45,10 +45,11 @@ sub.on('pmessage', (pattern, channel, key) => {
       // Also, set in the database
   } else if (channel === '__keyevent@0__:set') {
     if (key.includes('twitter') && !cron.isRunning()) {
-      log.verbose('----- CHECKING CRON -----')
+      log.debug('Cron: Checking usercount to start/stop')
       redis
         .get('usercount')
         .then(count => {
+          log.debug(`This is the current user count in Redis is: ${count}`)
           if (count) {
             cron.resumeTask()
           }

@@ -18,8 +18,8 @@ module.exports.findOrCreate = async ({ user_id, simple_id, screen_name }) => {
     newUser.markModified('friends_ids')
     const user = await newUser.save()
 
-    log.verbose('-----New User Created in Database-----')
-    log.verbose(user)
+    log.debug('Database: New user has been created')
+    log.debug(user)
 
     return user
   } catch (err) {

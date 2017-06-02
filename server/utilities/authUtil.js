@@ -9,7 +9,6 @@ const log = require('../middleware/winstonLogger')
  * @returns {object} access_token and token_type
  */
 const getManagmentToken = async () => {
-  log.verbose('Invoking getManagmentToken')
   try {
     let mtoken = await redis.get('mtoken')
     if (!mtoken || services.checkIfWebTokenIsExpired(mtoken)) {
@@ -30,7 +29,6 @@ const getManagmentToken = async () => {
  * @param {String} userId - id of user from Auth0 token
  */
 module.exports.getUserIdp = async userId => {
-  log.verbose('authUtil.getUserIdp')
   try {
     const mtoken = await getManagmentToken()
     const response = await rp({

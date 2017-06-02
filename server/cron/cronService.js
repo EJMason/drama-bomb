@@ -51,8 +51,8 @@ module.exports.compareItems = (groupsOfUsers, twitterApiResponses) => {
 
     twitterApiResponses[i].forEach(twitterUser => {
       const previousUserSnapshot = groupHashTable[twitterUser.id]
-      log.verbose(`Names:     ${previousUserSnapshot.screen_name}  |  ${twitterUser.screen_name}`)
-      log.verbose(`Usercount: ${previousUserSnapshot.followers_count}  |  ${twitterUser.followers_count}`)
+      log.debug(`Names:     ${previousUserSnapshot.screen_name}  |  ${twitterUser.screen_name}`)
+      log.debug(`Usercount: ${previousUserSnapshot.followers_count}  |  ${twitterUser.followers_count}`)
       if (twitterUser.followers_count !== previousUserSnapshot.followers_count) {
         changed.push(previousUserSnapshot)
       }

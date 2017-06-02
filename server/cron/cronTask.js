@@ -31,23 +31,23 @@ class CronTask {
   }
 
   initializer() {
-    log.verbose(chalk.bgBlue.magenta('------------- Cron Task Begin -------------'))
+    log.verbose(chalk.bgBlue.magenta('Cron: Begin'))
     this.workerBee.start()
     this.heartbeat.start()
   }
 
   resumeTask() {
     if (!this.workerBee.running) {
-      log.verbose(chalk.bgBlue.magenta('------------- Starting Cron Task -------------'))
+      log.verbose(chalk.bgBlue.magenta('Cron: Begin'))
       this.workerBee.start()
       this.heartbeat.start()
     } else {
-      log.verbose(chalk.bgBlue.magenta('Cron Task Already running'))
+      log.debug(chalk.bgBlue.magenta('Cron Task Already running'))
     }
   }
 
   stopTask() {
-    log.verbose(chalk.bgBlue.magenta('------------- Pausing Cron Task -------------'))
+    log.verbose(chalk.bgBlue.magenta('Cron: Pause'))
     this.workerBee.stop()
     this.heartbeat.stop()
   }
@@ -66,7 +66,7 @@ class CronTask {
    * @memberof CronTask
    */
   heartBeater() {
-    log.verbose(chalk.bgMagenta.blue('------------- Heartbeat -------------'))
+    log.verbose(chalk.bgMagenta.blue('Cron: Heartbeat'))
     redisUtil.streamUsers(users => {
       if (users.length) {
         this.emitter.emit('heartbeat', users)
@@ -75,7 +75,7 @@ class CronTask {
   }
 
   ticker() {
-    log.verbose(chalk.bgBlue.magenta('Cron Task: Checking logged in Users...'))
+    log.debug(chalk.bgBlue.magenta('Cron Task: Checking logged in Users...'))
     util.cronCheck().then(data => {
       if (data.length) {
         this.emitter.emit('updated_users', data)

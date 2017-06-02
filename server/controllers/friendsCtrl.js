@@ -16,7 +16,7 @@ module.exports.ssEvents = (req, res) => {
         data.forEach(user => {
           // This is info to be sent
           const toSend = buildSafeData(user)
-          log.verbose('Server Sent Event Dispatched', toSend)
+          log.debug('Server Sent Event Dispatched', toSend)
           // sending
           res.write(`id: ${cron.genId()} \n`)
           res.write(`event: ${user.user_id}\n`)
