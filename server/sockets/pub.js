@@ -1,23 +1,28 @@
 const socket = require('./socketClient')
 const log = require('../middleware/winstonLogger')
 
-const { socketError } = require('../services/errorLogging')
+// const { socketError } = require('../services/errorLogging')
 
-const errPfix = [err, __filename, __dirname]
+// const { emitUserDataToClient } = require('./emit')
+
+// const errPfix = [err, __filename, __dirname]
 
 module.exports.socketPubUserUpdate = (userId, payload) => {
   const data = {
-    userId, // definelty as just number
-    payload,
+    event: 'user-update',
+    payload: {
+      userId,
+      payload,
+    },
   }
 
   socket
-    .publish('userUpdate', data, err => {
+    .publish('drama-bomb', data, err => {
       if (err) {
-        const errParams = [...errPfix, 'publish', 'userUpdate']
-        log.error('API/Socket Error @ pub/userUpdate', socketError(...errParams))
+        // const errParams = [...errPfix, 'socketPubUserUpdate', 'publish']
+        log.error('API/Socket Error @ pub/userUpdate', 'error')
       } else {
-        // emit new data to client
+        log.verbose('API/Socket PUBLISH SUCCESS USER_UPDATE')
       }
     })
 }

@@ -5,20 +5,27 @@ const log = require('../middleware/winstonLogger')
 const isProd = Boolean(process.env.NODE_ENV === 'production')
 
 const hostname = isProd ? process.env.SOCK_HOST : '127.0.0.1'
-const port = isProd ? process.env.SOCK_PORT : 3000
+const port = isProd ? process.env.SOCK_PORT : 8000
 
 const socket = socketCluster.connect({ hostname, port })
 
 socket
-  .on('connect', (data, err) => {
-    if (err) {
-      log.error('API Socket error @ connect: ', { error: err })
-    } else {
-      log.verbose('Socket: API Server Has Connected to SocketCluster ', {
-        id: socket.id,
-        state: socket.state,
-      })
-    }
+  .on('connect', () => {
+    log.verbose('Socket: API Server Has Connected to SocketCluster ', {
+      id: socket.id,
+      state: socket.state,
+    })
+  })
+
+socket
+  .on('error', err => {
+    log.error('SOCKET: GLOBAL ERROR --> ', { error: err })
+  })
+
+socket
+  .on('test', (data, res) => {
+    console.log('IT CAME BACK')
+    res(null, 'Good!')
   })
 
 module.exports = socket
