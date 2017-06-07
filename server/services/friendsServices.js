@@ -15,14 +15,24 @@ const buildHater = hater => {
   }
 }
 
+// module.exports.buildSafeData = user => {
+//   return JSON.stringify({
+//     screen_name: user.screen_name,
+//     user_id: user.user_id,
+//     followers_count: user.followers_count,
+//     friends_ids: user.friends_ids,
+//     haters: user.haters,
+//   })
+// }
+
 module.exports.buildSafeData = user => {
-  return JSON.stringify({
+  return {
     screen_name: user.screen_name,
     user_id: user.user_id,
     followers_count: user.followers_count,
     friends_ids: user.friends_ids,
     haters: user.haters,
-  })
+  }
 }
 
 module.exports.fixHaters = objOfHaters => {

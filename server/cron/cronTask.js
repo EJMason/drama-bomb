@@ -4,6 +4,9 @@ const EventEmitter = require('events')
 
 const util = require('./cronUtil')
 const redisUtil = require('../database/redis/redisUtil')
+const { buildSafeData } = require('../services/friendsServices')
+const socketPub = require('../sockets/pub')
+
 const log = require('../middleware/winstonLogger')
 
 class CronTask {
@@ -78,6 +81,13 @@ class CronTask {
     log.debug(chalk.bgBlue.magenta('Cron Task: Checking logged in Users...'))
     util.cronCheck().then(data => {
       if (data.length) {
+        data.forEach(updatedUser => {
+          // build the payload with relevant data
+          const payload = buildSafeData(updatedUser)
+          // send it
+          socketPub.socketPubUserUpdate(payload.user_id, payload)
+        })
+
         this.emitter.emit('updated_users', data)
       }
     }).catch(err => {
