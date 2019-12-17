@@ -1,0 +1,28 @@
+version: 1
+update_configs:
+
+  - package_manager: "javascript"
+    directory: "/client"
+    update_schedule: "live"
+    target_branch: master
+    default_labels:
+      - "dependabot"
+    automerged_updates:
+      - match:
+          dependency_type: "all"
+          update_type: "all"
+    commit_message:
+      prefix: ":robot: "
+
+  - package_manager: "javascript"
+    directory: "/server"
+    update_schedule: "live"
+    target_branch: master
+    default_labels:
+      - "dependabot"
+    automerged_updates:
+      - match:
+          dependency_type: "all"
+          update_type: "all"
+    commit_message:
+      prefix: ":robot: "
