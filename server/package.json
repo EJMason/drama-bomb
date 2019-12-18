@@ -10,7 +10,7 @@
     "babel-eslint": "^7.2.3",
     "chai": "^3.5.0",
     "chai-sorted": "^0.1.0",
-    "del": "^2.2.2",
+    "del": "^5.1.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-loader": "1.6.0",
