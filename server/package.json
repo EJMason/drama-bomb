@@ -31,7 +31,7 @@
     "object-assign": "4.1.1",
     "run-sequence": "^1.2.2",
     "sinon": "^2.1.0",
-    "supertest": "^3.0.0"
+    "supertest": "^4.0.2"
   },
   "dependencies": {
     "@google-cloud/logging-winston": "^0.4.1",
