@@ -44,7 +44,7 @@
     "express": "^4.15.2",
     "express-winston": "^2.4.0",
     "ioredis": "^2.5.0",
-    "jsonwebtoken": "^7.3.0",
+    "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^2.2.0",
     "mongodb": "^2.2.25",
     "mongoose": "^4.9.4",
