@@ -30,7 +30,7 @@
     "html-webpack-plugin": "2.24.0",
     "http-proxy-middleware": "0.17.3",
     "jest": "18.1.0",
-    "json-loader": "0.5.4",
+    "json-loader": "0.5.7",
     "mocha": "^3.2.0",
     "mocha-mongoose": "^1.2.0",
     "node-sass": "^4.5.2",
