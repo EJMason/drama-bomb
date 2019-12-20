@@ -35,7 +35,7 @@
     "mocha-mongoose": "^1.2.0",
     "node-sass": "^4.5.2",
     "object-assign": "4.1.1",
-    "postcss-loader": "1.2.2",
+    "postcss-loader": "3.0.0",
     "react-dev-utils": "^0.5.2",
     "sinon": "^7.5.0",
     "style-loader": "0.13.1",
