@@ -8,7 +8,7 @@
   "license": "MIT",
   "devDependencies": {
     "babel-eslint": "^9.0.0",
-    "chai": "^3.5.0",
+    "chai": "^4.2.0",
     "chai-sorted": "^0.2.0",
     "del": "^5.1.0",
     "eslint": "^3.19.0",
