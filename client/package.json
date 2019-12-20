@@ -63,7 +63,7 @@
     "ioredis": "^2.5.0",
     "jsonwebtoken": "^7.3.0",
     "jwt-decode": "^2.2.0",
-    "localforage": "^1.5.0",
+    "localforage": "^1.7.3",
     "mongodb": "^3.4.1",
     "mongoose": "^5.7.5",
     "morgan": "^1.8.1",
