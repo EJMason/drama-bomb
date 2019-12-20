@@ -80,7 +80,7 @@
     "redux-saga": "^0.14.4",
     "request": "^2.81.0",
     "request-promise": "^4.2.0",
-    "seamless-immutable": "^7.1.2"
+    "seamless-immutable": "^7.1.4"
   },
   "scripts": {
     "build-css": "node-sass src/ -o src/",
