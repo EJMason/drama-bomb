@@ -5396,9 +5396,9 @@ sntp@1.x.x:
   dependencies:
     hoek "2.x.x"
 
-socketcluster-client@^15.0.0:
-  version "15.0.0"
-  resolved "https://registry.yarnpkg.com/socketcluster-client/-/socketcluster-client-15.0.0.tgz#098f4c4ac4196d628dbb5628f7294dd2a34efe13"
+socketcluster-client@^15.0.1:
+  version "15.0.1"
+  resolved "https://registry.yarnpkg.com/socketcluster-client/-/socketcluster-client-15.0.1.tgz#a2ac144282f31452bf7f4458c0274a7d15deb9fe"
   dependencies:
     ag-channel "^4.0.2"
     ag-request "^1.0.0"
