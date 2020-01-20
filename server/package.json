@@ -54,7 +54,7 @@
     "request": "^2.88.0",
     "request-promise": "^4.2.5",
     "slack-winston": "^0.0.9",
-    "socketcluster-client": "^15.0.0",
+    "socketcluster-client": "^15.0.1",
     "winston": "^3.2.1"
   },
   "scripts": {
