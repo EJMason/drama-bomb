@@ -30,7 +30,7 @@
     "mocha-mongoose": "^1.2.0",
     "object-assign": "4.1.1",
     "run-sequence": "^2.2.1",
-    "sinon": "^8.1.0",
+    "sinon": "^8.1.1",
     "supertest": "^4.0.2"
   },
   "dependencies": {
