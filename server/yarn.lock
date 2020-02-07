@@ -329,11 +329,11 @@ acorn@^5.0.1:
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.0.3.tgz#c460df08491463f028ccb82eab3730bf01087b3d"
 
-ag-channel@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/ag-channel/-/ag-channel-4.0.2.tgz#e0e79daef509ec50ec59c64c1a379aa08838ade3"
+ag-channel@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/ag-channel/-/ag-channel-5.0.0.tgz#c2c00dfbe372ae43e0466ec89e29aca1bbb2fb3e"
   dependencies:
-    consumable-stream "^1.0.0"
+    consumable-stream "^2.0.0"
 
 ag-request@^1.0.0:
   version "1.0.0"
@@ -681,11 +681,11 @@ async-settle@^1.0.0:
   dependencies:
     async-done "^1.2.2"
 
-async-stream-emitter@^3.0.2:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/async-stream-emitter/-/async-stream-emitter-3.0.3.tgz#5bad06fba1247118805d94c6f6ace14f9100e0a9"
+async-stream-emitter@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/async-stream-emitter/-/async-stream-emitter-4.0.0.tgz#97f4a910f078c43720a8a8c4ea73a5fdefb6f62a"
   dependencies:
-    stream-demux "^7.0.1"
+    stream-demux "^8.0.0"
 
 async@^2.4.1, async@^2.6.1:
   version "2.6.3"
@@ -1246,9 +1246,9 @@ console-control-strings@^1.0.0, console-control-strings@~1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/console-control-strings/-/console-control-strings-1.1.0.tgz#3d7cf4464db6446ea644bf4b39507f9851008e8e"
 
-consumable-stream@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/consumable-stream/-/consumable-stream-1.0.0.tgz#5b0862414730834541792532ee4cf98e22a946f6"
+consumable-stream@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/consumable-stream/-/consumable-stream-2.0.0.tgz#11d3c7281b747eb9efd31c199b3a8b1711bec654"
 
 contains-path@^0.1.0:
   version "0.1.0"
@@ -5429,22 +5429,22 @@ sntp@1.x.x:
   dependencies:
     hoek "2.x.x"
 
-socketcluster-client@^15.1.0:
-  version "15.1.0"
-  resolved "https://registry.yarnpkg.com/socketcluster-client/-/socketcluster-client-15.1.0.tgz#2a87daba86cd9ad54604c7cc86107fd3634ffb77"
+socketcluster-client@^16.0.1:
+  version "16.0.1"
+  resolved "https://registry.yarnpkg.com/socketcluster-client/-/socketcluster-client-16.0.1.tgz#e410544b20bb507979ede86e69be7dade6ad9e82"
   dependencies:
-    ag-channel "^4.0.2"
+    ag-channel "^5.0.0"
     ag-request "^1.0.0"
-    async-stream-emitter "^3.0.2"
+    async-stream-emitter "^4.0.0"
     buffer "^5.2.1"
     clone-deep "^4.0.1"
     linked-list "^0.1.0"
     querystring "^0.2.0"
     sc-errors "^2.0.1"
     sc-formatter "^3.0.2"
-    stream-demux "^7.0.1"
+    stream-demux "^8.0.0"
     uuid "^3.2.1"
-    ws "^7.1.0"
+    ws "^7.2.1"
 
 source-map-resolve@^0.5.0:
   version "0.5.2"
@@ -5535,12 +5535,12 @@ stealthy-require@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/stealthy-require/-/stealthy-require-1.1.1.tgz#35b09875b4ff49f26a777e509b3090a3226bf24b"
 
-stream-demux@^7.0.1:
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/stream-demux/-/stream-demux-7.0.1.tgz#86e3b25d19173e11f84e4ef711a1675d3c09879a"
+stream-demux@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/stream-demux/-/stream-demux-8.0.0.tgz#d7d33bf47dfaeb2e94f1966e990d206b6d26ef1e"
   dependencies:
-    consumable-stream "^1.0.0"
-    writable-consumable-stream "^1.1.1"
+    consumable-stream "^2.0.0"
+    writable-consumable-stream "^2.0.0"
 
 stream-events@^1.0.4, stream-events@^1.0.5:
   version "1.0.5"
@@ -6205,11 +6205,11 @@ wrappy@1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
 
-writable-consumable-stream@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/writable-consumable-stream/-/writable-consumable-stream-1.1.1.tgz#f6046da5df15debb344dfa3ce3fcddd7f5ddfaff"
+writable-consumable-stream@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/writable-consumable-stream/-/writable-consumable-stream-2.0.0.tgz#102beeea0b20b4862f263dd8688c926a4caa28d3"
   dependencies:
-    consumable-stream "^1.0.0"
+    consumable-stream "^2.0.0"
 
 write@^0.2.1:
   version "0.2.1"
@@ -6217,7 +6217,7 @@ write@^0.2.1:
   dependencies:
     mkdirp "^0.5.1"
 
-ws@^7.1.0:
+ws@^7.2.1:
   version "7.2.1"
   resolved "https://registry.yarnpkg.com/ws/-/ws-7.2.1.tgz#03ed52423cd744084b2cf42ed197c8b65a936b8e"
 
