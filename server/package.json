@@ -51,7 +51,7 @@
     "morgan": "^1.9.1",
     "oauth": "^0.9.15",
     "oauth-signature": "^1.5.0",
-    "request": "^2.88.0",
+    "request": "^2.88.2",
     "request-promise": "^4.2.5",
     "slack-winston": "^0.0.9",
     "socketcluster-client": "^16.0.1",
