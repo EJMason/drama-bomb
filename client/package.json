@@ -65,7 +65,7 @@
     "jwt-decode": "^2.2.0",
     "localforage": "^1.7.3",
     "mongodb": "^3.5.2",
-    "mongoose": "^5.8.10",
+    "mongoose": "^5.8.11",
     "morgan": "^1.9.1",
     "oauth": "^0.9.15",
     "oauth-signature": "^1.5.0",
