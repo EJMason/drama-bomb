@@ -47,7 +47,7 @@
     "whatwg-fetch": "3.0.0"
   },
   "dependencies": {
-    "auth0-lock": "^11.22.3",
+    "auth0-lock": "^11.22.5",
     "axios": "^0.19.2",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",

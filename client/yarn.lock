@@ -1711,9 +1711,9 @@ auth0-js@^9.12.2:
     url-join "^4.0.1"
     winchan "^0.2.2"
 
-auth0-lock@^11.22.3:
-  version "11.22.3"
-  resolved "https://registry.yarnpkg.com/auth0-lock/-/auth0-lock-11.22.3.tgz#ba065f5e9da55bfa6d027fec11d26247c077ac69"
+auth0-lock@^11.22.5:
+  version "11.22.5"
+  resolved "https://registry.yarnpkg.com/auth0-lock/-/auth0-lock-11.22.5.tgz#e21af56b7af03448f3d048ff97d63c63405f2d50"
   dependencies:
     auth0-js "^9.12.2"
     auth0-password-policies "^1.0.2"
