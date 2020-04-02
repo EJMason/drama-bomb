@@ -29,7 +29,7 @@
     "fs-extra": "9.0.0",
     "html-webpack-plugin": "3.2.0",
     "http-proxy-middleware": "1.0.3",
-    "jest": "25.2.4",
+    "jest": "25.2.6",
     "json-loader": "0.5.7",
     "mocha": "^7.1.1",
     "mocha-mongoose": "^1.2.0",
