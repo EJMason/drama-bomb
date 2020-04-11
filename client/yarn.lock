@@ -4966,9 +4966,9 @@ invert-kv@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-2.0.0.tgz#7393f5afa59ec9ff5f67a27620d11c226e3eec02"
 
-ioredis@^4.16.1:
-  version "4.16.1"
-  resolved "https://registry.yarnpkg.com/ioredis/-/ioredis-4.16.1.tgz#377c21d2a4fa8cc31fe9028c666f8dd16a6255bf"
+ioredis@^4.16.2:
+  version "4.16.2"
+  resolved "https://registry.yarnpkg.com/ioredis/-/ioredis-4.16.2.tgz#29ae301885e493c4642d2fb1998761c576e27462"
   dependencies:
     cluster-key-slot "^1.1.0"
     debug "^4.1.1"
