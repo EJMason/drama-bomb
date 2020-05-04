@@ -47,7 +47,7 @@
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^2.2.0",
     "mongodb": "^3.5.7",
-    "mongoose": "^5.9.11",
+    "mongoose": "^5.9.12",
     "morgan": "^1.10.0",
     "oauth": "^0.9.15",
     "oauth-signature": "^1.5.0",
