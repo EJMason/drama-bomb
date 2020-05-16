@@ -4950,9 +4950,9 @@ invariant@^2.2.2, invariant@^2.2.4:
   dependencies:
     loose-envify "^1.0.0"
 
-ioredis@^4.17.0:
-  version "4.17.0"
-  resolved "https://registry.yarnpkg.com/ioredis/-/ioredis-4.17.0.tgz#d0bf9f392e045d18c573c1495a86ca0be86bd627"
+ioredis@^4.17.1:
+  version "4.17.1"
+  resolved "https://registry.yarnpkg.com/ioredis/-/ioredis-4.17.1.tgz#06ef3d3b2cb96b7e6bc90a7b8839a33e743843ad"
   dependencies:
     cluster-key-slot "^1.1.0"
     debug "^4.1.1"
